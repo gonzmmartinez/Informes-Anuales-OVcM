@@ -36,27 +36,27 @@ Data <- Raw %>%
   rbind(c("2.023", 2, NA)) %>%
   mutate(Cantidad = as.numeric(Cantidad),
          Semestre_año = paste0(str_sub(Año, 4,5), "-", Semestre_num)) %>%
-  arrange(Semestre_año)
+  arrange(Semestre_año) %>%
+  mutate(Label = ifelse(is.na(Cantidad), "", formatC(Cantidad, big.mark=".", decimal.mark=",", format="d")))
 
 # Colores
 Colores <- c("#6e3169", "#ec6489")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
-  geom_col(aes(alpha=Cantidad), fill=Colores[1]) +
-  geom_line(linewidth = 4, color=Colores[2]) +
-  geom_point(size = 5, color=Colores[2]) +
-  geom_text(aes(y=45000, label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="d")),
-            size=10, family="font", fontface="bold", color="white", angle=90) +
-  annotate(geom="text", y=-0.1, x=2, label="Hola", size=30, color="black") +
+  geom_area(fill=Colores[1], alpha=0.25) +
+  geom_line(linewidth=2.5, color=Colores[1], lineend = 'round') +
+  geom_text(aes( label=Label), size=5, family="font",
+            fontface="bold", color="black", angle=90, hjust=1.5) +
+  annotate(geom="text", y=-20000, x=c(seq(from=2, to=11, by=2), 11.5), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
+           size=8, color="black", family="font") +
+  annotate(geom="segment", x=seq(from=1, to=11, by=2), xend=seq(from=1, to=11, by=2), y=-25000, yend=-15000, color="grey", linewidth=0.25) +
   labs(title="",
-       x="Año", y="Cantidad") +
-  scale_alpha_continuous(range=c(0.6,1)) +
-  scale_fill_gradient(labels = function(x) str_wrap(x, width = 20)) +
-  scale_x_discrete(breaks = Data$Semestre_año, labels = ifelse(Data$Semestre_num == 1, Data$Año, "")) +
-  scale_y_continuous(limits = c(0, 120000), labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
+       x="Semestre/Año", y="Cantidad") +
+  scale_x_discrete(labels = rep(c("1°", "2°"), 6)) +
+  scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
   theme_light() +
-  coord_cartesian(xlim=c(1, 11), ylim=c(0,120000), expand=FALSE, clip="off") +
+  coord_cartesian(ylim = c(-5000, 120000), xlim=c(0.75, 12.25), clip="off", expand=FALSE) +
   theme(text=element_text(family="font"),
         legend.position="none",
         legend.title = element_blank(),
@@ -64,11 +64,11 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
         plot.title = element_text(size=20, family="font", face="bold"),
         plot.subtitle = element_text(size=15, family="font"),
         plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_blank(),
-        axis.text.x = element_text(size=20, margin = margin(t=10,r=0,b=5,l=0), hjust=-1),
+        axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20),
-        axis.title.y = element_text(size=20))
+        axis.title.x = element_text(size=20, margin=margin(t=40)),
+        axis.title.y = element_text(size=20),
+        plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -79,3 +79,4 @@ ggsave(filename = paste0(filename, ".png"),
        plot=grafico, dpi=100, width=14, height=7)
 ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/pdf/"),
        plot=grafico, dpi=72, width=14, height=7)
+
