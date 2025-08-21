@@ -10,6 +10,7 @@ library(dplyr)
 library(stringr)
 library(directlabels)
 library(ggrepel)
+library(googlesheets4)
 
 # Fuentes
 library(showtext)
@@ -39,7 +40,8 @@ Labels <- Data %>%
   group_by(Año) %>%
   filter(Mes_num == max(Mes_num)) %>%
   ungroup %>%
-  mutate(xpos = Mes_num+0.35)
+  mutate(xpos = Mes_num+0.35,
+         Label = str_replace(as.character(Año), "^(\\d)(\\d+)$", "\\1.\\2"))
 
 # Colores
 Colores <- c()
@@ -48,14 +50,14 @@ Colores <- c()
 grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   geom_line(aes(color=Año), linewidth=2) +
   geom_point(aes(color=Año), size=3) +
-  geom_label_repel(data=Labels, aes(x=xpos, y=Cantidad, label=Año, color=Año), fill="white",
+  geom_label_repel(data=Labels, aes(x=xpos, y=Cantidad, label=Label, color=Año), fill="white",
                    family="font", box.padding=0.01, point.padding=0.01, force=0.001,
                    max.overlaps=Inf, min.segment.length=0, direction="y", vjust = 0.5, alpha=0.75) +
-  ylim(5000,25000) +
   labs(title="",
        x="Mes", y="Cantidad") +
   theme_light() +
   scale_x_discrete(labels = function(z) str_sub(z, 1, 3), expand = expansion(add = c(0.5, 1))) +
+  scale_y_continuous(limits=c(5000, 25000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ",")) +
   theme(text=element_text(family="font"), legend.position="none",
         plot.title = element_text(size=20, family="font", face="bold"),
         plot.subtitle = element_text(size=15, family="font"),
