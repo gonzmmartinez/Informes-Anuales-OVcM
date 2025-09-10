@@ -1,0 +1,106 @@
+# Limpiar todo
+rm(list = ls())
+
+# Librer?as
+library(ggplot2)
+library(dplyr)
+library(stringr)
+library(cowplot)
+library(magick)
+library(googlesheets4)
+
+# Fuentes
+library(showtext)
+font_add_google("Barlow", "font")
+showtext_auto()
+
+# Leer datos
+Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
+                  sheet = "Mes")
+
+# Diccionarios
+Mes <- data.frame(Mes = c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"),
+                  Mes_num = 1:12)
+
+Data1 <- Raw %>%
+  left_join(Mes, by="Mes") %>%
+  filter(Año == 2025, Tipo == "Abuso sexual") %>%
+  group_by(Mes, Mes_num, Accion) %>%
+  summarise(Cantidad = sum(Cantidad)) %>%
+  mutate(Accion = factor(Accion,
+                         levels = c("Llamadas", "Intervenciones", "Intervenciones SAMEC")))
+
+Data2 <- Raw %>%
+  left_join(Mes, by="Mes") %>%
+  filter(Año == 2024, Tipo == "Abuso sexual") %>%
+  group_by(Mes, Mes_num, Accion) %>%
+  summarise(Cantidad = sum(Cantidad)) %>%
+  mutate(Accion = factor(Accion,
+                         levels = c("Llamadas", "Intervenciones", "Intervenciones SAMEC")))
+
+# Definir colores
+Colores <- c("Llamadas" = "#f2904c",
+             "Intervenciones" = "#1daa6a",
+             "Intervenciones SAMEC" = "#ec6489")
+
+# Gráfico
+grafico1 <- ggplot(Data1, aes(x=reorder(Mes, Mes_num), y=Cantidad, group = Accion)) +
+  geom_line(aes(color=Accion), linewidth=2) +
+  geom_point(aes(color=Accion), size=3) +
+  geom_text(aes(label=Cantidad), size=3, family="font", vjust=-1, show_guide=FALSE) +
+  theme_light() +
+  labs(title="2.025", x="Mes", y="Cantidad") +
+  ylim(0,150) +
+  scale_color_manual(name="Tipo de requerimiento", values = Colores) +
+  theme(text=element_text(family="font"),
+        legend.position = "bottom",
+        legend.justification = "center",
+        legend.title = element_text(size=10, family="font"),
+        legend.text = element_text(size=12, family="font"),
+        plot.title = element_text(size=30, family="font", face="bold", hjust=0.5),
+        plot.title.position = "plot",
+        plot.subtitle = element_text(size=15, family="font"),
+        plot.caption = element_text(size=12, family="font", face="italic"),
+        panel.grid.major = element_line(colour = "#F5F5F5"),
+        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=15))
+
+# Gráfico
+grafico2 <- ggplot(Data2, aes(x=reorder(Mes, Mes_num), y=Cantidad, color=Accion, group=Accion)) +
+  geom_line(linewidth=1.5) +
+  geom_point(size=2.5) +
+  geom_text(aes(label=Cantidad), size=2, family="font", vjust=-1.1, guides=FALSE) +
+  theme_light() +
+  labs(title="2.024") +
+  ylim(0,150) +
+  scale_x_discrete(labels = function(z) str_sub(z, start=1, end=3)) +
+  scale_color_manual(values = Colores) +
+  theme(text=element_text(family="font"),
+        legend.position = "none",
+        plot.title = element_text(size=20, family="font", face="bold", hjust=0.5),
+        plot.title.position = "plot",
+        plot.subtitle = element_text(size=15, family="font"),
+        plot.caption = element_text(size=12, family="font", face="italic"),
+        legend.title = element_blank(),
+        panel.grid.major = element_line(colour = "#F5F5F5"),
+        axis.text.x = element_text(size=8, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=8, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.margin = margin(t=20, r=100, b=10, l=100))
+
+# Layout
+grafico <- plot_grid(grafico2, grafico1, nrow=2, rel_heights = c(2,3))
+
+# Guardar gráfico
+filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
+                    str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
+
+ggsave(filename = paste0(filename, ".png"),
+       path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
+       plot=grafico, dpi=100, width=8, height=8)
+ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+       plot=grafico, dpi=72, width=8, height=8)
