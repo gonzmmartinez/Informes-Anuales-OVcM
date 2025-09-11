@@ -95,4 +95,3 @@ ggsave(filename = paste0(filename, ".png"),
        plot=grafico, dpi=100, width=12, height=10)
 ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=12, height=10)
-
