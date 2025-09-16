@@ -14,20 +14,20 @@ library(janitor)
 library(tidyr)
 
 ######### LEER DATOS #########
-# Raw <- get_microdata(
-#   year = 2024,
-#   period = 1:4,
-#   type = "individual",
-#   vars = c("ANO4", "TRIMESTRE", "REGION", "AGLOMERADO", "PONDERA" , "CH04",
-#            "CH06", "ESTADO", "CAT_OCUP", "CAT_INAC", "INTENSI", "PP03J", "PP04D_COD")) %>%
-#   rbind(get_microdata(
-#     year = 2025,
-#     period = 1,
-#     type = "individual",
-#     vars = c("ANO4", "TRIMESTRE", "REGION", "AGLOMERADO", "PONDERA" , "CH04",
-#              "CH06", "ESTADO", "CAT_OCUP", "CAT_INAC", "INTENSI", "PP03J", "PP04D_COD")))
+Raw <- get_microdata(
+  year = 2024,
+  period = 1:4,
+  type = "individual",
+  vars = c("ANO4", "TRIMESTRE", "REGION", "AGLOMERADO", "PONDERA" , "CH04", "P21", "PP04B_COD",
+           "CH06", "ESTADO", "CAT_OCUP", "CAT_INAC", "INTENSI", "PP03J", "PP04D_COD")) %>%
+  rbind(get_microdata(
+    year = 2025,
+    period = 1,
+    type = "individual",
+    vars = c("ANO4", "TRIMESTRE", "REGION", "AGLOMERADO", "PONDERA" , "CH04", "P21", "PP04B_COD",
+             "CH06", "ESTADO", "CAT_OCUP", "CAT_INAC", "INTENSI", "PP03J", "PP04D_COD")))
 
-# write.csv(Raw, file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos_EPH.csv"))
+write.csv(Raw, file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos_EPH.csv"))
 Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos_EPH.csv"))
 
 # Todos los indicadores
