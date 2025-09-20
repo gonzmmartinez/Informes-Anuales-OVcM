@@ -7,6 +7,7 @@ rm(list = ls())
 # Librer?as
 library(ggplot2)
 library(ggbump)
+library(ggtext)
 library(dplyr)
 library(stringr)
 library(cowplot)
@@ -50,23 +51,37 @@ Data <- Data0 %>%
   mutate(Level = ifelse(Medida == "Otras", 15, Level)) %>%
   ungroup %>%
   mutate(Level = formatC(Level, width=2, flag="0"),
-         Año = as.character(Año))
+         Año = as.character(Año)) %>%
+  mutate(Axis = case_when(Año == "2023" ~ "<span style='font-size:20pt'>**2.023**</span><br><span style='font-size:15pt'>*Todo el año*</span>",
+                          Año == "2024" ~ "<span style='font-size:20pt'>**2.024**</span><br><span style='font-size:15pt'>*Todo el año*</span>",
+                          Año == "2025" ~ "<span style='font-size:20pt'>**2.025**</span><br><span style='font-size:15pt'>*Primer semestre*</span>"))
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   geom_bump(linewidth = 1.5) +
   geom_label(aes(label=formatC(Cantidad, format="fg", big.mark=".", decimal.mark=","), size=Cantidad, fill=Medida),
              family="font", fontface="bold", color="white") +
-  geom_text(data=Data %>% filter(Año == "2023"), aes(x=1-0.15, y=Level, label=str_wrap(Medida, width=25)),
+  geom_text(data=Data %>% filter(Año == "2023"), aes(x=1-0.2, y=Level, label=str_wrap(Medida, width=25)),
             color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
-  geom_text(data=Data %>% filter(Año == "2025"), aes(x=3+0.15, y=Level, label=str_wrap(Medida, width=25)),
+  geom_text(data=Data %>% filter(Año == "2025"), aes(x=3+0.2, y=Level, label=str_wrap(Medida, width=25)),
             color="black", size=3.5, family="font", hjust=0, lineheight = 1) +
+  geom_text(data=Data %>% filter(Año == "2024", Level %in% c("09", "11", "12", "13", "14")),
+            aes(x=2-0.1, y=Level, label=str_wrap(Medida, width=25)),
+            color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
   scale_y_discrete(limits = rev) +
-  scale_x_discrete(expand = c(0.3,0.3)) +
-  scale_size_continuous(limits=c(3,5)) +
-  theme_void() +
+  scale_x_discrete(expand = c(0.3,0.3), position = "top", labels = function(x) Data$Axis[match(x, Data$Año)]) +
+  scale_size_continuous(range=c(3, 6)) +
+  labs(x="Año", y="Medida dispuesta") +
+  theme_light() +
   theme(legend.position="none",
-        plot.background = element_rect(fill="white", color=NA))
+        plot.background = element_rect(fill="white", color=NA),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(color="grey90"),
+        axis.title.y = element_text(family="font", size=20, margin=margin(r=10)),
+        axis.title.x.top = element_text(family="font", size=20, margin=margin(t=0, r=0, b=15, l=0)),
+        axis.text.y = element_blank(),
+        axis.text.x.top = element_markdown(family="font", size=15, margin=margin(b=10), lineheight = 1),
+        axis.ticks.y = element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
