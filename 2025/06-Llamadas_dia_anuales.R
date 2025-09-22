@@ -38,7 +38,7 @@ grafico <- ggplot(Data, aes(x="", y=Dia, fill=Porcentaje)) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),"%")),
             family="font", size=5, color="black", alpha=0.7) +
   labs(y="Día de la semana",
-       caption="* las proporciones se calculan en base a los datos correspondientes al primer trimestre únicamente.") +
+       caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Porcentaje)) +
   theme_light() +
   theme(text=element_text(family="font"), legend.position="none",

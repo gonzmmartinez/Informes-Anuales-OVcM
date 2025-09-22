@@ -1,13 +1,19 @@
 # Limpiar todo
 rm(list = ls())
 
-# Librer?as
+# Funciones
+`%ni%` <- Negate(`%in%`)
+
+# Librerías
 library(ggplot2)
+library(ggbump)
+library(ggtext)
 library(dplyr)
 library(stringr)
 library(cowplot)
 library(magick)
 library(googlesheets4)
+library(tidyr)
 
 # Fuentes
 library(showtext)
@@ -18,76 +24,65 @@ showtext_auto()
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1AO8SmJ45quqCCvg9nZ0vZqRLvxZMfAqB7uzOtXmu9Ro/edit?usp=sharing",
                   sheet = "Medidas")
 
-Data1 <- Raw %>%
-  filter(Año == 2024) %>%
+Data0 <- Raw %>%
   group_by(Año, Medida) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  ungroup %>%
-  mutate(Medida = ifelse(Porcentaje <= 1, "Otras", Medida)) %>%
-  group_by(Año, Medida) %>%
-  summarise(Cantidad = sum(Cantidad)) %>%
-  mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  ungroup %>%
-  arrange(Cantidad) %>%
-  mutate(Ord = row_number()) %>%
-  mutate(Ord = ifelse(Medida == "Otras", 0, Ord))
+  ungroup
 
-Data2 <- Raw %>%
+Medidas <- Data0 %>%
   filter(Año == 2025) %>%
+  arrange(desc(Cantidad)) %>%
+  top_n(15) %>%
+  pull(Medida)
+
+Data0 <- Data0 %>%
+  mutate(Medida = ifelse(Medida %ni% Medidas, "Otras", Medida)) %>%
   group_by(Año, Medida) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
+  ungroup
+
+Data <- Data0 %>%
+  filter(Medida != "Otras") %>%
+  arrange(Año, desc(Cantidad)) %>%
+  group_by(Año) %>%
+  mutate(Level = row_number()) %>%
+  rbind(Data0 %>% filter(Medida == "Otras")) %>%
+  mutate(Level = ifelse(Medida == "Otras", 15, Level)) %>%
   ungroup %>%
-  mutate(Medida = ifelse(Porcentaje <= 1, "Otras", Medida)) %>%
-  group_by(Año, Medida) %>%
-  summarise(Cantidad = sum(Cantidad)) %>%
-  mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  ungroup %>%
-  arrange(Cantidad) %>%
-  mutate(Ord = row_number()) %>%
-  mutate(Ord = ifelse(Medida == "Otras", 0, Ord))
+  mutate(Level = formatC(Level, width=2, flag="0"),
+         Año = as.character(Año)) %>%
+  mutate(Axis = case_when(Año == "2023" ~ "<span style='font-size:20pt'>**2.023**</span><br><span style='font-size:15pt'>*Todo el año*</span>",
+                          Año == "2024" ~ "<span style='font-size:20pt'>**2.024**</span><br><span style='font-size:15pt'>*Todo el año*</span>",
+                          Año == "2025" ~ "<span style='font-size:20pt'>**2.025**</span><br><span style='font-size:15pt'>*Primer semestre*</span>"))
 
-# Gr?fico
-grafico1 <- ggplot(Data1, aes(x=Cantidad, y=reorder(Medida, Ord))) +
-  geom_col(aes(fill=Cantidad)) +
-  scale_fill_gradient(high="#6e3169", low="#e54c7c") +
-  theme_classic() +
-  labs(title="2.024", subtitle="Todo el año", y="Tipo de medida dispuesta", x="Cantidad") +
-  geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")), color = ifelse(Data1$Cantidad <= 3000, "black", "white"),
-            size=8, family="font", fontface="bold", hjust = ifelse(Data1$Cantidad <= 3000, -0.5, 1.5)) +
-  scale_y_discrete(labels = function(z) str_wrap(z, 30)) +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=40, family="font", face="bold"),
-        plot.subtitle = element_text(size=25, family="font", face="italic", margin=margin(t=5,r=0,b=20,l=0)),
-        legend.background = element_blank(), legend.box.background = element_rect(color = "black"),
-        legend.box.margin=margin(5,5,5,5),
-        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=0,l=0)),
-        axis.text.y = element_text(size=20, margin = margin(t=0,r=10,b=0,l=0)),
-        axis.title.x = element_text(size=20, margin = margin(t=15, r=0, b=0, l=0)),
-        axis.title.y = element_text(size=20, margin = margin(t=0, r=15, b=0, l=0)))
-
-# Gr?fico
-grafico2 <- ggplot(Data2, aes(x=Cantidad, y=reorder(Medida, Ord))) +
-  geom_col(aes(fill=Cantidad)) +
-  scale_fill_gradient(high="#316e6e", low="#72bf90") +
-  theme_classic() +
-  labs(title="2.025", subtitle="Enero-septiembre", y="Tipo de medida dispuesta", x="Cantidad") +
-  geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")), color = ifelse(Data2$Cantidad <= 3000, "black", "white"),
-            size=8, family="font", fontface="bold", hjust = ifelse(Data2$Cantidad <= 3000, -0.5, 1.5)) +
-  scale_y_discrete(labels = function(z) str_wrap(z, 30)) +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=40, family="font", face="bold"),
-        plot.subtitle = element_text(size=25, family="font", face="italic", margin=margin(t=5,r=0,b=20,l=0)),
-        legend.background = element_blank(), legend.box.background = element_rect(color = "black"),
-        legend.box.margin=margin(5,5,5,5),
-        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=0,l=0)),
-        axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=0)),
-        axis.title.x = element_text(size=20, margin = margin(t=15, r=0, b=0, l=0)),
-        axis.title.y = element_blank())
-
-grafico <- plot_grid(grafico1, grafico2, nrow=1) +
-  theme(plot.background = element_rect(fill="white", color=NA))
+# Gráfico
+grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
+  geom_bump(linewidth = 1.5) +
+  geom_label(aes(label=formatC(Cantidad, format="fg", big.mark=".", decimal.mark=","), size=Cantidad, fill=Medida),
+             family="font", fontface="bold", color="white") +
+  geom_text(data=Data %>% filter(Año == "2023"), aes(x=1-0.2, y=Level, label=str_wrap(Medida, width=25)),
+            color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
+  geom_text(data=Data %>% filter(Año == "2025"), aes(x=3+0.2, y=Level, label=str_wrap(Medida, width=25)),
+            color="black", size=3.5, family="font", hjust=0, lineheight = 1) +
+  geom_text(data=Data %>% filter(Año == "2024", Level %in% c("09", "11", "12", "13", "14")),
+            aes(x=2-0.1, y=Level, label=str_wrap(Medida, width=25)),
+            color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
+  scale_y_discrete(limits = rev) +
+  scale_x_discrete(expand = c(0.3,0.3), position = "top", labels = function(x) Data$Axis[match(x, Data$Año)]) +
+  scale_size_continuous(range=c(3, 6)) +
+  labs(x="Año", y="Medida dispuesta") +
+  theme_light() +
+  theme(legend.position="none",
+        plot.background = element_rect(fill="white", color=NA),
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(color="grey90"),
+        axis.title.y = element_text(family="font", size=20, margin=margin(r=10)),
+        axis.title.x.top = element_text(family="font", size=20, margin=margin(t=0, r=0, b=15, l=0)),
+        axis.text.y = element_blank(),
+        axis.text.x.top = element_markdown(family="font", size=15, margin=margin(b=10), lineheight = 1),
+        axis.ticks.y = element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -95,7 +90,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=20, height=22)
+       plot=grafico, dpi=100, width=10, height=10)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=20, height=22)
+       plot=grafico, dpi=72, width=10, height=10)
