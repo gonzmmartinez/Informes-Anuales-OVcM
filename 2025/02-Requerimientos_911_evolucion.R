@@ -44,19 +44,21 @@ Colores <- c("#6e3169", "#ec6489")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
-  geom_area(fill=Colores[1], alpha=0.25) +
-  geom_line(linewidth=2.5, color=Colores[1], lineend = 'round') +
-  geom_text(aes( label=Label), size=5, family="font",
-            fontface="bold", color="black", angle=90, hjust=1.5) +
-  annotate(geom="text", y=-20000, x=c(seq(from=2, to=11, by=2), 11.5), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
+  geom_col(aes(fill=Cantidad)) +
+  geom_text(aes(label=Label, size=Cantidad), family="font",
+            fontface="bold", color="white", nudge_y=-5000, hjust=0.5) +
+  annotate(geom="text", y=-20000, x=c(seq(from=1.5, to=9.5, by=2), 11), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
            size=8, color="black", family="font") +
-  annotate(geom="segment", x=seq(from=1, to=11, by=2), xend=seq(from=1, to=11, by=2), y=-25000, yend=-15000, color="grey", linewidth=0.25) +
+  annotate(geom="segment", x=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75), xend=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75),
+           y=-25000, yend=120000, color="grey", linewidth=0.25) +
   labs(title="",
        x="Semestre/Año", y="Cantidad") +
   scale_x_discrete(labels = rep(c("1°", "2°"), 6)) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
+  scale_fill_gradient2(high="#6e3169", low="#ec6489", mid="#6e3169", midpoint=mean(Data$Cantidad, na.rm=TRUE)) +
+  scale_size_continuous(range=c(4, 6)) +
   theme_light() +
-  coord_cartesian(ylim = c(-5000, 120000), xlim=c(0.75, 12.25), clip="off", expand=FALSE) +
+  coord_cartesian(ylim = c(-5000, 120000), xlim=c(0.25, 11.75), clip="off", expand=FALSE) +
   theme(text=element_text(family="font"),
         legend.position="none",
         legend.title = element_blank(),
@@ -66,9 +68,11 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
         plot.caption = element_text(size=12, family="font", face="italic"),
         axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20, margin=margin(t=40)),
-        axis.title.y = element_text(size=20),
-        plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
+        axis.title.x = element_text(size=15, margin=margin(t=50)),
+        axis.title.y = element_text(size=15),
+        plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"),
+        panel.grid = element_line(color="grey95"),
+        panel.grid.major.x = element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
