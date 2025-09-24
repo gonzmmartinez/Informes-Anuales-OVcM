@@ -15,6 +15,7 @@ library(janitor)
 library(tidyr)
 library(lubridate)
 library(ggrepel)
+library(ggh4x)
 
 # Fuentes
 library(showtext)
@@ -61,11 +62,12 @@ df_labels <- do.call(rbind, lapply(indics, function(ind) {
   data.frame(
     Indicador = ind,
     x = c(2.5, 5.5),
-    y = -27.5,
+    y = NA,
     label = formatC(c(2024, 2025), big.mark=".", decimal.mark=",", format="d"),
     stringsAsFactors = FALSE
   )
-}))
+})) %>%
+  mutate(y = ifelse(Indicador %in% c("Desocupación", "Subocupación"), -5.5, -20.5))
 df_labels$Indicador <- factor(df_labels$Indicador, levels = indics)
 
 df_segments <- do.call(rbind, lapply(indics, function(ind) {
@@ -73,11 +75,13 @@ df_segments <- do.call(rbind, lapply(indics, function(ind) {
     Indicador = ind,
     x = c(1, 5),
     xend = c(1, 5),
-    y = -22.5,
-    yend = -32.5,
+    y = NA,
+    yend = NA,
     stringsAsFactors = FALSE
   )
-}))
+})) %>%
+  mutate(y = ifelse(Indicador %in% c("Desocupación", "Subocupación"), -4, -15.5),
+         yend = ifelse(Indicador %in% c("Desocupación", "Subocupación"), -7, -25.5))
 df_segments$Indicador <- factor(df_segments$Indicador, levels = indics)
 
 # Colores
@@ -89,6 +93,18 @@ Labels <- Data %>%
   ungroup %>%
   mutate(xpos = 5.4) %>%
   mutate(Género = factor(Género, levels = c("Mujeres", "Varones")))
+
+# Escalas
+custom_y <- list(
+  scale_y_continuous(limits = c(-5,80), breaks = seq(from=0, to=80, by=20),
+                     labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")),
+  scale_y_continuous(limits = c(-1,20), breaks = seq(from=0, to=20, by=5),
+                     labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")),
+  scale_y_continuous(limits = c(-5,80), breaks = seq(from=0, to=80, by=20),
+                     labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")),
+  scale_y_continuous(limits = c(-1,20), breaks = seq(from=0, to=20, by=5),
+                     labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%"))
+)
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Trimestre_Año, y=Valor)) +
@@ -112,7 +128,8 @@ grafico <- ggplot(Data, aes(x=Trimestre_Año, y=Valor)) +
                color = "grey", linewidth = 0.25) +
   facet_wrap(~Indicador, nrow=2, ncol=2, dir="v", scales="free") +
   theme_light() +
-  coord_cartesian(ylim = c(-10, 80), xlim=c(0.75, 6), clip="off", expand=FALSE) +
+  coord_cartesian(xlim=c(0.75, 6), clip="off", expand=FALSE) +
+  facetted_pos_scales(y = custom_y) +
   scale_y_continuous(labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")) +
   scale_x_discrete(labels = function(z) paste0(str_sub(z, 6, -1), "°")) +
   scale_color_manual(name="Género", values=Colores) +
@@ -143,5 +160,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=8)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=8)

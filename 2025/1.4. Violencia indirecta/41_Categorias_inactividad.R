@@ -62,7 +62,7 @@ Colores <- c("Varones" = "#7E5CAD",
 
 # Grafico
 grafico <- ggplot(Data, aes(x=Categoria, y=Porcentaje, fill=Género)) +
-  annotate(geom="rect", xmin=2.55, xmax=3.45, ymin=-5, ymax=26, fill="grey", alpha=0.25, color=NA) +
+  annotate(geom="rect", xmin=2.50, xmax=3.50, ymin=-5, ymax=26, fill="grey", alpha=0.25, color=NA) +
   geom_col(width=0.75, position=position_dodge(width=0.75)) +
   geom_text(aes(label=paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark = ","), "%"), 
                 group=Género),

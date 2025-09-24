@@ -28,7 +28,7 @@ Mes <- data.frame(Mes = c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
 
 Data <- Raw %>%
   filter(Tipo != "Abuso sexual") %>%
-  mutate(Año = as.factor(formatC(Año, big.mark = ".", decimal.mark = ","))) %>%
+  mutate(Año = formatC(Año, big.mark = ".", decimal.mark = ",")) %>%
   left_join(Mes, by="Mes") %>%
   group_by(Año,Semestre_num) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
@@ -37,7 +37,13 @@ Data <- Raw %>%
   mutate(Cantidad = as.numeric(Cantidad),
          Semestre_año = paste0(str_sub(Año, 4,5), "-", Semestre_num)) %>%
   arrange(Semestre_año) %>%
-  mutate(Label = ifelse(is.na(Cantidad), "", formatC(Cantidad, big.mark=".", decimal.mark=",", format="d")))
+  mutate(Label = ifelse(is.na(Cantidad), "", formatC(Cantidad, big.mark=".", decimal.mark=",", format="d"))) %>%
+  mutate(Año = ifelse(Año %in% c("2.023", "2.025"), paste0(Año, "*"), Año))
+
+Totales <- Data %>%
+  mutate(Cantidad = ifelse(is.na(Cantidad), 0, Cantidad)) %>%
+  group_by(Año) %>%
+  summarise(Cantidad = sum(Cantidad))
 
 # Colores
 Colores <- c("#6e3169", "#ec6489")
@@ -45,30 +51,39 @@ Colores <- c("#6e3169", "#ec6489")
 # Gr?fico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   geom_col(aes(fill=Cantidad)) +
-  geom_text(aes(label=Label, size=Cantidad), family="font",
-            fontface="bold", color="white", nudge_y=-5000, hjust=0.5) +
-  annotate(geom="text", y=-20000, x=c(seq(from=1.5, to=9.5, by=2), 11), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
+  geom_text(aes(label=Label), family="font", size=5,
+            fontface="bold", color="white", nudge_y=-7500, hjust=0.5) +
+  geom_point(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=150000, size=Cantidad, color=Cantidad)) +
+  geom_text(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=147500,
+                              label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
+            size=5, color="white", family="font", fontface="bold") +
+  geom_text(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=154000, label=Año),
+            size=4, color="white", family="font") +
+  annotate(geom="text", y=-25000, x=c(seq(from=1.5, to=9.5, by=2), 11), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
            size=8, color="black", family="font") +
   annotate(geom="segment", x=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75), xend=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75),
-           y=-25000, yend=120000, color="grey", linewidth=0.25) +
+           y=-30000, yend=175000, color="grey", linewidth=0.25) +
   labs(title="",
-       x="Semestre/Año", y="Cantidad") +
+       x="Semestre/Año", y="Cantidad",
+       caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   scale_x_discrete(labels = rep(c("1°", "2°"), 6)) +
-  scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
+  scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d"),
+                     breaks = seq(from=0, to=100000, by=25000)) +
   scale_fill_gradient2(high="#6e3169", low="#ec6489", mid="#6e3169", midpoint=mean(Data$Cantidad, na.rm=TRUE)) +
-  scale_size_continuous(range=c(4, 6)) +
+  scale_color_gradient2(high="#6e3169", low="#ec6489", mid="#6e3169", midpoint=mean(Totales$Cantidad, na.rm=TRUE)) +
+  scale_size_continuous(range=c(25, 40)) +
   theme_light() +
-  coord_cartesian(ylim = c(-5000, 120000), xlim=c(0.25, 11.75), clip="off", expand=FALSE) +
+  coord_cartesian(ylim = c(-5000, 175000), xlim=c(0.25, 11.75), clip="off", expand=FALSE) +
   theme(text=element_text(family="font"),
         legend.position="none",
         legend.title = element_blank(),
         legend.text = element_text(size=12, family="font"),
         plot.title = element_text(size=20, family="font", face="bold"),
         plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+        plot.caption = element_text(size=10, family="font", face="italic", margin=margin(t=10)),
         axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, margin=margin(t=50)),
+        axis.title.x = element_text(size=15, margin=margin(t=40)),
         axis.title.y = element_text(size=15),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"),
         panel.grid = element_line(color="grey95"),
