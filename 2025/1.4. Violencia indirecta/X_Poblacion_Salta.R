@@ -22,17 +22,7 @@ font_add_google("Barlow", "font")
 showtext_auto()
 
 # Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Poblacion_tasa_crecimiento.csv")) %>%
-  select(-c(Country.Code, Indicator.Name, Indicator.Code)) %>%
-  filter(Country.Name %in% c("Latin America & Caribbean", "Middle East, North Africa, Afghanistan & Pakistan",
-                             "Sub-Saharan Africa", "Europe & Central Asia", "East Asia & Pacific", "South Asia",
-                             "North America", "World")) %>%
-  pivot_longer(cols = starts_with("X"),
-               names_to = "Año",
-               values_to = "Tasa") %>%
-  mutate(Año = as.integer(sub("X", "", Año))) %>%
-  filter(!is.na(Año)) %>%
-  rename(Region = "Country.Name")
+Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Poblacion_Salta_evolucion.csv"))
 
 Data <- Raw %>%
   mutate(Region = case_when(Region == "Latin America & Caribbean" ~ "América latina y el Caribe",
@@ -84,7 +74,6 @@ grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
         plot.subtitle = element_text(size=15, family="font"),
         plot.caption = element_text(size=12, family="font", face="italic"),
         panel.grid = element_line(color="grey95", linewidth = 0.5),
-        panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=15, family="font"),
