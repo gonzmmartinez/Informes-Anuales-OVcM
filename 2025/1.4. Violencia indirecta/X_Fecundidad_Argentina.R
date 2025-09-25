@@ -22,47 +22,49 @@ font_add_google("Barlow", "font")
 showtext_auto()
 
 # Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Poblacion_Salta_evolucion.csv"))
+Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Tasa_Fecundidad_Argentina_Provincias.csv")) %>%
+  rename(Provincia = "Jurisdiccion") %>%
+  filter(Año >= 1960)
+
+Provincias <- c("Buenos Aires", "Chaco", "Corrientes", "Formosa", "Mendoza",
+                "Misiones", "Neuquén", "Salta", "San Juan", "Santa Cruz",
+                "Santiago del Estero", "Tucumán", "Argentina")
 
 Data <- Raw %>%
-  mutate(Region = case_when(Region == "Latin America & Caribbean" ~ "América latina y el Caribe",
-                            Region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "Medio oriente y África del norte",
-                            Region == "Sub-Saharan Africa" ~ "África subsahariana",
-                            Region == "Europe & Central Asia" ~ "Europa y Asia central",
-                            Region == "East Asia & Pacific" ~ "Asia del este y el Pacífico",
-                            Region == "South Asia" ~ "Asia del sur",
-                            Region == "North America" ~ "América del Norte",
-                            Region == "World" ~ "Tasa mundial")) %>%
-  mutate(Grupo = case_when(Region == "América latina y el Caribe" ~ "América latina y el Caribe",
-                                  Region == "Tasa mundial" ~ "Tasa mundial",
-                                  .default = "Resto de regiones")) %>%
-  mutate(Grupo = factor(Grupo, levels=c("América latina y el Caribe", "Tasa mundial", "Resto de regiones"))) %>%
-  mutate(Region = factor(Region, levels = c("África subsahariana", "Asia del sur", "Medio oriente y África del norte",
-                                            "Asia del este y el Pacífico", "Europa y Asia central",
-                                            "América del Norte", "Tasa mundial", "América latina y el Caribe"))) %>%
-  arrange(Grupo, Region, Año)
+  filter(Provincia %in% Provincias) %>%
+  mutate(Grupo = case_when(Provincia == "Salta" ~ "Salta",
+                           Provincia == "Argentina" ~ "Tasa nacional",
+                           .default = "Resto de provincias")) %>%
+  mutate(Grupo = factor(Grupo, levels=c("Salta", "Tasa nacional", "Resto de provincias"))) %>%
+  mutate(Provincia = factor(Provincia, levels = c("Ciudad Autónoma de Buenos Aires", "Buenos Aires", "Catamarca",
+                                                  "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "Jujuy",
+                                                  "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro",
+                                                  "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero",
+                                                  "Tierra del Fuego, Antártida e Islas del Atlántico Sur", "Tucumán",
+                                                  "Argentina", "Salta"))) %>%
+  arrange(Grupo, Provincia, Año)
 
 # Colores
 Paleta <- c("#5fad56", "#f2c14e", "#f78154", "#4d9078", "#b4436c")
 Paleta2 <- c("#474E93", "#7E5CAD", "#b4436c", "#72BAA9", "#D5E7B5")
 
-Colores <- c("América latina y el Caribe" = "#f78154",
-             "Tasa mundial" = "#7E5CAD",
-             "Resto de regiones" = "#D5E7B5")
+Colores <- c("Salta" = "#f78154",
+             "Tasa nacional" = "#7E5CAD",
+             "Resto de provincias" = "#D5E7B5")
 
 # Gráfico
-grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
-  geom_line(aes(color=Grupo, group=Region, linewidth=Grupo), lineend = "round") +
+grafico <- ggplot(Data, aes(x=Año, y=TGF)) +
+  geom_line(aes(color=Grupo, group=Provincia, linewidth=Grupo), lineend = "round") +
   scale_x_continuous(breaks = seq(from=1960, to=2025, by=5),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
   scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=4, by=0.5)) +
+                     expand = c(0,0)) +
   scale_linewidth_manual(values=c(2, 2, 1)) +
-  geom_text(data=Data %>% filter(Año == 2024), (aes(label=str_wrap(Region, width=15), color=Grupo, group=Region)),
+  geom_text(data=Data %>% filter(Año == 2022), (aes(label=str_wrap(Provincia, width=15), color=Grupo, group=Provincia)),
                                                 size=2.5, family="font", hjust=0, nudge_x=0.5, lineheight=0.75) +
   scale_color_manual(values=Colores) +
-  coord_cartesian(xlim=c(1962, 2027), ylim=c(-0.05,3.75), clip="off") +
-  labs(y="Tasa de crecimiento anual de la población") +
+  coord_cartesian(xlim=c(1960, 2024), ylim=c(0,6), clip="off") +
+  labs(y="Tasa de crecimiento anual media de la población") +
   theme_linedraw() +
   theme(text=element_text(family="font"),
         legend.position="bottom",
@@ -87,5 +89,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=6)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=6)
