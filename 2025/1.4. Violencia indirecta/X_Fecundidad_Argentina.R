@@ -22,13 +22,41 @@ font_add_google("Barlow", "font")
 showtext_auto()
 
 # Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Tasa_Fecundidad_Argentina_Provincias.csv")) %>%
-  rename(Provincia = "Jurisdiccion") %>%
-  filter(Año >= 1960)
+Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Nacidos_Vivos_Jurisdiccion.csv"))
 
-Provincias <- c("Buenos Aires", "Chaco", "Corrientes", "Formosa", "Mendoza",
-                "Misiones", "Neuquén", "Salta", "San Juan", "Santa Cruz",
-                "Santiago del Estero", "Tucumán", "Argentina")
+Data <- Raw %>%
+  mutate(indice_tiempo = as.numeric(str_sub(indice_tiempo, start=1, end=4))) %>%
+  pivot_longer(cols=!indice_tiempo,
+               names_to = "Provincia",
+               values_to = "Cantidad") %>%
+  rename(Año = "indice_tiempo") %>%
+  mutate(Provincia = case_when(Provincia == "total_argentina" ~ "Total país",
+                               Provincia == "capital_federal" ~ "Ciudad Autónoma de Buenos Aires",
+                               Provincia == "buenos_aires" ~ "Buenos Aires",
+                               Provincia == "catamarca" ~ "Catamarca",
+                               Provincia == "cordoba" ~ "Córdoba",
+                               Provincia == "corrientes" ~ "Corrientes",
+                               Provincia == "chaco" ~ "Chaco",
+                               Provincia == "chubut" ~ "Chubut",
+                               Provincia == "entre_rios" ~ "Entre Ríos",
+                               Provincia == "formosa" ~ "Formosa",
+                               Provincia == "jujuy" ~ "Jujuy",
+                               Provincia == "la_pampa" ~ "La Pampa",
+                               Provincia == "la_rioja" ~ "La Rioja",
+                               Provincia == "mendoza" ~ "Mendoza",
+                               Provincia == "misiones" ~ "Misiones",
+                               Provincia == "neuquen" ~ "Neuquén",
+                               Provincia == "rio_negro" ~ "Río Negro",
+                               Provincia == "salta" ~ "Salta",
+                               Provincia == "san_juan" ~ "San Juan",
+                               Provincia == "san_luis" ~ "San Luis",
+                               Provincia == "santa_cruz" ~ "Santa Cruz",
+                               Provincia == "santa_fe" ~ "Santa Fé",
+                               Provincia == "santiago_del_estero" ~ "Santiago del Estero",
+                               Provincia == "tucuman" ~ "Tucumán",
+                               Provincia == "tierra_del_fuego" ~ "Tierra del Fuego")) %>%
+  
+  filter(Año >= 1980)
 
 Data <- Raw %>%
   filter(Provincia %in% Provincias) %>%
