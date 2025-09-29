@@ -15,6 +15,7 @@ library(janitor)
 library(tidyr)
 library(lubridate)
 library(ggrepel)
+library(ggtext)
 
 # Fuentes
 library(showtext)
@@ -22,11 +23,11 @@ font_add_google("Barlow", "font")
 showtext_auto()
 
 # Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Fecundidad_global_mundo.csv")) %>%
+Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Natalidad_global.csv")) %>%
   select(-c(Country.Code, Indicator.Name, Indicator.Code)) %>%
   filter(Country.Name %in% c("Latin America & Caribbean", "Middle East, North Africa, Afghanistan & Pakistan",
                              "Europe & Central Asia", "East Asia & Pacific", "South Asia",
-                             "North America", "World", "Argentina", "Sub-Saharan Africa")) %>%
+                             "North America", "World", "Argentina")) %>%
   pivot_longer(cols = starts_with("X"),
                names_to = "Año",
                values_to = "Tasa") %>%
@@ -57,6 +58,20 @@ Data <- Raw %>%
   arrange(Grupo, Region, Año) %>%
   filter(!is.na(Tasa))
 
+Labels <- Data %>%
+  filter(Año == 2023) %>%
+  mutate(Label = case_when(Region == "Argentina" ~ paste0("<span>Tasa de Argentina: **",
+                                                          formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                          "**</span>"),
+                           Region == "América latina y el Caribe" ~ paste0("<span>Tasa de Latinoamérica: **",
+                                                                           formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                                           "**</span>"),
+                           Region == "Tasa mundial" ~ paste0("<span>Tasa mundial: **",
+                                                             formatC(round(Tasa, 1), big.mark = ".", decimal.mark = ",", format="fg"),
+                                                             "**</span>"),
+                           .default = NA)) %>%
+  na.omit()
+
 # Colores
 Paleta <- c("#5fad56", "#f2c14e", "#f78154", "#4d9078", "#b4436c")
 Paleta2 <- c("#474E93", "#7E5CAD", "#b4436c", "#72BAA9", "#D5E7B5")
@@ -69,15 +84,18 @@ Colores <- c("Argentina" = "#72BAA9",
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
   geom_line(aes(color=Grupo, group=Region, linewidth=Grupo), lineend = "round") +
+  geom_point(data=Labels, aes(color=Grupo), size=3, show.legend = FALSE) +
+  geom_richtext(data=Labels, aes(label=Label, color=Grupo), size=3, family="font",
+                hjust=0, nudge_x=0.1, fill=NA, label.colour = NA, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(from=1995, to=2025, by=5),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
   scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=6.5, by=1)) +
+                     expand = c(0,0), breaks = seq(from=0, to=35, by=5)) +
   scale_linewidth_manual(values=c(2, 1.5, 1.5, 1)) +
   scale_color_manual(values=Colores) +
-  coord_cartesian(xlim=c(1995, 2025), ylim=c(-0.05,5), clip="off") +
-  labs(y="Tasa global de fecundidad\n(promedio de hijos/as por mujer)") +
-  theme_linedraw() +
+  coord_cartesian(xlim=c(1996, 2028), ylim=c(-1,35), clip="off") +
+  labs(y="Tasa bruta de natalidad\n(nacimientos por cada 1.000 habitantes)") +
+  theme_light() +
   theme(text=element_text(family="font"),
         legend.position="bottom",
         legend.justification = "center",
@@ -94,3 +112,14 @@ grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
         axis.title.x = element_text(size=15, family="font", lineheight = 1),
         axis.title.y = element_text(size=15, family="font"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
+
+# Guardar gráfico
+filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
+                    str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
+
+ggsave(filename = paste0(filename, ".png"),
+       path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
+       plot=grafico, dpi=100, width=10, height=6)
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+       plot=grafico, dpi=72, width=10, height=6)

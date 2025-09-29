@@ -40,8 +40,7 @@ Raw <- map_dfr(anios, function(anio) {
 Codigos_provincias <- read_excel(path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/DEIS/descnac.xlsx"),
                                  sheet="PROVRES") %>%
   rename(Codigo = "CODIGO", Provincia = "VALOR") %>%
-  mutate(Provincia = ifelse(Provincia == "Ciudad Aut. de Buenos Aires", "Ciudad Autónoma de Buenos Aires", Provincia)) %>%
-  add_row(Codigo = "01", Provincia = "Total del país")
+  mutate(Provincia = ifelse(Provincia == "Ciudad Aut. de Buenos Aires", "Ciudad Autónoma de Buenos Aires", Provincia))
 
 # Modificar datos
 Nacidos_vivos <- Raw %>%
@@ -63,14 +62,6 @@ Nacidos_vivos <- Raw %>%
          Provincia %ni% c("Lugar no especificado", "Otro país")) %>%
   rename(Rango_etario = "Edad")
 
-Totales_pais <- Nacidos_vivos %>%
-  group_by(Año, Rango_etario) %>%
-  summarise(Cantidad = sum(Cantidad), .groups = "drop") %>%
-  mutate(Provincia = "Total del país")
-
-Nacidos_vivos <- Nacidos_vivos %>%
-  rbind(Totales_pais)
-
 # LEER DATOS DE POBLACIÓN
 # Rango de edades (etiquetas quinquenales, para adjuntar a los datos)
 edades <- c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39",
@@ -87,20 +78,20 @@ Diccionario_edades <- data.frame(Edad = edades,
 
 # Definimos en qué rango de celdas está cada año
 rangos <- list(
-  "2010" = "D8:D28",
-  "2011" = "H8:H28",
-  "2012" = "L8:L28",
-  "2013" = "P8:P28",
-  "2014" = "T8:T28",
-  "2015" = "X8:X28",
-  "2016" = "D36:D56",
-  "2017" = "H36:H56",
-  "2018" = "L36:L56",
-  "2019" = "P36:P56",
-  "2020" = "T36:T56",
-  "2021" = "X36:X56",
-  "2022" = "D64:D84",
-  "2023" = "H64:H84"
+  "2010" = "B8:B28",
+  "2011" = "F8:F28",
+  "2012" = "J8:J28",
+  "2013" = "N8:N28",
+  "2014" = "R8:R28",
+  "2015" = "V8:V28",
+  "2016" = "B36:B56",
+  "2017" = "F36:F56",
+  "2018" = "J36:J56",
+  "2019" = "N36:N56",
+  "2020" = "R36:R56",
+  "2021" = "V36:V56",
+  "2022" = "B64:B84",
+  "2023" = "F64:F84"
 )
 
 # Nombres de todas las hojas (provincias)
@@ -133,10 +124,12 @@ Poblacion <- Poblacion_raw %>%
   mutate(Provincia = str_sub(Provincia, start=1, end=2)) %>%
   rename(Codigo = "Provincia") %>%
   left_join(Codigos_provincias, by="Codigo") %>%
-  select(Año, Provincia, Rango_etario, Poblacion)
+  select(Año, Provincia, Rango_etario, Poblacion) %>%
+  group_by(Año, Provincia) %>%
+  summarise(Poblacion = sum(Poblacion))
 
 Poblacion_completa <- Poblacion %>%
-  group_by(Provincia, Rango_etario) %>%
+  group_by(Provincia) %>%
   group_modify(~ {
     modelo <- lm(Poblacion ~ poly(Año, 2), data = .x)
     
@@ -148,19 +141,23 @@ Poblacion_completa <- Poblacion %>%
     bind_rows(nuevos, .x)
   }) %>%
   ungroup() %>%
-  arrange(Provincia, Rango_etario, Año)
+  arrange(Provincia, Año)
 
 
 # UNIÓN DE TODOS LOS DATOS
 Data <- Nacidos_vivos %>%
+  group_by(Año, Provincia) %>%
+  summarise(Cantidad = sum(Cantidad)) %>%
+  ungroup %>%
   rename(Nacimientos = "Cantidad") %>%
-  filter(Rango_etario %in% c("15-19 años", "20-24 años", "25-29 años", 
-                             "30-34 años", "35-39 años", "40-44 años", "45 años o más")) %>%
   left_join(Poblacion_completa, 
-            by = c("Año", "Provincia", "Rango_etario")) %>%
-  mutate(Tasa = Nacimientos / Poblacion) %>%
-  group_by(Provincia, Año) %>%
-  summarise(TGF = sum(Tasa * 5), .groups = "drop") %>%
+            by = c("Año", "Provincia")) %>%
+  mutate(Tasa = (1000 * Nacimientos) / Poblacion) %>%
+  add_row(Año = 2005:2023,
+          Provincia = "Total del país",
+          Tasa = c(18.306, 18.161, 17.967, 18.462, 18.231, 18.314, 18.172, 17.48,
+                   17.683, 18.019, 17.665, 16.789, 16.155, 15.332, 13.902, 11.799,
+                   11.682, 10.926, 11.064)) %>%
   arrange(Provincia, Año) %>%
   mutate(Grupo = case_when(Provincia == "Salta" ~ "Salta",
                            Provincia == "Total del país" ~ "Tasa nacional",
@@ -175,36 +172,35 @@ Data <- Nacidos_vivos %>%
                                                 "Total del país", "Salta")))
 
 Labels <- Data %>%
-  filter(Año == 2023) %>%
+  filter(Año == 2023, Provincia %in% c("Salta", "Total del país")) %>%
   mutate(Label = case_when(Provincia == "Salta" ~ paste0("<span>Tasa de Salta: **",
-                                                         formatC(round(TGF,1), big.mark=".", decimal.mark=",", format="fg"), "**</span>"),
+                                                         formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                         "**</span>"),
                            Provincia == "Total del país" ~ paste0("<span>Tasa nacional: **",
-                                                           formatC(round(TGF,1), big.mark=".", decimal.mark=",", format="fg"), "**</span>"),
-                           .default = NA)) %>%
-  na.omit()
+                                                           formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                           "**</span>"),
+                           .default = NA))
 
 Colores <- c("Salta" = "#72BAA9",
              "Tasa nacional" = "#f78154",
              "Resto de provincias" = "#D5E7B5")
 
 # Grafico
-grafico <- ggplot(Data, aes(x=Año, y=TGF)) +
-  geom_hline(yintercept=2.1, linetype=2, linewidth=0.5, color="grey75") +
-  annotate(geom="text", family="font", fontface="italic", size=2.5,
-           y=2.1+0.1, x=2025.75, hjust=1, label="Nivel de reemplazo", color="grey75") +
+grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
   geom_line(aes(color=Grupo, group=Provincia, linewidth=Grupo), lineend = "round") +
   geom_point(data=Labels, aes(color=Grupo), size=3, show.legend = FALSE) +
   geom_richtext(data=Labels, aes(label=Label, color=Grupo), size=3, family="font",
-                hjust=0, nudge_x=0.1, fill=NA, label.colour = NA, show.legend = FALSE) +
+                hjust=0, nudge_x=0.1, fill=NA, label.colour = NA, show.legend = FALSE,
+                nudge_y=c(0.6, -0.6)) +
   scale_x_continuous(breaks = seq(from=2005, to=2025, by=5),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
   scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=4, by=1)) +
+                     expand = c(0,0), breaks = seq(from=0, to=35, by=5)) +
   scale_linewidth_manual(values=c(2, 1.5, 0.5)) +
   scale_color_manual(values=Colores) +
   theme_light() +
-  coord_cartesian(xlim=c(2005, 2025), ylim=c(-0.05,4), clip="off") +
-  labs(y="Tasa global de fecundidad\n(promedio de hijos/as por mujer)") +
+  coord_cartesian(xlim=c(2005, 2025), ylim=c(-1,35), clip="off") +
+  labs(y="Tasa bruta de natalidad\n(nacimientos por cada 1.000 habitantes)") +
   theme(text=element_text(family="font"),
         legend.position="bottom",
         legend.justification = "center",
