@@ -5,118 +5,187 @@ rm(list = ls())
 `%ni%` <- Negate(`%in%`)
 
 # Librerías
-library(ggplot2)
-library(jsonlite)
 library(dplyr)
+library(ggplot2)
 library(stringr)
 library(readr)
-library(eph)
-library(janitor)
 library(tidyr)
-library(lubridate)
-library(ggrepel)
+library(googlesheets4)
+library(purrr)
+library(readxl)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Roboto", "font")
 showtext_auto()
 
-# Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Nacidos_Vivos_Jurisdiccion.csv"))
+# LEER DATOS DE NACIDOS VIVOS
+# Ruta base
+ruta_base <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/DEIS/")
 
-Data <- Raw %>%
-  mutate(indice_tiempo = as.numeric(str_sub(indice_tiempo, start=1, end=4))) %>%
-  pivot_longer(cols=!indice_tiempo,
-               names_to = "Provincia",
-               values_to = "Cantidad") %>%
-  rename(Año = "indice_tiempo") %>%
-  mutate(Provincia = case_when(Provincia == "total_argentina" ~ "Total país",
-                               Provincia == "capital_federal" ~ "Ciudad Autónoma de Buenos Aires",
-                               Provincia == "buenos_aires" ~ "Buenos Aires",
-                               Provincia == "catamarca" ~ "Catamarca",
-                               Provincia == "cordoba" ~ "Córdoba",
-                               Provincia == "corrientes" ~ "Corrientes",
-                               Provincia == "chaco" ~ "Chaco",
-                               Provincia == "chubut" ~ "Chubut",
-                               Provincia == "entre_rios" ~ "Entre Ríos",
-                               Provincia == "formosa" ~ "Formosa",
-                               Provincia == "jujuy" ~ "Jujuy",
-                               Provincia == "la_pampa" ~ "La Pampa",
-                               Provincia == "la_rioja" ~ "La Rioja",
-                               Provincia == "mendoza" ~ "Mendoza",
-                               Provincia == "misiones" ~ "Misiones",
-                               Provincia == "neuquen" ~ "Neuquén",
-                               Provincia == "rio_negro" ~ "Río Negro",
-                               Provincia == "salta" ~ "Salta",
-                               Provincia == "san_juan" ~ "San Juan",
-                               Provincia == "san_luis" ~ "San Luis",
-                               Provincia == "santa_cruz" ~ "Santa Cruz",
-                               Provincia == "santa_fe" ~ "Santa Fé",
-                               Provincia == "santiago_del_estero" ~ "Santiago del Estero",
-                               Provincia == "tucuman" ~ "Tucumán",
-                               Provincia == "tierra_del_fuego" ~ "Tierra del Fuego")) %>%
-  
-  filter(Año >= 1980)
+# Años a cargar (de 2023 a 2005)
+anios <- 2023:2005
 
-Data <- Raw %>%
-  filter(Provincia %in% Provincias) %>%
-  mutate(Grupo = case_when(Provincia == "Salta" ~ "Salta",
-                           Provincia == "Argentina" ~ "Tasa nacional",
-                           .default = "Resto de provincias")) %>%
-  mutate(Grupo = factor(Grupo, levels=c("Salta", "Tasa nacional", "Resto de provincias"))) %>%
-  mutate(Provincia = factor(Provincia, levels = c("Ciudad Autónoma de Buenos Aires", "Buenos Aires", "Catamarca",
-                                                  "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "Jujuy",
-                                                  "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro",
-                                                  "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero",
-                                                  "Tierra del Fuego, Antártida e Islas del Atlántico Sur", "Tucumán",
-                                                  "Argentina", "Salta"))) %>%
-  arrange(Grupo, Provincia, Año)
+# Función para cargar cada archivo y agregar columna AÑO
+Raw <- map_dfr(anios, function(anio) {
+  archivo <- paste0(ruta_base, "nacweb", substr(anio, 3, 4), ".csv")
+  # Elegimos read_csv2 para años 2023 a 2020, read_csv para el resto
+  lector <- if (anio >= 2020) read_csv2 else read_csv
+  lector(file = archivo) %>%
+    mutate(AÑO = anio)
+})
+
+# Leer códigos de provincias
+Codigos_provincias <- read_excel(path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/DEIS/descnac.xlsx"),
+                                 sheet="PROVRES") %>%
+  rename(Codigo = "CODIGO", Provincia = "VALOR") %>%
+  mutate(Provincia = ifelse(Provincia == "Ciudad Aut. de Buenos Aires", "Ciudad Autónoma de Buenos Aires", Provincia)) %>%
+  add_row(Codigo = "01", Provincia = "Total del país")
+
+# Modificar datos
+Nacidos_vivos <- Raw %>%
+  mutate(Edad = case_when(IMEDAD == "1.Menor de 15" ~ "Menos de 15 años",
+                          IMEDAD == "2.15 a 19" ~ "15-19 años",
+                          IMEDAD == "3.20 a 24" ~ "20-24 años",
+                          IMEDAD == "4.25 a 29" ~ "25-29 años",
+                          IMEDAD == "5.30 a 34" ~ "30-34 años",
+                          IMEDAD == "6.35 a 39" ~ "35-39 años",
+                          IMEDAD == "7.40 a 44" ~ "40-44 años",
+                          IMEDAD == "8.De 45 y más" ~ "45 años o más",
+                          IMEDAD == "9.Sin especificar" ~ "Sin especificar",
+                          .default = "45 años o más")) %>%
+  select(PROVRES, AÑO, Edad, CUENTA) %>%
+  rename(Codigo = "PROVRES", Año = "AÑO", Cantidad = "CUENTA") %>%
+  left_join(Codigos_provincias, by="Codigo") %>%
+  select(Año, Provincia, Edad, Cantidad) %>%
+  filter(Edad != "Sin especificar",
+         Provincia %ni% c("Lugar no especificado", "Otro país")) %>%
+  rename(Rango_etario = "Edad")
+
+Totales_pais <- Nacidos_vivos %>%
+  group_by(Año, Rango_etario) %>%
+  summarise(Cantidad = sum(Cantidad), .groups = "drop") %>%
+  mutate(Provincia = "Total del país")
+
+Nacidos_vivos <- Nacidos_vivos %>%
+  rbind(Totales_pais)
+
+# LEER DATOS DE POBLACIÓN
+# Rango de edades (etiquetas quinquenales, para adjuntar a los datos)
+edades <- c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39",
+            "40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79",
+            "80-84","85-89","90-94","95-99","100+")
+
+Diccionario_edades <- data.frame(Edad = edades,
+                                 Rango_etario = c("Menos de 15 años", "Menos de 15 años", "Menos de 15 años",
+                                                  "15-19 años", "20-24 años", "25-29 años", "30-34 años",
+                                                  "35-39 años", "40-44 años", "45 años o más", "45 años o más",
+                                                  "45 años o más", "45 años o más", "45 años o más", "45 años o más",
+                                                  "45 años o más", "45 años o más", "45 años o más", "45 años o más",
+                                                  "45 años o más", "45 años o más"))
+
+# Definimos en qué rango de celdas está cada año
+rangos <- list(
+  "2010" = "D8:D28",
+  "2011" = "H8:H28",
+  "2012" = "L8:L28",
+  "2013" = "P8:P28",
+  "2014" = "T8:T28",
+  "2015" = "X8:X28",
+  "2016" = "D36:D56",
+  "2017" = "H36:H56",
+  "2018" = "L36:L56",
+  "2019" = "P36:P56",
+  "2020" = "T36:T56",
+  "2021" = "X36:X56",
+  "2022" = "D64:D84",
+  "2023" = "H64:H84"
+)
+
+# Nombres de todas las hojas (provincias)
+archivo <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Proyecciones_poblacion_provincias.xls")
+hojas <- excel_sheets(archivo)[-1]
+
+# Función para leer una hoja completa
+leer_hoja <- function(hoja) {
+  map_dfr(names(rangos), function(anio) {
+    datos <- read_excel(archivo, sheet = hoja, range = rangos[[anio]], col_names = FALSE)[[1]]
+    tibble(
+      provincia = hoja,
+      anio = as.integer(anio),
+      edad = edades,
+      poblacion = as.numeric(datos)
+    )
+  })
+}
+
+# Aplicamos a todas las hojas
+Poblacion_raw <- map_dfr(hojas, leer_hoja)
+
+Poblacion <- Poblacion_raw %>%
+  rename(Provincia = "provincia", Año = "anio", Edad = "edad", Poblacion = "poblacion") %>%
+  left_join(Diccionario_edades, by="Edad") %>%
+  select(Año, Provincia, Rango_etario, Poblacion) %>%
+  group_by(Año, Provincia, Rango_etario) %>%
+  summarise(Poblacion = sum(Poblacion)) %>%
+  ungroup %>%
+  mutate(Provincia = str_sub(Provincia, start=1, end=2)) %>%
+  rename(Codigo = "Provincia") %>%
+  left_join(Codigos_provincias, by="Codigo") %>%
+  select(Año, Provincia, Rango_etario, Poblacion)
+
+Poblacion_completa <- Poblacion %>%
+  group_by(Provincia, Rango_etario) %>%
+  group_modify(~ {
+    modelo <- lm(Poblacion ~ poly(Año, 2), data = .x)
+    
+    nuevos <- tibble(
+      Año = 2005:2009,
+      Poblacion = round(predict(modelo, newdata = data.frame(Año = 2005:2009)))
+    )
+    
+    bind_rows(nuevos, .x)
+  }) %>%
+  ungroup() %>%
+  arrange(Provincia, Rango_etario, Año)
+
+
+# UNIÓN DE TODOS LOS DATOS
+Data <- Nacidos_vivos %>%
+  rename(Nacimientos = "Cantidad") %>%
+  filter(Rango_etario %in% c("15-19 años", "20-24 años", "25-29 años", 
+                             "30-34 años", "35-39 años", "40-44 años", "45 años o más")) %>%
+  left_join(Poblacion_completa, 
+            by = c("Año", "Provincia", "Rango_etario")) %>%
+  mutate(Tasa = Nacimientos / Poblacion) %>%
+  group_by(Provincia, Año) %>%
+  summarise(TGF = sum(Tasa * 5), .groups = "drop") %>%
+  arrange(Provincia, Año)
+
 
 # Colores
-Paleta <- c("#5fad56", "#f2c14e", "#f78154", "#4d9078", "#b4436c")
-Paleta2 <- c("#474E93", "#7E5CAD", "#b4436c", "#72BAA9", "#D5E7B5")
+Colores <- c("Menos de 15 años" = "#d72b31",
+             "15-19 años" = "#e94a22",
+             "20-24 años" = "#f69e31",
+             "25-29 años" = "#e8fa42",
+             "30-34 años" = "#60c04c",
+             "35-39 años" = "#21917b",
+             "40-44 años" = "#225575",
+             "45 años o más" = "#5f3675",
+             "Sin especificar" = "#6c757d")
 
-Colores <- c("Salta" = "#f78154",
-             "Tasa nacional" = "#7E5CAD",
-             "Resto de provincias" = "#D5E7B5")
-
-# Gráfico
-grafico <- ggplot(Data, aes(x=Año, y=TGF)) +
-  geom_line(aes(color=Grupo, group=Provincia, linewidth=Grupo), lineend = "round") +
-  scale_x_continuous(breaks = seq(from=1960, to=2025, by=5),
-                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
-  scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0)) +
-  scale_linewidth_manual(values=c(2, 2, 1)) +
-  geom_text(data=Data %>% filter(Año == 2022), (aes(label=str_wrap(Provincia, width=15), color=Grupo, group=Provincia)),
-                                                size=2.5, family="font", hjust=0, nudge_x=0.5, lineheight=0.75) +
-  scale_color_manual(values=Colores) +
-  coord_cartesian(xlim=c(1960, 2024), ylim=c(0,6), clip="off") +
-  labs(y="Tasa de crecimiento anual media de la población") +
-  theme_linedraw() +
-  theme(text=element_text(family="font"),
-        legend.position="bottom",
-        legend.justification = "center",
-        legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font"),
-        legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_line(color="grey95", linewidth = 0.5),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font"),
-        axis.title.y = element_text(size=15, family="font"),
-        plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
-
-# Guardar gráfico
-filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
-                    str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
-
-ggsave(filename = paste0(filename, ".png"),
-       path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=10, height=6)
-ggsave(filename = paste0(filename, ".pdf"),
-       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=10, height=6)
+# Grafico
+grafico <- ggplot(Data %>% filter(Provincia %in% c("Salta", "Total del país")),
+                  aes(x=Año, y=TGF)) +
+  geom_line(aes(color=Provincia)) +
+  geom_text(aes(label=round(TGF, 1)), nudge_y=0.05) +
+  theme_light() +
+  theme(text = element_text(size=20, family="font"),
+        axis.text.x = element_text(size = 10, angle = 45, hjust = 1, family="font"),
+        axis.text.y = element_text(size=10, family="font"),
+        axis.title = element_text(size=12, family="font"),
+        plot.title = element_text(family="font", face="bold"),
+        plot.subtitle = element_text(size=15, family="font", face="italic"),
+        plot.caption = element_text(size=12, family="font"),
+        plot.caption.position = "plot",
+        panel.grid.minor.x = element_blank())
