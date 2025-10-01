@@ -19,11 +19,14 @@ Data <- Raw %>%
   filter(funcion_desc == "Salud") %>%
   filter(medicion_fisica_desc %in% c("Distribución de Medicamentos para la Interrupción Voluntaria del Embarazo (Ley N° 27.610)",
                                      "Distribución de Métodos Anticonceptivos de Larga Duración para Adolescentes (Plan Enia)",
-                                     "Distribución de Preservativos")) %>%
+                                     "Distribución de Preservativos",
+                                     "Asistencia en Salud Sexual y Reproductiva",
+                                     "Asistencia en Salud Sexual y Reproductiva (PPG)")) %>%
   select(Año = ejercicio_presupuestario,
          Categoria = medicion_fisica_desc,
          Vigente = programacion_anual_vig_trim4,
          Ejecutado = ejecutado_acumulado_trim4) %>%
+  mutate(Categoria = ifelse(Categoria == "Asistencia en Salud Sexual y Reproductiva (PPG)", "Asistencia en Salud Sexual y Reproductiva", Categoria)) %>%
   group_by(Año, Categoria) %>%
   summarise(Ejecutado = sum(as.numeric(Ejecutado)),
             Vigente = sum(as.numeric(Vigente))) %>%

@@ -21,34 +21,42 @@ font_add_google("Barlow", "font")
 showtext_auto()
 
 # Leer datos
-Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Asistencia_sexual.csv")) %>%
-  select(Año = ejercicio_presupuestario,
-         Cantidad = SUM.de.ejecutado_acumulado_trim1) %>%
-  filter(Año != 2025) %>%
-  mutate(Cantidad = parse_number(Cantidad, locale=locale(grouping_mark = ".")))
+Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Prespuesto/Presupuesto.csv")) %>%
+  filter(Categoria == "Asistencia en Salud Sexual y Reproductiva") %>%
+  select(-Categoria)
 
-Data <- Raw
+Data <- Raw %>%
+  pivot_longer(cols = c(Ejecutado, Vigente),
+               names_to = "Tipo",
+               values_to = "Cantidad") %>%
+  mutate(Tipo = ifelse(Tipo == "Vigente", "Cantidad programada", "Cantidad ejecutada")) %>%
+  mutate(Tipo = factor(Tipo, levels=c("Cantidad programada", "Cantidad ejecutada")))
 
-Colores <- c("Salta" = "#72BAA9",
-             "Tasa nacional" = "#f78154",
-             "Resto de provincias" = "#D5E7B5")
+Colores <- c("Cantidad ejecutada" = "#72BAA9",
+             "Cantidad programada" = "grey85")
+Colores_text <- c("Cantidad ejecutada" = "black",
+                  "Cantidad programada" = "grey50")
 
 # Grafico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
-  geom_col(aes(fill=Cantidad)) +
-  geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"), size=Cantidad),
-            color="grey10", family="font", fontface="bold", nudge_y=500000, vjust=0) +
+  geom_col(data = subset(Data, Tipo=="Cantidad programada"),
+           aes(fill=Tipo), position="identity") +
+  geom_col(data = subset(Data, Tipo=="Cantidad ejecutada"),
+           aes(fill=Tipo), position="identity") +
+  geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"), size=Cantidad, color=Tipo),
+            family="font", fontface="bold", nudge_y=500000, vjust=0, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(from=2014, to=2024, by=1),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
   scale_y_continuous(labels = function(z) formatC(z, format = "fg", big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=20000000, by=10000000)) +
-  scale_fill_gradient2(high="#72BAA9", mid="#72BAA9", low="#f78154", midpoint=10000000) +
+                     expand = c(0,0), breaks = seq(from=0, to=18000000, by=3000000)) +
+  scale_fill_manual(values=Colores) +
+  scale_color_manual(values=Colores_text) +
   scale_size_continuous(range=c(2.5, 3.5)) +
   theme_light() +
-  coord_cartesian(xlim=c(2014-0.2, 2024+0.2), ylim=c(-1000000,22000000), clip="off") +
-  labs(y="Cantidad de tratamientos distribuidos") +
+  coord_cartesian(xlim=c(2014-0.2, 2024+0.2), ylim=c(-1000000,20000000), clip="off") +
+  labs(y="Cantidad") +
   theme(text=element_text(family="font"),
-        legend.position="none",
+        legend.position="bottom",
         legend.justification = "center",
         legend.title = element_blank(),
         legend.text = element_text(size=12, family="font"),
