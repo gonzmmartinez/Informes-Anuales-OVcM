@@ -12,7 +12,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -61,29 +62,23 @@ Colores <- c("Violencia de género" = "#f2904c",
              "Violencia familiar histórica" = "#a5549c")
 
 # Total
-Total1 <- paste0(paste0("<span style='font-size:18pt'>",
-                       "Total",
-                       "</span><br><span style='font-size:25pt'>**",
-                       formatC(sum(Data1$Cantidad), big.mark = ".", decimal.mark = ",", format="fg"),
-                       "**</span>"))
+Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
+                  "**", formatC(sum(Data1$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"),
+                  "**")
 
-Total2 <- paste0(paste0("<span style='font-size:15pt'>",
-                        "Total",
-                        "</span><br><span style='font-size:20pt'>**",
-                        formatC(sum(Data2$Cantidad), big.mark = ".", decimal.mark = ",", format="fg"),
-                        "**</span>"))
+Total2 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
+                  "**", formatC(sum(Data2$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"),
+                  "**")
 
 # Gr?fico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
-  geom_richtext(y=0, x=1.5,
-                label=Total1, size=6,
-                color = "black",
-                label.color = NA, family="font",
-                show.legend=FALSE, fill=NA) +
+  geom_textbox(x = 1.5, y = 0, label = Total1, hjust = 0.5,
+               halign = 0.5, fill = NA, size=8, box.color=NA,
+               family = "font_sans", lineheight = 0.75) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
-                color = "black",
-                label.color = NA, family="font",
+                color = "black", hjust=0.5, lineheight=1,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -92,11 +87,11 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
                     values = Colores, labels = function(z) str_wrap(z, width=20)) +
   labs(title="2.025",
        subtitle = "enero-junio") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "right",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=15, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font"),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
+        legend.title = element_text(size=10, family="font_sans"),
         legend.text = element_text(size=12),
         legend.box.margin=margin(5,5,5,5),
         legend.key.spacing.y = unit(0.5, "cm"),
@@ -105,14 +100,12 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
 # Gr?fico2
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
-  geom_richtext(y=0, x=1.5,
-                label=Total2, size=5,
-                color = "black",
-                label.color = NA, family="font",
-                show.legend=FALSE, fill=NA) +
-  geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=2,
-                color = "black",
-                label.color = NA, family="font",
+  geom_textbox(x = 1.5, y = 0, label = Total2, hjust = 0.5,
+               halign = 0.5, fill = NA, size=6, box.color=NA,
+               family = "font_sans", lineheight = 1) +
+  geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
+                color = "black", hjust=0.5, lineheight=1,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -120,10 +113,10 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   scale_fill_manual(values = Colores) +
   labs(title="2.024",
        subtitle="enero-diciembre") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=12, face="italic", hjust=0.5),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
         legend.title = element_blank(),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5))

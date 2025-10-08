@@ -17,7 +17,7 @@ showtext_auto()
 
 # Crear datos
 Data <- data.frame(Organismo = c("SUD", "OVFG", "Juzgados"),
-                   Cantidad = c(20400, 13787, 10425),
+                   Cantidad = c(20400, 13787, 11065),
                    Texto = c("Denuncias totales SUD", "OVFG", "Juzgados de VFG"),
                    Descripcion = c("Se establecen parámetros y filtros estandarizados para calificar denuncias de VFG.",
                                    "Análisis específico y filtración por operadores jurídicos de las denuncias que configuran VFG.",

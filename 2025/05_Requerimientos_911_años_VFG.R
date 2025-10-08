@@ -13,7 +13,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -47,15 +48,15 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   scale_fill_manual(name = str_wrap("Motivo del requerimiento", width=20),
                     values = Colores) +
   theme_light() +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position="top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
+        legend.title = element_text(size=10, family="font_sans"),
+        legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid = element_blank(),
         axis.text.x = element_text(size=20, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
@@ -69,5 +70,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=12, height=7)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=12, height=7)

@@ -45,7 +45,7 @@ Data0 <- Data0 %>%
 
 Data <- Data0 %>%
   filter(Medida != "Otras") %>%
-  arrange(Año, desc(Cantidad)) %>%
+  arrange(Año, desc(Porcentaje)) %>%
   group_by(Año) %>%
   mutate(Level = row_number()) %>%
   rbind(Data0 %>% filter(Medida == "Otras")) %>%
@@ -60,8 +60,10 @@ Data <- Data0 %>%
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   geom_bump(linewidth = 1.5) +
-  geom_label(aes(label=formatC(Cantidad, format="fg", big.mark=".", decimal.mark=","), size=Cantidad, fill=Medida),
-             family="font", fontface="bold", color="white") +
+  geom_label(aes(label=paste0(formatC(round(Porcentaje,1), format="fg", big.mark=".", decimal.mark=","), "%"),
+                 size=Porcentaje, fill=Medida), family="font", fontface="bold", color="white") +
+  geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark=",", format="fg")),
+            size=3, color="grey10", family="font", hjust=0.5, nudge_y=-0.4) +
   geom_text(data=Data %>% filter(Año == "2023"), aes(x=1-0.2, y=Level, label=str_wrap(Medida, width=25)),
             color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
   geom_text(data=Data %>% filter(Año == "2025"), aes(x=3+0.2, y=Level, label=str_wrap(Medida, width=25)),
@@ -72,7 +74,7 @@ grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   scale_y_discrete(limits = rev) +
   scale_x_discrete(expand = c(0.3,0.3), position = "top", labels = function(x) Data$Axis[match(x, Data$Año)]) +
   scale_size_continuous(range=c(3, 6)) +
-  labs(x="Año", y="Medida dispuesta") +
+  labs(x="Año", y="Medidas dispuestas") +
   theme_light() +
   theme(legend.position="none",
         plot.background = element_rect(fill="white", color=NA),

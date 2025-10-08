@@ -13,7 +13,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -51,16 +52,16 @@ Colores <- c("#6e3169", "#ec6489")
 # Gr?fico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   geom_col(aes(fill=Cantidad)) +
-  geom_text(aes(label=Label), family="font", size=5,
+  geom_text(aes(label=Label), family="font_sans", size=5,
             fontface="bold", color="white", nudge_y=-7500, hjust=0.5) +
   geom_point(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=150000, size=Cantidad, color=Cantidad)) +
   geom_text(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=147500,
                               label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
-            size=5, color="white", family="font", fontface="bold") +
+            size=5, color="white", family="font_sans", fontface="bold") +
   geom_text(data=Totales, aes(x=c(1.5, 3.5, 5.5, 7.5, 9.5, 11), y=154000, label=Año),
-            size=4, color="white", family="font") +
+            size=4, color="white", family="font_serif") +
   annotate(geom="text", y=-25000, x=c(seq(from=1.5, to=9.5, by=2), 11), label=formatC(seq(2020,2025), big.mark=".", decimal.mark=",", format="d"),
-           size=8, color="black", family="font") +
+           size=8, color="black", family="font_sans") +
   annotate(geom="segment", x=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75), xend=c(0.25, 2.5, 4.5, 6.5, 8.5, 10.5, 11.75),
            y=-30000, yend=175000, color="grey", linewidth=0.25) +
   labs(title="",
@@ -77,10 +78,10 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   theme(text=element_text(family="font"),
         legend.position="none",
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=10, family="font", face="italic", margin=margin(t=10)),
+        legend.text = element_text(size=12, family="font_sans"),
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=10, family="font_sans", face="italic", margin=margin(t=10)),
         axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=15, margin=margin(t=40)),
@@ -96,6 +97,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=14, height=7)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/pdf/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/pdf/"),
        plot=grafico, dpi=72, width=14, height=7)
-
