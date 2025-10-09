@@ -12,7 +12,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -56,21 +57,21 @@ Total_anterior <- Raw %>%
 # Gráfico
 grafico1 <- ggplot(Data, aes(x=Dia, y=Mes, fill=Cantidad)) +
   geom_tile() +
-  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")), family="font", size=3, color="black", alpha=0.7) +
+  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")), family="font_sans", size=3, color="black", alpha=0.7) +
   annotate(geom="rect", ymin=0.5, ymax=6.5, xmin=5.5, xmax=7.5, color="#6e3169", fill="#6e3169", alpha=0.1) +
   labs(x="Día de la semana", y="Mes") +
   scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Cantidad)) +
   theme_light() +
-  theme(text=element_text(family="font"), legend.position="none",
+  theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         plot.background = element_rect(fill = "white", color="white"),
         panel.border = element_blank(),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=0,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=5,b=0,l=5)),
-        axis.title.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
-        axis.title.y = element_text(size=15, margin = margin(t=0,r=5,b=0,l=0)))
+        axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=0,l=0)),
+        axis.text.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
+        axis.title.x = element_text(size=15, family="font_sans", margin = margin(t=5,r=0,b=5,l=0)),
+        axis.title.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)))
 
 grafico2 <- ggplot(x=1:2, y=1:2) +
   geom_textbox(aes(x=1.5, y=1.5,
@@ -85,7 +86,7 @@ grafico2 <- ggplot(x=1:2, y=1:2) +
                              "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#6e3169'>**violencia familiar**</span><br>",
                              "<span style='font-size:12pt'>se registraron los días</span><br>",
                              "<span style='font-size:12pt; color:#6e3169; text-decoration: underline'>**sábado y domingo**</span><br>")),
-                label.color = NA, family="font", halign = 0.5, fill=NA, color="white", text.color="black",
+                label.color = NA, family="font_sans", halign = 0.5, fill=NA, color="white", text.color="black",
                 show.legend=FALSE, fill=NA, size=4) +
   theme_void() +
   theme(plot.background = element_rect(fill = "white", colour = "white"),

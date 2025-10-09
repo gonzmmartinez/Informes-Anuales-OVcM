@@ -12,7 +12,8 @@ library(tidyr)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -50,16 +51,17 @@ grafico <- ggplot(Data, aes(x="", y=Hora, fill=Porcentaje)) +
   scale_y_discrete(limits = rev) + 
   scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Porcentaje)) +
   theme_light() +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=10, family="font", face="italic"),
-        strip.text = element_text(size=15, family="font", face="bold"),
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=10, family="font_sans", face="italic"),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size=15, margin = margin(t=0,r=5,b=0,l=5)),
+        axis.text.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
         axis.title.x = element_blank(),
-        axis.title.y = element_text(size=20, margin = margin(t=0,r=5,b=0,l=0)))
+        axis.title.y = element_text(size=20, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)),
+        strip.background = element_rect(color=NA, fill="#FE6244"),
+        strip.text = element_text(size=20, color="white", family="font_serif", face="bold"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -68,5 +70,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=10)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=10)

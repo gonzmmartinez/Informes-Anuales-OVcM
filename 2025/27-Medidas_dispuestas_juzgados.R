@@ -17,7 +17,8 @@ library(tidyr)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -45,11 +46,12 @@ Data0 <- Data0 %>%
 
 Data <- Data0 %>%
   filter(Medida != "Otras") %>%
+  filter(Medida != "Competencia") %>%
   arrange(Año, desc(Porcentaje)) %>%
   group_by(Año) %>%
   mutate(Level = row_number()) %>%
   rbind(Data0 %>% filter(Medida == "Otras")) %>%
-  mutate(Level = ifelse(Medida == "Otras", 15, Level)) %>%
+  mutate(Level = ifelse(Medida == "Otras", 14, Level)) %>%
   ungroup %>%
   mutate(Level = formatC(Level, width=2, flag="0"),
          Año = as.character(Año)) %>%
@@ -61,16 +63,16 @@ Data <- Data0 %>%
 grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   geom_bump(linewidth = 1.5) +
   geom_label(aes(label=paste0(formatC(round(Porcentaje,1), format="fg", big.mark=".", decimal.mark=","), "%"),
-                 size=Porcentaje, fill=Medida), family="font", fontface="bold", color="white") +
+                 size=Porcentaje, fill=Medida), family="font_sans", fontface="bold", color="white") +
   geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark=",", format="fg")),
-            size=3, color="grey10", family="font", hjust=0.5, nudge_y=-0.4) +
+            size=3, color="grey10", family="font_sans", hjust=0.5, nudge_y=-0.4) +
   geom_text(data=Data %>% filter(Año == "2023"), aes(x=1-0.2, y=Level, label=str_wrap(Medida, width=25)),
-            color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
+            color="black", size=3.5, family="font_sans", hjust=1, lineheight = 1) +
   geom_text(data=Data %>% filter(Año == "2025"), aes(x=3+0.2, y=Level, label=str_wrap(Medida, width=25)),
-            color="black", size=3.5, family="font", hjust=0, lineheight = 1) +
-  geom_text(data=Data %>% filter(Año == "2024", Level %in% c("09", "11", "12", "13", "14")),
+            color="black", size=3.5, family="font_sans", hjust=0, lineheight = 1) +
+  geom_text(data=Data %>% filter(Año == "2024", Level %in% c("09", "11", "12", "13")),
             aes(x=2-0.1, y=Level, label=str_wrap(Medida, width=25)),
-            color="black", size=3.5, family="font", hjust=1, lineheight = 1) +
+            color="black", size=3.5, family="font_sans", hjust=1, lineheight = 1) +
   scale_y_discrete(limits = rev) +
   scale_x_discrete(expand = c(0.3,0.3), position = "top", labels = function(x) Data$Axis[match(x, Data$Año)]) +
   scale_size_continuous(range=c(3, 6)) +
@@ -80,10 +82,10 @@ grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
         plot.background = element_rect(fill="white", color=NA),
         panel.grid.minor = element_blank(),
         panel.grid.major = element_line(color="grey90"),
-        axis.title.y = element_text(family="font", size=20, margin=margin(r=10)),
-        axis.title.x.top = element_text(family="font", size=20, margin=margin(t=0, r=0, b=15, l=0)),
+        axis.title.y = element_text(family="font_sans", size=20, margin=margin(r=10)),
+        axis.title.x.top = element_text(family="font_sans", size=20, margin=margin(t=0, r=0, b=15, l=0)),
         axis.text.y = element_blank(),
-        axis.text.x.top = element_markdown(family="font", size=15, margin=margin(b=10), lineheight = 1),
+        axis.text.x.top = element_markdown(family="font_serif", size=15, margin=margin(b=10), lineheight = 1),
         axis.ticks.y = element_blank())
 
 # Guardar gráfico

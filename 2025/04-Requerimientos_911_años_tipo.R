@@ -69,7 +69,7 @@ grafico <- ggplot(Data, aes(x=Accion, y=Cantidad, fill=Tipo)) +
                     labels = function(x) str_wrap(x, width = 20), values=Colores) +
   theme_light() +
   theme(text=element_text(family="font_sans"),
-        legend.position="bottom",
+        legend.position="top",
         legend.justification = "right",
         legend.title = element_text(size=10, family="font_serif"),
         legend.text = element_text(size=12, family="font_sans"),

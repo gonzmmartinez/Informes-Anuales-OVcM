@@ -8,10 +8,12 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(googlesheets4)
+library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -37,15 +39,17 @@ Total <- Data %>%
 # Gr?fico
 grafico1 <- ggplot(Data, aes(x=Hora, y=Mes, fill=Cantidad)) +
   geom_tile() +
-  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")), family="font", size=3, color="black", alpha=0.7) +
-  annotate(geom="rect", xmin=c(0.5, 19.5), ymax=6.5, ymin=0.5, xmax=c(3.5,24.5), color="#6e3169", fill="#6e3169", alpha=0.1) +
+  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")),
+            family="font_sans", size=3, color="black", alpha=0.7) +
+  annotate(geom="rect", xmin=c(0.5, 19.5), ymax=6.5, ymin=0.5, xmax=c(3.5,24.5),
+           color="#6e3169", fill="#6e3169", alpha=0.1) +
   labs(x="Hora del día", y="Mes") +
   scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Cantidad)) +
   theme_light() +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=10, family="font", face="italic"),
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=10, family="font_sans", face="italic"),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         plot.background = element_rect(fill = "white", colour = "white"),
         panel.border = element_blank(),
@@ -76,12 +80,13 @@ grafico2 <- ggplot(x=1:2, y=1:2) +
 grafico <- plot_grid(grafico1, grafico2, ncol=2,
                      rel_widths = c(5,1))
 
-# Guardar gr?fico
+# Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
                     str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=13, height=5)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=13, height=5)

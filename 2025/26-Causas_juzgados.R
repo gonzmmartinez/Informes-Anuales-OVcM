@@ -12,7 +12,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -81,11 +82,11 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Motivo)
   geom_richtext(y=0, x=1.5,
                 label=Total1, size=6,
                 color = "black",
-                label.color = NA, family="font",
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
                 color = "black",
-                label.color = NA, family="font",
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -94,11 +95,11 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Motivo)
                     values = Colores, labels=function(z) str_wrap(z, width=20)) +
   labs(title="2.025",
        subtitle = str_wrap("primer semestre", 20)) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "right",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=15, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font"),
+        plot.title = element_text(family="font_sans", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_sans", size=15, face="italic", hjust=0.5),
+        legend.title = element_text(size=10, family="font_sans"),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5),
         legend.key.spacing.y = unit(0.5, "cm"),
@@ -110,11 +111,11 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Motivo)
   geom_richtext(y=0, x=1.5,
                 label=Total2, size=5,
                 color = "black",
-                label.color = NA, family="font",
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=2,
                 color = "black",
-                label.color = NA, family="font",
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -122,10 +123,10 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Motivo)
   scale_fill_manual(values = Colores) +
   labs(title="2.024",
        subtitle = str_wrap("enero-diciembre", 20)) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=12, face="italic", hjust=0.5),
+        plot.title = element_text(family="font_sans", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_sans", size=12, face="italic", hjust=0.5),
         legend.title = element_blank(),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5))

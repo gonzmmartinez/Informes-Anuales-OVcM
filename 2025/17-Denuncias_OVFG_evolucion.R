@@ -12,7 +12,8 @@ library(directlabels)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -22,7 +23,7 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsM
 
 Data <- Raw %>%
   mutate(Año = factor(Año), Trimestre = factor(Trimestre)) %>%
-  filter(Año %in% c(2024, 2025)) %>%
+  filter(Año %in% c(2023, 2024, 2025)) %>%
   filter(Tipo %in% c("Familiar", "Género")) %>%
   group_by(Año, Trimestre) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
@@ -35,22 +36,26 @@ Colores <- c("#6e3169", "#ec6489")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(x=reorder(Label, Orden), y=Cantidad, group="1")) +
-  geom_vline(xintercept=4.5, linetype=1, color="lightgrey") +
+  geom_vline(xintercept=c(4.5, 8.5), linetype=1, color="lightgrey") +
   geom_col(aes(alpha=Cantidad), fill=Colores[1]) +
-  geom_text(aes(y=4000, label=formatC(Cantidad, big.mark = ".", decimal.mark = ",")), family="font", color="white", size=7) +
-  annotate(geom="text", x=c(2.5, 5.5), y=-2000, label=c("2.024", "2.025"), size=7.5, color="grey20", family="font") +
-  annotate(geom="segment", x=c(0.4, 4.5), xend=c(0.4, 4.5), y=-2500, yend=0, linetype=1, color="lightgrey", linewidth=0.5) +
+  geom_text(aes(y=Cantidad, label=formatC(Cantidad, big.mark = ".", decimal.mark = ","), size=Cantidad),
+            family="font_sans", color="white", nudge_y=-500, fontface="bold") +
+  annotate(geom="text", x=c(2.5, 6.5, 9.5), y=-2000, label=c("2.023", "2.024", "2.025"),
+           size=7.5, color="grey20", family="font_sans") +
+  annotate(geom="segment", x=c(0.4, 4.5, 8.5), xend=c(0.4, 4.5, 8.5), y=-2500,
+           yend=0, linetype=1, color="lightgrey", linewidth=0.5) +
   labs(title="",
        x="Trimestre-Año", y="Cantidad") +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
-  scale_x_discrete(labels = paste0(c(1:4, 1:2), "°")) +
-  coord_cartesian(xlim=c(1,6), ylim=c(0, 10000), clip="off") +
+  scale_x_discrete(labels = paste0(c(1:4, 1:4, 1:2), "°")) +
+  scale_size_continuous(range=c(4, 6)) +
+  coord_cartesian(xlim=c(1,10), ylim=c(0, 10000), clip="off") +
   theme_light() +
   scale_alpha_continuous(range=c(0.5, 1)) +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),

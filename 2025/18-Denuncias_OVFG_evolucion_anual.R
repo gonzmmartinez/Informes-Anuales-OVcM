@@ -15,7 +15,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -59,33 +60,33 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
   geom_col(aes(fill=Cantidad), width=0.9) +
   annotate(geom="rect", xmin=9.55, xmax=10.45, ymin=(Data %>% filter(Año == "2.025"))$Cantidad, ymax=Estimacion,
            linetype=2, color="gray", fill="gray", alpha=0.5) +
-  geom_text(aes(y=Cantidad, label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="d")), family="font", fontface="bold",
+  geom_text(aes(y=Cantidad, label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="d")), family="font_sans", fontface="bold",
             color="white", size=6, vjust=2) +
   annotate(geom="text", x=10, y=Estimacion,
            label = formatC(Estimacion, big.mark = ".", decimal.mark=",", format="d"),
-           vjust=2, family="font", fontface="bold", color="black", size=6) +
+           vjust=2, family="font_sans", fontface="bold", color="black", size=6) +
   annotate(geom="text", x=10, y=Estimacion,
            label = str_wrap("Proyección del número total de denuncias para el año 2.025 completo", width=25),
-           vjust=-0.4, family="font", fontface="italic", color="gray", size=3) +
+           vjust=-0.4, family="font_sans", fontface="italic", color="gray", size=3) +
   annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#6e3169", linewidth=1) +
   annotate(geom="text", x=8, y=29037,
            label = "Estimación realizada en 2.024\n 29.037 denuncias",
-           vjust=-0.4, family="font", fontface="italic", color="#6e3169", size=3) +
+           vjust=-0.4, family="font_sans", fontface="italic", color="#6e3169", size=3) +
   labs(title="",
        x="Año", y="Cantidad") +
   scale_y_continuous(limits=c(0,max(Data$Cantidad+7000)), labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d")) +
   theme_light() +
   scale_fill_gradient2(low="#f2904c", high="#c93131", mid="#e55a3e", midpoint=mean(Data$Cantidad)) +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         panel.grid.major.x = element_blank(),
-        axis.text.x = element_text(size=20, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20),
-        axis.title.y = element_text(size=20))
+        axis.text.x = element_text(size=20, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(size=20, family="font_sans"),
+        axis.title.y = element_text(size=20, family="font_sans"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

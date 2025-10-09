@@ -11,7 +11,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -35,14 +36,19 @@ Data1 <- Raw %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Label = ifelse(Porcentaje >= 10,
-                        paste0("<span style='font-size:20pt'>**",formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","),"%**</span><br><span style='font-size:10pt'>",formatC(Cantidad, big.mark = ".", decimal.mark = ",","</span>")),
+                        paste0("<span style='font-size:20pt'>**",
+                               formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ",", format="fg"),
+                               "%**</span><br><span style='font-size:10pt'>",
+                               formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                               "</span>"),
                         NA)) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup() %>%
-  mutate(Leyenda = ifelse(Porcentaje >= 10, Levels[1], paste0(Modalidad, "    (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","), "%)")))
+  mutate(Leyenda = ifelse(Porcentaje >= 10, Levels[1],
+                          paste0(Modalidad, " (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","), "%)")))
 
 Data2 <- Raw %>%
   filter(Año == 2024, Modalidad != "Sin especificar") %>%
@@ -51,7 +57,11 @@ Data2 <- Raw %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Label = ifelse(Porcentaje >= 10,
-                        paste0("<span style='font-size:15pt'>**",round(Porcentaje,1),"%**</span><br><span style='font-size:10pt'>",formatC(Cantidad, big.mark = ".", decimal.mark = ",","</span>")),
+                        paste0("<span style='font-size:15pt'>**",
+                               formatC(round(Porcentaje,1), big.mark=".", decimal.mark=",", format="fg"),
+                               "%**</span><br><span style='font-size:10pt'>",
+                               formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                               "</span>"),
                         NA)) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
@@ -72,9 +82,9 @@ Colores <- c("Doméstica" = "#e54c7c",
 # Gráfico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Modalidad)) +
   geom_rect() +
-  geom_richtext(aes(x = 3.2, y=ymid, label=Label), size=4,
-                color = "black",
-                label.color = NA, family="font",
+  geom_richtext(aes(x = 3, y=ymid, label=Label),
+                color = "black", hjust=0.5, lineheight=1.25,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -84,22 +94,21 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
                     labels = Data1$Leyenda) +
   labs(title="2.025",
        subtitle = "primer semestre") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "right",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=15, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=15),
-        legend.box.margin=margin(5,5,5,5),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=10, family="font_sans"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
 # Gráfico2
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Modalidad)) +
   geom_rect() +
-  geom_richtext(aes(x = 3.2, y=ymid, label=Label), size=4,
-                color = "black",
-                label.color = NA, family="font",
+  geom_richtext(aes(x = 3, y=ymid, label=Label),
+                color = "black", hjust=0.5, lineheight=1.25,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4.5)) +
@@ -107,10 +116,10 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
   scale_fill_manual(values = Colores) +
   labs(title="2.024",
        subtitle="Todo el año") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=12, face="italic", hjust=0.5),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
         legend.title = element_blank(),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5))
@@ -126,7 +135,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=10, height=4.5)
+       plot=grafico, dpi=100, width=7, height=3.5)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=10, height=4.5)
+       plot=grafico, dpi=72, width=7, height=3.5)

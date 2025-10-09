@@ -12,7 +12,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -54,7 +55,7 @@ grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distr
                                    "</span>")),
                 color = "black",
                 vjust = ifelse(Data$Porcentaje <=20, -0.2, 1.2),
-                label.color = NA, family="font",
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   facet_wrap(~Año, nrow=2, scales='free') +
   labs(x="Distrito judicial", y="Porcentaje") +
@@ -62,17 +63,17 @@ grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distr
   scale_y_continuous(labels=function(z) paste0(abs(z), "%")) +
   scale_x_discrete(labels = function(z) str_wrap(z, width=3)) +
   theme_light() +
-  theme(text=element_text(family="font"), legend.position="none",
+  theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
         panel.grid.major = element_line(colour = "#F5F5F5"),
-        axis.text.x = element_text(size=12, margin = margin(t=5,r=0,b=0,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=5,b=0,l=5)),
-        axis.title.x = element_text(size=12, margin = margin(t=10,r=0,b=0,l=0)),
-        axis.title.y = element_text(size=12, margin = margin(t=0,r=5,b=0,l=0)),
+        axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=5,r=0,b=0,l=0)),
+        axis.text.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
+        axis.title.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=0,l=0)),
+        axis.title.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)),
         strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font", face="bold"))
+        strip.text = element_text(size=15, color="white", family="font_serif", face="bold"))
 
 # Imagen
 # imagen <- ggdraw() +  draw_image("https://www.justiciasalta.gov.ar/media/images/distritos_judiciales_web-2024.jpg?timestamp=20240312114917")
@@ -91,6 +92,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=15, height=6)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=15, height=6)
 
