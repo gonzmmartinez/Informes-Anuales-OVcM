@@ -8,10 +8,12 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(ggtext)
+library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -27,7 +29,7 @@ Data <- Raw %>%
 
 Totales <- Data %>%
   group_by(Año) %>%
-  summarise(Total = sum(Total))
+  summarise(Cantidad = sum(Total))
 
 # Definir colores
 Colores <- c("Fija" = "#ec6489",
@@ -38,24 +40,30 @@ Colores <- c("Fija" = "#ec6489",
 grafico <- ggplot(Data, aes(x=Año, y=Total, fill=Tipo)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=formatC(Total, big.mark=".", decimal.mark=",", format="fg")),
-            position = position_stack(vjust=1), vjust=-0.5, size=3, family="font", color="black") +
-  geom_text(data=Totales, inherit.aes = FALSE,
-            aes(x=Año, y=35000, label=formatC(Total, big.mark = ".", decimal.mark = ",", format="fg")),
-            family="font", fontface="bold", size=6) +
+            position = position_stack(vjust=1), vjust=-0.5, size=3, family="font_sans", color="black") +
+  geom_point(data=Totales, inherit.aes=FALSE, aes(x=Año, y=40000, size=Cantidad, color=Cantidad), show.legend = FALSE) +
+  geom_text(data=Totales, inherit.aes=FALSE, aes(x=Año, y=40000, label=Año),
+            size=3, color="white", family="font_serif", show.legend = FALSE, nudge_y=1000) +
+  geom_text(data=Totales, inherit.aes=FALSE, aes(x=Año, y=40000, label=formatC(Cantidad, big.mark=".", decimal.mark = ",", format="fg")),
+            size=4, color="white", family="fomt_sans", fontface="bold", show.legend = FALSE, nudge_y=-1000) +
   theme_light() +
   labs(y="Cantidad",
-       caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
+       caption="* las cantidades corresponden únicamente al primer semestre.") +
   scale_fill_manual(name="Tipo de consigna", values = Colores) +
-  scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="fg")) +
-  theme(text=element_text(family="font"),
+  scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="fg"),
+                     limits=c(0, 45000), breaks=seq(0, 30000, by=10000)) +
+  scale_color_gradient2(high="#6e3169", low="#ec6489", mid="#6e3169", midpoint=mean(Totales$Cantidad, na.rm=TRUE)) +
+  scale_size_continuous(range=c(20, 25)) +
+  theme(text=element_text(family="font_sans"),
         legend.position = "top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=7.5, family="font", face="italic", margin=margin(t=10)),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=12, family="font_sans"),
+        plot.title = element_text(size=20, family="font_serif", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=7.5, family="font_sans", face="italic", margin=margin(t=10)),
         panel.grid = element_blank(),
+        panel.grid.major = element_line(color="grey95", linewidth=0.5),
         axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=12),

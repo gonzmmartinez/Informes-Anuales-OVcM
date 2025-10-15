@@ -55,7 +55,7 @@ grafico <- ggplot(Data, aes(x=reorder(Label, Ord), y=Cantidad, group=1)) +
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
         plot.caption = element_text(size=12, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid.major = element_line(colour = "grey95"),
         axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20, margin=margin(t=40)),

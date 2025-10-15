@@ -11,7 +11,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -67,15 +68,15 @@ grafico1 <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Rango_etario, Ord_rango_et
   scale_x_continuous(limits=c(min(Data1$Porcentaje) - 3, max(Data1$Porcentaje) + 3), labels = function(z) paste0(abs(z), "%")) +
   scale_fill_manual(name = "Género",
                     values = Colores) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "bottom",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
-        plot.title = element_text(size=20, family="font", face="bold", hjust=0.5),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=12, family="font_sans"),
+        plot.title = element_text(size=20, family="font_sans", face="bold", hjust=0.5),
         plot.title.position = "plot",
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(color="grey95", linewidth = 0.5),
         panel.grid.minor.y = element_blank(),
@@ -91,12 +92,12 @@ grafico2 <- ggplot(Data2, aes(x=Porcentaje, y=reorder(Rango_etario, Ord_rango_et
   labs(title="2.024") +
   scale_x_continuous(limits=c(min(Data2$Porcentaje) - 3, max(Data1$Porcentaje) + 3), labels = function(z) paste0(abs(z), "%")) +
   scale_fill_manual(values = Colores) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
-        plot.title = element_text(size=20, family="font", face="bold", hjust=0.5),
+        plot.title = element_text(size=20, family="font_serif", face="bold", hjust=0.5),
         plot.title.position = "plot",
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         legend.title = element_blank(),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_blank(),

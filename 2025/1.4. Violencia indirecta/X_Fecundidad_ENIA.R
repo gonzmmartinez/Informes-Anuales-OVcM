@@ -150,8 +150,8 @@ Poblacion_completa <- Poblacion %>%
     bind_rows(nuevos, .x)
   }) %>%
   ungroup() %>%
-  arrange(Provincia, Rango_etario, Año) %>%
-  filter(Provincia %in% c("Salta", "Total del país"))
+  arrange(Provincia, Rango_etario, Año) #%>%
+  #filter(Provincia %in% c("Salta", "Total del país"))
 
 
 # UNIÓN DE TODOS LOS DATOS
@@ -185,6 +185,42 @@ Data <- Data %>%
                                levels=c("TEF adolescente temprana (10-14 años)", "TEF adolescente tardía (15-19 años)",
                                         "TEF adolescente total (10-19 años)")),
          Provincia = factor(Provincia, levels=c("Salta", "Argentina")))
+
+################################################################################
+# Datos de provincias de ENIA
+Data2 <- Nacidos_vivos %>%
+  filter(Provincia %in% c("Salta", "Jujuy", "Tucumán", "Formosa", "Chaco", "Catamarca",
+                          "La Rioja", "Santiago del Estero", "Misiones", "Corrientes",
+                          "Entre Ríos", "Buenos Aires", "Total del país")) %>%
+  rename(Nacimientos = "Cantidad") %>%
+  left_join(Poblacion_completa, 
+            by = c("Año", "Provincia", "Rango_etario")) %>%
+  mutate(Tasa = (1000 * Nacimientos) / Poblacion) %>%
+  arrange(Provincia, Año) %>%
+  mutate(Rango_etario = factor(Rango_etario,
+                               levels = c("Menos de 15 años", "15-19 años",
+                                          "20-24 años", "25-29 años", "30-34 años",
+                                          "35-39 años", "40-44 años", "45 años o más"))) %>%
+  filter(Rango_etario %in% c("Menos de 15 años", "15-19 años"))
+
+Data_totales2 <- Data2 %>%
+  group_by(Año, Provincia) %>%
+  summarise(Poblacion = sum(Poblacion),
+            Nacimientos = sum(Nacimientos)) %>%
+  ungroup %>%
+  mutate(Tasa = (1000 * Nacimientos) / Poblacion)
+
+Data2 <- Data2 %>%
+  rbind(Data_totales2 %>% mutate(Rango_etario="Adolescencia")) %>%
+  mutate(Rango_etario = case_when(Rango_etario == "Menos de 15 años" ~ "TEF adolescente temprana (10-14 años)",
+                                  Rango_etario == "15-19 años" ~ "TEF adolescente tardía (15-19 años)",
+                                  Rango_etario == "Adolescencia" ~ "TEF adolescente total (10-19 años)")) %>%
+  mutate(Rango_etario = factor(Rango_etario,
+                               levels=c("TEF adolescente temprana (10-14 años)", "TEF adolescente tardía (15-19 años)",
+                                        "TEF adolescente total (10-19 años)"))) %>%
+  filter(Año %in% c(2017, 2023),
+         Rango_etario == "TEF adolescente total (10-19 años)")
+################################################################################
 
 
 Colores <- c("TEF adolescente temprana (10-14 años)" = "#72BAA9",

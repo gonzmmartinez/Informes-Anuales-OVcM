@@ -65,13 +65,13 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
   annotate(geom="text", x=10, y=Estimacion,
            label = formatC(Estimacion, big.mark = ".", decimal.mark=",", format="d"),
            vjust=2, family="font_sans", fontface="bold", color="black", size=6) +
-  annotate(geom="text", x=10, y=Estimacion,
-           label = str_wrap("Proyección del número total de denuncias para el año 2.025 completo", width=25),
-           vjust=-0.4, family="font_sans", fontface="italic", color="gray", size=3) +
+  annotate(geom="text", x=10, y=Estimacion+750,
+           label = str_wrap("Proyección del número total de denuncias para el año 2.025 completo", width=20),
+           vjust=0, family="font_sans", fontface="italic", color="gray", size=4) +
   annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#6e3169", linewidth=1) +
-  annotate(geom="text", x=8, y=29037,
-           label = "Estimación realizada en 2.024\n 29.037 denuncias",
-           vjust=-0.4, family="font_sans", fontface="italic", color="#6e3169", size=3) +
+  annotate(geom="text", x=8, y=29037+750,
+           label = "Estimación realizada\nen 2.024:\n 29.037 denuncias",
+           vjust=0, hjust=0, family="font_sans", fontface="italic", color="#6e3169", size=4) +
   labs(title="",
        x="Año", y="Cantidad") +
   scale_y_continuous(limits=c(0,max(Data$Cantidad+7000)), labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d")) +

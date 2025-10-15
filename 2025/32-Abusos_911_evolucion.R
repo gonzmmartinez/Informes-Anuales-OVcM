@@ -8,10 +8,12 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(googlesheets4)
+library(lubridate)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -23,21 +25,15 @@ Mes <- data.frame(Mes = c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"),
                   Mes_num = 1:12)
 
-Data1 <- Raw %>%
+Data <- Raw %>%
   left_join(Mes, by="Mes") %>%
-  filter(Año == 2025, Tipo == "Abuso sexual") %>%
-  group_by(Mes, Mes_num, Accion) %>%
+  filter(Año %in% c(2024,2025), Tipo == "Abuso sexual") %>%
+  group_by(Año, Mes, Mes_num, Accion) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Accion = factor(Accion,
-                         levels = c("Llamadas", "Intervenciones", "Intervenciones SAMEC")))
-
-Data2 <- Raw %>%
-  left_join(Mes, by="Mes") %>%
-  filter(Año == 2024, Tipo == "Abuso sexual") %>%
-  group_by(Mes, Mes_num, Accion) %>%
-  summarise(Cantidad = sum(Cantidad)) %>%
-  mutate(Accion = factor(Accion,
-                         levels = c("Llamadas", "Intervenciones", "Intervenciones SAMEC")))
+                         levels = c("Llamadas", "Intervenciones", "Intervenciones SAMEC"))) %>%
+  ungroup %>%
+  mutate(Orden = paste0(str_sub(Año, 3,4), "-", formatC(Mes_num, width=2, flag="0")))
 
 # Definir colores
 Colores <- c("Llamadas" = "#f2904c",
@@ -45,55 +41,29 @@ Colores <- c("Llamadas" = "#f2904c",
              "Intervenciones SAMEC" = "#ec6489")
 
 # Gráfico
-grafico1 <- ggplot(Data1, aes(x=reorder(Mes, Mes_num), y=Cantidad, group = Accion)) +
+grafico <- ggplot(Data, aes(x=Orden, y=Cantidad, group = Accion)) +
   geom_line(aes(color=Accion), linewidth=2) +
   geom_point(aes(color=Accion), size=3) +
-  geom_text(aes(label=Cantidad), size=3, family="font", vjust=-1, show_guide=FALSE) +
+  geom_text(aes(label=Cantidad, color=Accion), size=3, family="font_sans", hjust=0.5, show_guide=FALSE, nudge_y=5) +
+  annotate(geom="text", y=-20, x=c(6.5, 15.5), label=formatC(c(2024, 2025), big.mark=".", decimal.mark=",", format="d"),
+           size=8, color="black", family="font_sans") +
+  annotate(geom="segment", x=c(1,13,18), xend=c(1,13,18), y=-15, yend=-27.5, color="grey", linewidth=0.25) +
   theme_light() +
-  labs(title="2.025", x="Mes", y="Cantidad") +
-  ylim(0,150) +
+  labs(x="Mes-Año", y="Cantidad") +
   scale_color_manual(name="Tipo de requerimiento", values = Colores) +
-  theme(text=element_text(family="font"),
-        legend.position = "bottom",
-        legend.justification = "center",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
-        plot.title = element_text(size=30, family="font", face="bold", hjust=0.5),
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15),
-        axis.title.y = element_text(size=15))
-
-# Gráfico
-grafico2 <- ggplot(Data2, aes(x=reorder(Mes, Mes_num), y=Cantidad, color=Accion, group=Accion)) +
-  geom_line(linewidth=1.5) +
-  geom_point(size=2.5) +
-  geom_text(aes(label=Cantidad), size=2, family="font", vjust=-1.1, guides=FALSE) +
-  theme_light() +
-  labs(title="2.024") +
-  ylim(0,150) +
-  scale_x_discrete(labels = function(z) str_sub(z, start=1, end=3)) +
-  scale_color_manual(values = Colores) +
-  theme(text=element_text(family="font"),
-        legend.position = "none",
-        plot.title = element_text(size=20, family="font", face="bold", hjust=0.5),
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
-        legend.title = element_blank(),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
-        axis.text.x = element_text(size=8, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=8, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        plot.margin = margin(t=20, r=100, b=10, l=100))
-
-# Layout
-grafico <- plot_grid(grafico2, grafico1, nrow=2, rel_heights = c(2,3))
+  scale_x_discrete(labels = c(str_to_title(month(1:12, label = TRUE, abbr = TRUE, locale = "es_ES")), 
+                              str_to_title(month(1:6, label = TRUE, abbr = TRUE, locale = "es_ES")))) +
+  coord_cartesian(ylim = c(-5, 150), xlim=c(0.75, 18.25), clip="off", expand=FALSE) +
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_text(size=20, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+        panel.grid.major = element_line(colour = "grey95"),
+        axis.text.x = element_text(size=15, margin = margin(t=5,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(size=20, margin=margin(t=40)),
+        axis.title.y = element_text(size=20),
+        plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -101,6 +71,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=8, height=8)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=8, height=8)
+       plot=grafico, dpi=100, width=14, height=7)
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+       plot=grafico, dpi=72, width=14, height=7)

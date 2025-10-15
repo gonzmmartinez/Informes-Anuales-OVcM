@@ -12,7 +12,8 @@ library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -51,20 +52,20 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Sujeto)) 
   theme_void() +
   labs(caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   geom_richtext(aes(x=4, y=ymid, label = Label), color = "black", label.color = NA,
-                family="font", show.legend=FALSE, fill=NA, nudge_x=1, size=4) +
-  geom_text(aes(x=1, y=0, label=Año), size=7.5, family="font", fontface="bold", color="black") +
+                family="font_sans", show.legend=FALSE, fill=NA, nudge_x=1, size=4) +
+  geom_text(aes(x=1, y=0, label=Año), size=7.5, family="font_serif", fontface="bold", color="black") +
   xlim(1,5) +
   scale_fill_manual(name=str_wrap("Destinatario de la consigna", width=15), values=Colores[c(1,2)]) +
-  theme(text=element_text(family="font", size=20),
+  theme(text=element_text(family="font_sans", size=20),
         legend.position="bottom",
         legend.justification = "center",
         legend.margin = margin(t=20),
-        legend.title = element_text(family="font", size=10, margin=margin(r=15)),
+        legend.title = element_text(family="font_serif", size=10, margin=margin(r=15)),
         legend.key.spacing.x = unit(0.5, "cm"),
-        legend.text = element_text(family="font", size=12),
+        legend.text = element_text(family="font_sans", size=12),
         plot.margin = margin(t=0,r=0,b=0,l=0),
         plot.background = element_rect(fill="white", color=NA),
-        plot.caption = element_text(size=8, family="font", face="italic", margin=margin(t=20)),
+        plot.caption = element_text(size=8, family="font_sans", face="italic", margin=margin(t=20)),
         strip.background = element_blank(),
         strip.text = element_blank(),
         panel.spacing = unit(-1, "cm"))

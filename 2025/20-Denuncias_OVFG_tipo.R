@@ -8,10 +8,12 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(ggtext)
+library(googlesheets4)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -27,14 +29,20 @@ Data1 <- Raw %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Cantidad),
             Porcentaje = sum(Porcentaje)) %>%
-  mutate(Label = ifelse(Porcentaje < 10,
-                        paste0("<span style='font-size:12pt'>**",round(Porcentaje,1),"%**</span><br><span style='font-size:8pt'>",formatC(Cantidad, big.mark = ".", decimal.mark = ",","</span>")),
-                        paste0("<span style='font-size:25pt'>**",round(Porcentaje,1),"%**</span><br><span style='font-size:10pt'>",formatC(Cantidad, big.mark = ".", decimal.mark = ",","</span>")))) %>%
+  mutate(Label = ifelse(Porcentaje > 10,
+                        paste0("<span style='font-size:20pt'>**",
+                               round(Porcentaje,1),
+                               "%**</span><br><span style='font-size:10pt'>",
+                               formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                               "</span>"),
+                        "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(Leyenda = ifelse(Porcentaje >= 10, Tipo,
+                          paste0(Tipo, " (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ",", format="fg"), "%)")))
 
 Data2 <- Raw %>%
   filter(Año == 2024) %>%
@@ -45,12 +53,13 @@ Data2 <- Raw %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Cantidad),
             Porcentaje = sum(Porcentaje)) %>%
-  mutate(Label = paste0("<span style='font-size:15pt'>**",
-                        round(Porcentaje,1),
-                        "%**</span><br><span style='font-size:8pt'>",
-                        formatC(Cantidad, big.mark = ".", decimal.mark = ",",
-                                "</span>")),
-         ypos = (sum(Cantidad) - lag(cumsum(Cantidad), default = 0) - 0.5 * Cantidad)) %>%
+  mutate(Label = ifelse(Porcentaje > 10,
+                        paste0("<span style='font-size:15pt'>**",
+                               round(Porcentaje,1),
+                               "%**</span><br><span style='font-size:8pt'>",
+                               formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                               "</span>"),
+                        "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
@@ -65,33 +74,33 @@ Colores <- c("Física" = "#a5549c",
 # Gr?fico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo)) +
   geom_rect() +
-  geom_richtext(aes(x = 3.2, y=ymid, label=Label), size=3,
-                color = "black",
-                label.color = NA, family="font",
+  geom_richtext(aes(x = 3, y=ymid, label=Label),
+                color = "black", hjust=0.5, lineheight=1.25,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(name = "Tipo de violencia",
-                    values = Colores) +
+                    values = Colores,
+                    labels = Data1$Leyenda) +
   labs(title="2.025",
        subtitle = "primer semestre") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "right",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=15, face="italic", hjust=0.5),
-        legend.title = element_text(family="font", size=10, margin=margin(b=5)),
-        legend.text = element_text(size=15),
-        legend.box.margin=margin(5,5,5,5),
-        legend.key.spacing.y = unit(0.5, "cm"),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=10, family="font_sans"),
+        legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
 # Gr?fico2
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo)) +
   geom_rect() +
-  geom_richtext(aes(x = 3.2, y=ymid, label=Label), size=3,
-                color = "black",
-                label.color = NA, family="font",
+  geom_richtext(aes(x = 3, y=ymid, label=Label),
+                color = "black", hjust=0.5, lineheight=1,
+                label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4.5)) +
@@ -99,10 +108,10 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo
   scale_fill_manual(values = Colores) +
   labs(title="2.024",
        subtitle="Todo el año") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
-        plot.title = element_text(family="font", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font", size=12, face="italic", hjust=0.5),
+        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
         legend.title = element_blank(),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5))
@@ -118,7 +127,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=10, height=5)
+       plot=grafico, dpi=100, width=7, height=3.5)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=10, height=5)
+       plot=grafico, dpi=72, width=7, height=3.5)

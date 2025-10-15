@@ -32,11 +32,14 @@ Data1 <- Raw %>%
                         "%**</span><br><span style='font-size:6pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>")) %>%
+  mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(Leyenda = ifelse(Porcentaje >= 10, as.character(Tipo),
+                          paste0(Tipo, " (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","), "%)")))
 
 Data2 <- Raw %>%
   filter(Año == 2024, Tipo != "Abuso sexual") %>%
@@ -50,6 +53,7 @@ Data2 <- Raw %>%
                         "%**</span><br><span style='font-size:4pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>")) %>%
+  mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
@@ -70,7 +74,7 @@ Total2 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
                   "**", formatC(sum(Data2$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"),
                   "**")
 
-# Gr?fico1
+# Gráfico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total1, hjust = 0.5,
@@ -84,17 +88,17 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(name = str_wrap("Situación motivo del requerimiento", width=20),
-                    values = Colores, labels = function(z) str_wrap(z, width=20)) +
+                    values = Colores,
+                    labels=str_wrap(Data1$Leyenda, 25)) +
   labs(title="2.025",
        subtitle = "enero-junio") +
   theme(text=element_text(family="font_sans"),
         legend.position = "right",
         plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
         plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_sans"),
-        legend.text = element_text(size=12),
-        legend.box.margin=margin(5,5,5,5),
-        legend.key.spacing.y = unit(0.5, "cm"),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=10, family="font_sans"),
+        legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
 # Gr?fico2

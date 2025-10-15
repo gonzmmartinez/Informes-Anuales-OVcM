@@ -10,7 +10,8 @@ library(magick)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -39,15 +40,15 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Vínculo, Ord))) +
   theme_classic() +
   labs(y="Vínculo con la persona que resultó denunciada", x="Porcentaje") +
   geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark = ",")), color = "black",
-            size=4, family="font", hjust = 0, nudge_x = 1, nudge_y = -0.15) +
+            size=4, family="font_sans", hjust = 0, nudge_x = 1, nudge_y = -0.15) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark = ","), "%")), color = "black",
-            size=7, family="font", fontface="bold", hjust = 0, nudge_x = 1, nudge_y = 0.15) +
+            size=7, family="font_sans", fontface="bold", hjust = 0, nudge_x = 1, nudge_y = 0.15) +
   scale_x_continuous(limits = c(0, round(max(Data1$Porcentaje) * 1.2, -1)),
                      labels = function(z) paste0(z, "%")) +
   scale_y_discrete(labels = function(z) str_wrap(z, 30)) +
-  theme(text=element_text(family="font"), legend.position="none",
-        plot.title = element_text(size=40, family="font", face="bold"),
-        plot.subtitle = element_text(size=25, family="font", face="italic", margin=margin(t=5,r=0,b=20,l=0)),
+  theme(text=element_text(family="font_sans"), legend.position="none",
+        plot.title = element_text(size=40, family="font_sans", face="bold"),
+        plot.subtitle = element_text(size=25, family="font_sans", face="italic", margin=margin(t=5,r=0,b=20,l=0)),
         legend.background = element_blank(), legend.box.background = element_rect(color = "black"),
         legend.box.margin=margin(5,5,5,5),
         panel.grid = element_blank(),
@@ -65,5 +66,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=8)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=8)

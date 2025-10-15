@@ -12,7 +12,8 @@ library(tidyr)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Crear datos
@@ -60,16 +61,16 @@ grafico <- ggplot(Data, aes(x=Cantidad, y=Level, fill=Organismo)) +
   geom_polygon(data = Trapezoides, aes(x = x, y = y, group = Organismo, fill=Organismo), alpha = 0.5) +
   geom_rect(aes(xmin = xmin, xmax=xmax, ymin = ymin, ymax=ymax)) +
   geom_text(aes(x=0, y=Level, label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
-            family="font", size=17.5, fontface="bold", color="white") +
+            family="font_sans", size=17.5, fontface="bold", color="white") +
   geom_text(aes(x=xmax, label=str_wrap(Texto, width=15), color=Organismo),
-            family="font", fontface="bold", size=12, nudge_x = 1000, hjust=0) +
+            family="font_sans", fontface="bold", size=12, nudge_x = 1000, hjust=0) +
   geom_text(aes(x=xmin, label=str_wrap(Descripcion, width=35)),
-            family="font", color="grey20", size=6, nudge_x=-6000) +
+            family="font_sans", color="grey20", size=6, nudge_x=-6000) +
   theme_void() +
   scale_fill_manual(values = Colores, name="") +
   scale_color_manual(values = Colores, name="") +
   scale_x_continuous(limits = c(-20000, 17500)) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position = "none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
