@@ -26,7 +26,7 @@ Data1 <- Raw %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Motivo = factor(Motivo,
-                         levels = c("Violencia familiar", "Violencia de género", "No violencia y otros"))) %>%
+                         levels = c("Violencia familiar", "Violencia de género", "No violencia y otros", "Provenientes de otros juzgados"))) %>%
   arrange(Motivo) %>%
   mutate(Label = paste0("<span style='font-size:10pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
@@ -45,7 +45,7 @@ Data2 <- Raw %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Motivo = factor(Motivo,
-                         levels = c("Violencia familiar", "Violencia de género", "No violencia y otros"))) %>%
+                         levels = c("Violencia familiar", "Violencia de género", "No violencia y otros", "Provenientes de otros juzgados"))) %>%
   arrange(Motivo) %>%
   mutate(Label = paste0("<span style='font-size:8pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
@@ -61,7 +61,8 @@ Data2 <- Raw %>%
 # Definir colores
 Colores <- c("Violencia familiar" = "#f2904c",
              "Violencia de género" = "#1daa6a",
-             "No violencia y otros" = "#ec6489")
+             "No violencia y otros" = "#ec6489",
+             "Provenientes de otros juzgados" = "#6e3169")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
