@@ -41,7 +41,9 @@ Data <- Raw %>%
   ungroup() %>%
   mutate(Año = factor(case_when(Año == 2024 ~ "2.024 (todo el año)",
                                 Año == 2025 ~ "2.025 (primer semestre)"),
-                      levels = c("2.025 (primer semestre)", "2.024 (todo el año)")))
+                      levels = c("2.025 (primer semestre)", "2.024 (todo el año)"))) %>%
+  group_by(Año) %>%
+  top_n(10, Tasa)
 
 # Colores
 Colores <- c()
@@ -55,10 +57,10 @@ grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
   geom_text(aes(y = Tasa*5000, label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",", format="fg")),
             color="#a5549c", size=4, nudge_y=1500, family="font_sans") +
   labs(title="",
-       x="Departamento", y="Cantidad") +
+       x="Departamento", y="Cantidad de denuncias") +
   facet_wrap(~Año, nrow=2, scales="free_x") +
   theme_light() +
-  scale_x_discrete(labels = function(z) str_sub(z, start=1, end=-6)) +
+  scale_x_discrete(labels = function(z) str_wrap(str_sub(z, start=1, end=-6), width=12)) +
   scale_y_continuous(limits=c(0, 23000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(transform=~./5000, name="Tasa de denuncias por cada 100 habitantes")) +
   theme(text=element_text(family="font_sans"), legend.position="none",
@@ -67,7 +69,7 @@ grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
         plot.caption = element_blank(),
         panel.grid = element_blank(),
         panel.grid.major = element_line(colour = "grey95"),
-        axis.text.x = element_text(size=12, margin = margin(t=5,r=0,b=5,l=0), angle=45, hjust=1),
+        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0), hjust=0.5),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20),
         axis.title.y = element_text(size=20, margin=margin(r=10, l=10)),

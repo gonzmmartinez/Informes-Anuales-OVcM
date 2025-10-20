@@ -35,6 +35,11 @@ Data1 <- Raw %>%
                         "%**</span><br><span style='font-size:6pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>")) %>%
+  mutate(Label2 = ifelse(Porcentaje >= 50, paste0("<span style='font-size:15pt'>**",
+                                                  formatC(round(Porcentaje,1), big.mark=".", decimal.mark=",", digits=1, format="f"),
+                                                  "%**</span><br><span style='font-size:10pt'>",
+                                                  formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                                                  "</span>"), NA)) %>%
   mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
@@ -90,6 +95,10 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organis
                 color = "black", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
+  geom_richtext(aes(x = 3.5, y=ymid, label=Label2),
+                color = "black", hjust=0.5, lineheight=1.125,
+                label.color = NA, family="font_sans", label.padding = unit(2, "mm"),
+                show.legend=FALSE, fill="#1daa6a", text.color="white") +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
   theme_void() +

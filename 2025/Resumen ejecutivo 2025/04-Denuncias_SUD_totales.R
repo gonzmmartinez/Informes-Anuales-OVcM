@@ -19,46 +19,50 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWbTfAquSDR25YWnSDTL8T5MFkllvU/edit?usp=sharing",
                   sheet = "SUD_db_completa") %>%
-  filter(Tipo != "Penal")
+  mutate(Tipo = case_when(Tipo == "Género" ~ "Violencia de género y/o familiar",
+                          Tipo == "Familiar" ~ "Violencia de género y/o familiar",
+                          Tipo == "No penal" ~ "Violencia de género y/o familiar",
+                          Tipo == "Penal" ~ "Otros delitos penales"))
 
 Data1 <- Raw %>%
   filter(Año == 2025) %>%
-  group_by(Organismo) %>%
+  group_by(Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  mutate(Organismo = ifelse(Organismo == "OOD", "OOyD", Organismo)) %>%
-  mutate(Organismo = factor(Organismo,
-                            levels = c("OVFG", "OOyD", "Fiscalías", "Comisarías"))) %>%
-  arrange(Organismo) %>%
+  mutate(Tipo = factor(Tipo,
+                         levels = c("Violencia de género y/o familiar",
+                                    "Otros delitos penales"))) %>%
+  arrange(Tipo) %>%
   mutate(Label = paste0("<span style='font-size:10pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
                         "%**</span><br><span style='font-size:6pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>")) %>%
-  mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
+  mutate(Label2 = ifelse(Porcentaje <= 50, paste0("<span style='font-size:15pt'>**",
+                                                  formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
+                                                  "%**</span><br><span style='font-size:10pt'>",
+                                                  formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
+                                                  "</span>"), NA)) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
-  ungroup() %>%
-  mutate(Leyenda = ifelse(Porcentaje >= 10, as.character(Organismo),
-                          paste0(Organismo, " (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","), "%)")))
+  ungroup()
 
 Data2 <- Raw %>%
   filter(Año == 2024) %>%
-  group_by(Organismo) %>%
+  group_by(Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  mutate(Organismo = ifelse(Organismo == "OOD", "OOyD", Organismo)) %>%
-  mutate(Organismo = factor(Organismo,
-                            levels = c("OVFG", "OOyD", "Fiscalías", "Comisarías"))) %>%
-  arrange(Organismo) %>%
+  mutate(Tipo = factor(Tipo,
+                       levels = c("Violencia de género y/o familiar",
+                                  "Otros delitos penales"))) %>%
+  arrange(Tipo) %>%
   mutate(Label = paste0("<span style='font-size:8pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
                         "%**</span><br><span style='font-size:4pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>")) %>%
-  mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
@@ -66,10 +70,8 @@ Data2 <- Raw %>%
   ungroup()
 
 # Definir colores
-Colores <- c("OVFG" = "#6e3169",
-             "OOyD" = "#e54c7c",
-             "Fiscalías" = "#f2904c",
-             "Comisarías" = "#1daa6a")
+Colores <- c("Violencia de género y/o familiar" = "#a5549c",
+             "Otros delitos penales" = "#1daa6a")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
@@ -81,7 +83,7 @@ Total2 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
                   "**")
 
 # Gr?fico1
-grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organismo)) +
+grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total1, hjust = 0.5,
                halign = 0.5, fill = NA, size=8, box.color=NA,
@@ -90,12 +92,14 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organis
                 color = "black", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
-  coord_polar(theta="y") +
+  geom_richtext(aes(x = 3.5, y=ymid, label=Label2),
+                color = "black", hjust=0.5, lineheight=1.125,
+                label.color = NA, family="font_sans", label.padding = unit(2, "mm"),
+                show.legend=FALSE, fill="#a5549c", text.color="white") +
+  coord_polar(theta="y", clip="off") +
   xlim(c(1.5, 4)) +
   theme_void() +
-  scale_fill_manual(name = str_wrap("Boca de denuncia", width=20),
-                    values = Colores,
-                    labels=str_wrap(Data1$Leyenda, 25)) +
+  scale_fill_manual(values = Colores, name="Tipo de denuncia", labels=function(z) str_wrap(z, width=20)) +
   labs(title="2.025",
        subtitle = "primer semestre") +
   theme(text=element_text(family="font_sans"),
@@ -108,7 +112,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organis
         plot.background = element_rect(fill = "white", colour = NA))
 
 # Gr?fico2
-grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organismo)) +
+grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total2, hjust = 0.5,
                halign = 0.5, fill = NA, size=6, box.color=NA,
@@ -117,12 +121,12 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organis
                 color = "black", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
-  coord_polar(theta="y") +
+  coord_polar(theta="y", clip="off") +
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(values = Colores) +
   labs(title="2.024",
-       subtitle = str_wrap("enero-diciembre", 20)) +
+       subtitle = "enero-diciembre") +
   theme(text=element_text(family="font_sans"),
         legend.position = "none",
         plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
@@ -136,7 +140,7 @@ grafico <- plot_grid(grafico2, grafico1, ncol=2,
                      rel_widths = c(1,2)) +
   theme(plot.background = element_rect(fill = "white", colour = NA))
 
-# Guardar gráfico
+# Guardar gr?fico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
                     str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
 
@@ -146,3 +150,4 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=7, height=3.5)
+

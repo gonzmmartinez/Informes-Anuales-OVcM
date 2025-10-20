@@ -11,6 +11,7 @@ library(stringr)
 library(directlabels)
 library(ggrepel)
 library(googlesheets4)
+library(ggtext)
 
 # Fuentes
 library(showtext)
@@ -41,8 +42,11 @@ Labels <- Data %>%
   group_by(Año) %>%
   filter(Mes_num == max(Mes_num)) %>%
   ungroup %>%
-  mutate(xpos = Mes_num+0.35,
-         Label = str_replace(as.character(Año), "^(\\d)(\\d+)$", "\\1.\\2"))
+  mutate(xpos = Mes_num+0.4,
+         Label = str_replace(as.character(Año), "^(\\d)(\\d+)$", "\\1.\\2")) %>%
+  mutate(ypos = case_when(Año == 2023 ~ Cantidad - 500,
+                          Año == 2025 ~ Cantidad + 500,
+                          .default = Cantidad))
 
 # Colores
 Colores <- c()
@@ -51,9 +55,11 @@ Colores <- c()
 grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   geom_line(aes(color=Año), linewidth=2) +
   geom_point(aes(color=Año), size=3) +
-  geom_label_repel(data=Labels, aes(x=xpos, y=Cantidad, label=Label, color=Año), fill="white",
-                   family="font_serif", box.padding=0.01, point.padding=0.01, force=0.001,
-                   max.overlaps=Inf, min.segment.length=0, direction="y", vjust = 0.5, alpha=0.75) +
+  geom_label(data=Labels, aes(x=xpos, y=ypos, label=Label, fill=Año), color="white",
+             family="font_serif", alpha=0.75) +
+  geom_textbox(inherit.aes = FALSE, aes(x=8.5, y=22500, label="Mayor cantidad de requerimientos en la **segunda mitad del año**"),
+               family="font", color="black", width=unit(0.6, "npc"), halign=0.5, size=5, lineheight=1,
+               box.colour = NA, fill=NA) +
   labs(title="",
        x="Mes", y="Cantidad") +
   theme_light() +
@@ -63,7 +69,7 @@ grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
         plot.caption = element_text(size=12, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid.major = element_line(colour = "grey95"),
         axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20),
