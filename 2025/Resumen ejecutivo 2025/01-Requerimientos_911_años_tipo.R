@@ -45,23 +45,24 @@ Totales <- Data %>%
   mutate(x = 1, y=Title_ypos)
 
 # Colores
-Colores <- c("#7149C6", "#FC2947","#FE6244")
+Paleta2 <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Definir colores
-Colores <- c("Violencia de género" = "#f2904c",
-             "Violencia familiar en curso" = "#ec6489",
-             "Violencia familiar histórica" = "#6e3169")
+Colores <- c("Violencia de género" = "#ff621d",
+             "Violencia familiar en curso" = "#a782ec",
+             "Violencia familiar histórica" = "#852f8c")
 
-# Gr?fico
+# Gráfico
 grafico <- ggplot(Data, aes(x=Accion, y=Cantidad, fill=Tipo)) +
   geom_col(position="dodge") +
   geom_text(aes(label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg"), group=Tipo),
-            position=position_dodge(width=0.9), vjust=-0.5, size=7, family="font_sans", color="black") +
+            position=position_dodge(width=0.9), vjust=-0.5, size=5, family="font_sans", color="black") +
   facet_wrap(~Año, nrow=2, scales='free') +
   geom_text(data=Totales, aes(x=Accion, y=y, label=formatC(Total, big.mark=".", decimal.mark=",", format="fg")),
             inherit.aes = FALSE, size=10, family="font_sans", fontface="bold") +
   labs(title="",
-       x="Requerimiento", y="Cantidad de requerimientos solicitados") +
+       x="Requerimiento", y=str_wrap("Cantidad de requerimientos solicitados", 30)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark=",", format="fg"),
                      limits = c(0, round(max(Data$Cantidad) * 1.5, -3))) +
@@ -82,10 +83,10 @@ grafico <- ggplot(Data, aes(x=Accion, y=Cantidad, fill=Tipo)) +
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20),
         axis.title.y = element_text(size=20),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=25, color="white", family="font_serif", face="bold"))
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=20, color="black", family="font_serif", face="bold", margin=margin(t=10, b=10)))
 
-# Guardar gr?fico
+# Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
                     str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
 

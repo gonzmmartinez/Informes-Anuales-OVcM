@@ -46,16 +46,17 @@ Data <- Raw %>%
   top_n(10, Tasa)
 
 # Colores
-Colores <- c()
+Paleta2 <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
-  geom_col(fill="#1daa6a") +
+  geom_col(fill="#25879e") +
   geom_text(aes(label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg")),
-            color="#1daa6a", size=3, nudge_y=1000, family="font_sans") +
-  geom_point(aes(y=Tasa*5000), size=5, color="#a5549c") +
+            color="#25879e", size=3, nudge_y=1000, family="font_sans") +
+  geom_point(aes(y=Tasa*5000), size=5, color="#d3335e") +
   geom_text(aes(y = Tasa*5000, label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",", format="fg")),
-            color="#a5549c", size=4, nudge_y=1500, family="font_sans") +
+            color="#d3335e", size=4, nudge_y=1500, family="font_sans") +
   labs(title="",
        x="Departamento", y="Cantidad de denuncias") +
   facet_wrap(~Año, nrow=2, scales="free_x") +
@@ -74,8 +75,9 @@ grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
         axis.title.x = element_text(size=20),
         axis.title.y = element_text(size=20, margin=margin(r=10, l=10)),
         axis.title.y.right = element_text(size=20, margin=margin(r=10, l=10)),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font_serif", face="bold"))
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif",
+                                  face="bold", margin=margin(t=10, b=10)))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

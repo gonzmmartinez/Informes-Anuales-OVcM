@@ -48,13 +48,20 @@ Labels <- Data %>%
                           Año == 2025 ~ Cantidad + 500,
                           .default = Cantidad))
 
-# Colores
-Colores <- c()
+Paleta2 <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d",
+             "#2b42a0", "#ff9d27", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("2025" = "#f93e35",
+             "2024" = "#eb55a1",
+             "2023" = "#c676e3",
+             "2022" = "#9497fe",
+             "2021" = "#63b3f3",
+             "2020" = "#5ec5d4")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   geom_line(aes(color=Año), linewidth=2) +
-  geom_point(aes(color=Año), size=3) +
+  geom_point(aes(color=Año), size=2.5) +
   geom_label(data=Labels, aes(x=xpos, y=ypos, label=Label, fill=Año), color="white",
              family="font_serif", alpha=0.75) +
   geom_textbox(inherit.aes = FALSE, aes(x=8.5, y=22500, label="Mayor cantidad de requerimientos en la **segunda mitad del año**"),
@@ -65,6 +72,8 @@ grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   theme_light() +
   scale_x_discrete(labels = function(z) str_sub(z, 1, 3), expand = expansion(add = c(0.5, 1))) +
   scale_y_continuous(limits=c(5000, 25000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ",")) +
+  scale_color_manual(values=Colores) +
+  scale_fill_manual(values=Colores) +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),

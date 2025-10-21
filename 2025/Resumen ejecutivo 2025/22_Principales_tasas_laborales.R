@@ -19,7 +19,8 @@ library(ggh4x)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -61,9 +62,12 @@ Brechas <- Data %>%
   rowwise() %>%
   mutate(ypos = min(Varones, Mujeres))
 
-# Colores
-Colores <- c("Varones" = "#f2904c",
-             "Mujeres" = "#1daa6a")
+# Definir colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Mujeres" = "#ff621d",
+             "Varones" = "#852f8c")
 
 # Escalas
 custom_y <- list(
@@ -81,7 +85,7 @@ custom_y <- list(
 grafico <- ggplot(Data, aes(x=Género, y=Valor)) +
   geom_col(aes(x=Género, y=Valor, fill=Género)) +
   geom_text(aes(label=paste0(formatC(Valor, format = "f", digits = 1, decimal.mark = ","), "%")),
-            family="font_sans", size=7.5, fontface="bold", nudge_y=c(-5,-5,-1.25,-1.25), color="white") +
+            family="font_sans", size=7.5, fontface="bold", nudge_y=c(-5,-5,-1.25,-1.25, -5, -5,-1.25,-1.25), color="white") +
   geom_text(data=Brechas, inherit.aes=FALSE,
             aes(x=c(1,1,2,2), y=ypos, label=paste0(formatC(Brecha, format = "f", digits = 1, decimal.mark = ","), "%")),
             family="font_sans", size=5, fontface="bold", nudge_y=c(6,6,1,1), color="black") +
@@ -97,7 +101,7 @@ grafico <- ggplot(Data, aes(x=Género, y=Valor)) +
   scale_y_continuous(labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")) +
   scale_x_discrete(labels = function(z) paste0(str_sub(z, 6, -1), "°")) +
   scale_fill_manual(name="Género", values=Colores) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
@@ -109,11 +113,11 @@ grafico <- ggplot(Data, aes(x=Género, y=Valor)) +
         axis.ticks.x = element_blank(),
         plot.margin = unit(c(0, 0.5, 0.5, 0.5), "cm"),
         panel.spacing.y = unit(1, "cm"),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font", face="bold"),
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif", face="bold", margin=margin(t=10, b=10)),
         legend.position= "top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
+        legend.title = element_text(size=10, family="font_serif"),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5),
         legend.key.spacing.x = unit(0.5, "cm"))
