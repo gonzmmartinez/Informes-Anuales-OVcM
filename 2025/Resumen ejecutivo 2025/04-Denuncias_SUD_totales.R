@@ -22,7 +22,7 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWb
   mutate(Tipo = case_when(Tipo == "Género" ~ "Violencia de género y/o familiar",
                           Tipo == "Familiar" ~ "Violencia de género y/o familiar",
                           Tipo == "No penal" ~ "Violencia de género y/o familiar",
-                          Tipo == "Penal" ~ "Otros delitos penales"))
+                          Tipo == "Penal" ~ "Otros delitos"))
 
 Data1 <- Raw %>%
   filter(Año == 2025) %>%
@@ -31,7 +31,7 @@ Data1 <- Raw %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Tipo = factor(Tipo,
                          levels = c("Violencia de género y/o familiar",
-                                    "Otros delitos penales"))) %>%
+                                    "Otros delitos"))) %>%
   arrange(Tipo) %>%
   mutate(Label = paste0("<span style='font-size:10pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
@@ -56,7 +56,7 @@ Data2 <- Raw %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Tipo = factor(Tipo,
                        levels = c("Violencia de género y/o familiar",
-                                  "Otros delitos penales"))) %>%
+                                  "Otros delitos"))) %>%
   arrange(Tipo) %>%
   mutate(Label = paste0("<span style='font-size:8pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
@@ -74,7 +74,7 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d",
              "#2b42a0", "#ff9d27", "#f93e35", "#d3335e", "#cbc2ce")
 
 Colores <- c("Violencia de género y/o familiar" = "#f93e35",
-             "Otros delitos penales" = "#2b42a0")
+             "Otros delitos" = "#2b42a0")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
