@@ -32,13 +32,17 @@ Data1 <- Raw %>%
   mutate(Ord = row_number()) %>%
   mutate(Ord = ifelse(Vínculo == "Otro", max(Ord) + 1, Ord))
 
+# Definir colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Gráfico
 grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Vínculo, Ord))) +
-  geom_col(data = subset(Data1, Vínculo == "Otro"), fill = "grey80") +
+  geom_col(data = subset(Data1, Vínculo == "Otro"), fill = "#cbc2ce") +
   geom_col(data = subset(Data1, Vínculo != "Otro"), aes(fill=Cantidad)) +
-  scale_fill_gradient(low="#1daa6a", high="#e54c7c") +
+  scale_fill_gradient(low="#fc9f9a", high="#f93e35") +
   theme_classic() +
-  labs(y="Vínculo con la persona que resultó denunciada", x="Porcentaje") +
+  labs(y=str_wrap("Vínculo con la persona que resultó denunciada", 25), x="Porcentaje") +
   geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark = ",")), color = "black",
             size=4, family="font_sans", hjust = 0, nudge_x = 1, nudge_y = -0.15) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark = ","), "%")), color = "black",
@@ -53,7 +57,6 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Vínculo, Ord))) +
         legend.box.margin=margin(5,5,5,5),
         panel.grid = element_blank(),
         panel.grid.major.x = element_line(color="grey95", linewidth = 0.5),
-        panel.grid.minor.x = element_line(color="grey98", linewidth = 0.5),
         axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=0,l=0)),
         axis.text.y = element_text(size=20, margin = margin(t=0,r=10,b=0,l=0)),
         axis.title.x = element_text(size=20, margin = margin(t=15, r=0, b=0, l=0)),

@@ -69,21 +69,24 @@ Data2 <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup()
 
-# Definir colores
-Colores <- c("Doméstica" = "#e54c7c",
-             "Acoso callejero" = "#6e3169",
-             "Institucional" = "#f2904c",
-             "Laboral" = "#ffd241",
-             "Mediática" = "#1daa6a",
-             "Obstétrica" = "#4cb2f2",
-             "Política" = "#f24c7e",
-             "Otras" = "#747264")
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Doméstica" = "#852f8c",
+             "Acoso callejero" = "#a782ec",
+             "Institucional" = "#ff9d27",
+             "Laboral" = "#5ec5d4",
+             "Mediática" = "#2b42a0",
+             "Obstétrica" = "#206170",
+             "Política" = "#f93e35",
+             "Otras" = "#cbc2ce")
 
 # Gráfico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Modalidad)) +
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
-                color = "black", hjust=0.5, lineheight=1.25,
+                color = "white", hjust=0.5, lineheight=1.25,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
@@ -107,7 +110,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Modalidad)) +
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
-                color = "black", hjust=0.5, lineheight=1.25,
+                color = "white", hjust=0.5, lineheight=1.25,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +

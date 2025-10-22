@@ -25,12 +25,11 @@ Data1 <- Raw %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  mutate(Tipo = replace(Tipo, Porcentaje <= 5, "Otras")) %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Cantidad),
             Porcentaje = sum(Porcentaje)) %>%
   mutate(Label = ifelse(Porcentaje > 10,
-                        paste0("<span style='font-size:20pt'>**",
+                        paste0("<span style='font-size:15pt'>**",
                                round(Porcentaje,1),
                                "%**</span><br><span style='font-size:10pt'>",
                                formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
@@ -49,12 +48,11 @@ Data2 <- Raw %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  mutate(Tipo = replace(Tipo, Porcentaje <= 5, "Otras")) %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Cantidad),
             Porcentaje = sum(Porcentaje)) %>%
   mutate(Label = ifelse(Porcentaje > 10,
-                        paste0("<span style='font-size:15pt'>**",
+                        paste0("<span style='font-size:12pt'>**",
                                round(Porcentaje,1),
                                "%**</span><br><span style='font-size:8pt'>",
                                formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
@@ -67,15 +65,20 @@ Data2 <- Raw %>%
   ungroup()
 
 # Definir colores
-Colores <- c("Física" = "#a5549c",
-             "Psicológica" = "#1daa6a",
-             "Simbólica" = "#f2904c",
-             "Otras" = "#747264")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Física" = "#206170",
+             "Psicológica" = "#ff621d",
+             "Simbólica" = "#2b42a0",
+             "Económica/Patrimonial" = "#a782ec",
+             "Sexual" = "#d3335e",
+             "Otras" = "#cbc2ce")
 # Gr?fico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo)) +
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
-                color = "black", hjust=0.5, lineheight=1.25,
+                color = "white", hjust=0.5, lineheight=1.25,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
@@ -99,7 +102,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Tipo)) +
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
-                color = "black", hjust=0.5, lineheight=1,
+                color = "white", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +

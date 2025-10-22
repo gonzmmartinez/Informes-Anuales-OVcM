@@ -36,21 +36,26 @@ Data <- Raw %>%
 Total <- Data %>%
   filter(Hora %in% c(0,1,2,19,20,21,22,23))
 
-# Gr?fico
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+# Gráfico
 grafico1 <- ggplot(Data, aes(x=Hora, y=Mes, fill=Cantidad)) +
   geom_tile() +
   geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")),
-            family="font_sans", size=3, color="black", alpha=0.7) +
+            family="font_sans", size=3, color="white", alpha=0.7) +
   annotate(geom="rect", xmin=c(0.5, 19.5), ymax=6.5, ymin=0.5, xmax=c(3.5,24.5),
-           color="#6e3169", fill="#6e3169", alpha=0.1) +
+           color="#852f8c", fill="#852f8c", alpha=0.1) +
   labs(x="Hora del día", y="Mes") +
-  scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Cantidad)) +
+  scale_fill_gradient(low="#ffd283", high="#852f8c") +
   theme_light() +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
         plot.caption = element_text(size=10, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95"),
         plot.background = element_rect(fill = "white", colour = "white"),
         panel.border = element_blank(),
         axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=0,l=0)),
@@ -60,17 +65,17 @@ grafico1 <- ggplot(Data, aes(x=Hora, y=Mes, fill=Cantidad)) +
 
 grafico2 <- ggplot(x=1:2, y=1:2) +
   geom_textbox(aes(x=1.5, y=1.5,
-                   label=paste0("<span style='font-size:40pt; color:#6e3169'>**",
+                   label=paste0("<span style='font-size:40pt; color:#0f216d'>**",
                                 formatC(round(sum(Total$Porcentaje),0), big.mark=".", decimal.mark=","),
                                 "%**</span><br>",
                                 "<span style='font-size:8pt'>(",
                                 formatC(sum(Total$Cantidad), big.mark=".", decimal.mark=",", "fg"),
                                 ")</span><br>",
                                 "<span style='font-size:12pt'>de las llamadas por</span><br>",
-                                "<span style='font-size:12pt; color:#6e3169'>**violencia de género**</span><br>",
-                                "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#6e3169'>**violencia familiar**</span><br>",
+                                "<span style='font-size:12pt; color:#0f216d'>**violencia de género**</span><br>",
+                                "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#0f216d'>**violencia familiar**</span><br>",
                                 "<span style='font-size:12pt'>se registraron entre las</span><br>",
-                                "<span style='font-size:12pt; color:#6e3169; text-decoration: underline'>**19:00 y 3:00 hs**</span><br>")),
+                                "<span style='font-size:12pt; color:#0f216d; text-decoration: underline'>**19:00 y 3:00 hs**</span><br>")),
                label.color = NA, family="font", halign = 0.5, fill=NA, color="white", text.color="black",
                show.legend=FALSE, fill=NA, size=4) +
   theme_void() +

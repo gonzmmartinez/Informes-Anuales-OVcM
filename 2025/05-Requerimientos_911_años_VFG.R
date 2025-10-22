@@ -31,17 +31,20 @@ Data <- Raw %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad/sum(Cantidad))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Definir colores
-Colores <- c("Violencia de género" = "#f2904c",
-             "Violencia familiar" = "#ec6489",
-             "Violencia familiar histórica" = "#6e3169")
+Colores <- c("Violencia de género" = "#ff621d",
+             "Violencia familiar" = "#852f8c")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   geom_hline(yintercept = 0.5, color="gray", linetype=2) +
   geom_col(position="fill", width=0.7) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark=",", format="fg"), "%")),
-            family="font", position = position_fill(vjust = 0.5), size=8) +
+            family="font", position = position_fill(vjust = 0.5), size=7.5, color="white") +
   labs(y="Porcentaje", x="Año",
        caption="* las proporciones se calculan en base a los datos correspondientes al primer trimestre únicamente.") +
   scale_y_continuous(labels = function(x) paste0(x * 100, "%")) +
@@ -51,11 +54,11 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   theme(text=element_text(family="font_sans"),
         legend.position="top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font_sans"),
+        legend.title = element_text(size=10, family="font_serif"),
         legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font_sans", face="bold"),
-        plot.subtitle = element_text(size=15, family="font_sans"),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
         plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid = element_blank(),
         axis.text.x = element_text(size=20, margin = margin(t=10,r=0,b=5,l=0)),

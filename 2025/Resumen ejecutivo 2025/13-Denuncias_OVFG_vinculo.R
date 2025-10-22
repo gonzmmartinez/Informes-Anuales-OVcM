@@ -40,9 +40,9 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
 grafico <- ggplot(Data, aes(y=Porcentaje, x=reorder(Vínculo, -Ord))) +
   geom_col(data = subset(Data, Vínculo == "Otro"), aes(x=8), fill = "#cbc2ce") +
   geom_col(data = subset(Data, Vínculo != "Otro"), aes(fill=Cantidad)) +
-  scale_fill_gradient2(low="#2b42a0", high="#f93e35", mid="#2b42a0") +
+  scale_fill_gradient(low="#fc9f9a", high="#f93e35") +
   theme_light() +
-  labs(y=str_wrap("Vínculo con la persona que resultó denunciada", 30), x="Porcentaje") +
+  labs(x="Vínculo con la persona que resultó denunciada", y="Porcentaje") +
   geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark = ",")), color = "black",
             size=4, family="font_sans", hjust = 0.5, nudge_y = 1) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark = ","), "%")), color = "black",

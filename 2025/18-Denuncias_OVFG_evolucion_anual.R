@@ -53,7 +53,8 @@ Data <- Data_trimestral %>%
 Estimacion <- (Data %>% filter(Año == "2.025"))$Cantidad + round(sum(as.numeric(Prediccion$mean)))
 
 # Colores
-Colores <- c("#6e3169", "#ec6489")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
@@ -68,15 +69,15 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
   annotate(geom="text", x=10, y=Estimacion+750,
            label = str_wrap("Proyección del número total de denuncias para el año 2.025 completo", width=20),
            vjust=0, family="font_sans", fontface="italic", color="gray", size=4) +
-  annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#6e3169", linewidth=1) +
+  annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#f93e35", linewidth=1) +
   annotate(geom="text", x=8, y=29037+750,
            label = "Estimación realizada\nen 2.024:\n 29.037 denuncias",
-           vjust=0, hjust=0, family="font_sans", fontface="italic", color="#6e3169", size=4) +
+           vjust=0, hjust=0, family="font_sans", fontface="italic", color="#f93e35", size=4) +
   labs(title="",
        x="Año", y="Cantidad") +
   scale_y_continuous(limits=c(0,max(Data$Cantidad+7000)), labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d")) +
   theme_light() +
-  scale_fill_gradient2(low="#f2904c", high="#c93131", mid="#e55a3e", midpoint=mean(Data$Cantidad)) +
+  scale_fill_gradient(low="#8790b6", high="#0f216d") +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),

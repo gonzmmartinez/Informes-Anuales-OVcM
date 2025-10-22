@@ -31,10 +31,14 @@ Totales <- Data %>%
   group_by(Año) %>%
   summarise(Cantidad = sum(Total))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Definir colores
-Colores <- c("Fija" = "#ec6489",
-             "Ambulatoria" = "#f2904c",
-             "Personalizada" = "#72bf90")
+Colores <- c("Fija" = "#d3335e",
+             "Ambulatoria" = "#ff9d27",
+             "Personalizada" = "#2b42a0")
 
 # Grafico 1
 grafico <- ggplot(Data, aes(x=Año, y=Total, fill=Tipo)) +
@@ -52,7 +56,7 @@ grafico <- ggplot(Data, aes(x=Año, y=Total, fill=Tipo)) +
   scale_fill_manual(name="Tipo de consigna", values = Colores) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="fg"),
                      limits=c(0, 45000), breaks=seq(0, 30000, by=10000)) +
-  scale_color_gradient2(high="#6e3169", low="#ec6489", mid="#6e3169", midpoint=mean(Totales$Cantidad, na.rm=TRUE)) +
+  scale_color_gradient(high="#a782ec", low="#d3c1f6") +
   scale_size_continuous(range=c(20, 25)) +
   theme(text=element_text(family="font_sans"),
         legend.position = "top",

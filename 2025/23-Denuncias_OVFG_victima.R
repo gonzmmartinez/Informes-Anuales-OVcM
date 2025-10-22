@@ -39,11 +39,14 @@ Data2 <- Data2 %>%
          Porcentaje = ifelse(Género == "Mujeres", Porcentaje * (-1), Porcentaje))
 
 # Definir colores
-Colores <- c("Mujeres" = "#f2904c",
-             "Varones" = "#a5549c")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Mujeres" = "#ff621d",
+             "Varones" = "#852f8c")
 
 # Texto
-Texto <- paste0("<span style='font-size:30pt; color:#6e3169'>**",
+Texto <- paste0("<span style='font-size:30pt; color:#0f216d'>**",
                 formatC(round(abs(sum((Data1 %>% filter(Año == 2025, Género == "Mujeres",
                                                         Rango_etario %in% c("22-29 años", "30-39 años", "40-49 años")))$Porcentaje)),1),
                         big.mark = ".", decimal.mark = ","),
@@ -52,13 +55,15 @@ Texto <- paste0("<span style='font-size:30pt; color:#6e3169'>**",
                 "de las personas que</span><br>",
                 "<span style='font-size:10pt'>",
                 "realizaron la denuncia son</span><br>",
-                "<span style='font-size:10pt; color:#6e3169'>**mujeres entre 22 y 49 años**</span>")
+                "<span style='font-size:10pt; color:#0f216d'>**mujeres entre 22 y 49 años**</span>")
 
 # Grafico 1
 grafico1 <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Rango_etario, Ord_rango_etario), fill=Género)) +
   geom_col(position = "stack") +
-  annotate(geom="rect", ymin=5.5, ymax=8.5, xmin=min(Data1$Porcentaje), xmax=0, linetype=2, color="grey", fill=NA) +
-  geom_textbox(aes(y=3, x=-15), label=Texto, label.color = NA, family="font", halign = 0.5, fill=NA, color="white", text.color="black",
+  annotate(geom="rect", ymin=5.5, ymax=8.5, xmin=min(Data1$Porcentaje), xmax=0,
+           linetype=2, color="grey", fill=NA) +
+  geom_textbox(aes(y=3, x=-15), label=Texto, label.color = NA, family="font", halign = 0.5,
+               fill=NA, color="white", text.color="black",
                show.legend=FALSE, fill=NA, size=4) +
   theme_light() +
   labs(title="2.025", x="Porcentaje", y="Rango etario") +

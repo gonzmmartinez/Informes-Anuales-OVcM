@@ -31,13 +31,17 @@ Data <- Raw %>%
   mutate(Orden = row_number(),
          Label = paste0(Trimestre, "-", str_sub(Año, 3,4)))
 
+
 # Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 Colores <- c("#6e3169", "#ec6489")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(x=reorder(Label, Orden), y=Cantidad, group="1")) +
   geom_vline(xintercept=c(4.5, 8.5), linetype=1, color="lightgrey") +
-  geom_col(aes(alpha=Cantidad), fill=Colores[1]) +
+  geom_col(aes(fill=Cantidad)) +
   geom_text(aes(y=Cantidad, label=formatC(Cantidad, big.mark = ".", decimal.mark = ","), size=Cantidad),
             family="font_sans", color="white", nudge_y=-500, fontface="bold") +
   annotate(geom="text", x=c(2.5, 6.5, 9.5), y=-2000, label=c("2.023", "2.024", "2.025"),
@@ -49,6 +53,7 @@ grafico <- ggplot(Data, aes(x=reorder(Label, Orden), y=Cantidad, group="1")) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark = ",", format="d")) +
   scale_x_discrete(labels = paste0(c(1:4, 1:4, 1:2), "°")) +
   scale_size_continuous(range=c(4, 6)) +
+  scale_fill_gradient(low = "#ffb18e", high="#ff621d") +
   coord_cartesian(xlim=c(1,10), ylim=c(0, 10000), clip="off") +
   theme_light() +
   scale_alpha_continuous(range=c(0.5, 1)) +

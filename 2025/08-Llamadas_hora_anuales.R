@@ -41,27 +41,34 @@ Test <- Raw %>%
     values_from = Cantidad
   )
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Gráfico
 grafico <- ggplot(Data, aes(x="", y=Hora, fill=Porcentaje)) +
   geom_tile() +
   facet_wrap(~Año, nrow=1) +
-  geom_text(aes(label=paste0(round(Porcentaje,1),"%")), family="font", size=3, color="black", alpha=0.7) +
+  geom_text(aes(label=paste0(round(Porcentaje,1),"%")), family="font", size=3, color="white", alpha=0.7) +
   labs(y="Hora del día",
        caption="* las proporciones se calculan en base a los datos correspondientes al primer trimestre únicamente.") +
   scale_y_discrete(limits = rev) + 
-  scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Porcentaje)) +
+  scale_fill_gradient(low="#ffd283", high="#852f8c") +
   theme_light() +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
         plot.caption = element_text(size=10, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95"),
         axis.text.x = element_blank(),
         axis.text.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
         axis.title.x = element_blank(),
         axis.title.y = element_text(size=20, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=20, color="white", family="font_serif", face="bold"))
+        axis.ticks.x = element_blank(),
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=20, color="black", family="font_serif", face="bold",
+                                  margin=margin(t=10, b=10)))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

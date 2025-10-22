@@ -54,18 +54,24 @@ Total_anterior <- Raw %>%
   summarise(Cantidad = sum(Cantidad),
             Porcentaje = sum(Porcentaje))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Gráfico
 grafico1 <- ggplot(Data, aes(x=Dia, y=Mes, fill=Cantidad)) +
   geom_tile() +
-  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")), family="font_sans", size=3, color="black", alpha=0.7) +
-  annotate(geom="rect", ymin=0.5, ymax=6.5, xmin=5.5, xmax=7.5, color="#6e3169", fill="#6e3169", alpha=0.1) +
+  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")),
+            family="font_sans", size=3, color="white", alpha=0.7) +
+  annotate(geom="rect", ymin=0.5, ymax=6.5, xmin=5.5, xmax=7.5, color="#852f8c", fill="#852f8c", alpha=0.1) +
   labs(x="Día de la semana", y="Mes") +
-  scale_fill_gradient2(low="#1daa6a", mid="#FAF99F", high="#a5549c", midpoint=mean(Data$Cantidad)) +
+  scale_fill_gradient(low="#ffd283", high="#852f8c") +
   theme_light() +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95"),
         plot.background = element_rect(fill = "white", color="white"),
         panel.border = element_blank(),
         axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=0,l=0)),
@@ -75,17 +81,17 @@ grafico1 <- ggplot(Data, aes(x=Dia, y=Mes, fill=Cantidad)) +
 
 grafico2 <- ggplot(x=1:2, y=1:2) +
   geom_textbox(aes(x=1.5, y=1.5,
-                label=paste0("<span style='font-size:40pt; color:#6e3169'>**",
+                label=paste0("<span style='font-size:40pt; color:#0f216d'>**",
                              formatC(round(sum(Total$Porcentaje),0), big.mark=".", decimal.mark=","),
                              "%**</span><br>",
                              "<span style='font-size:8pt'>(",
                              formatC(sum(Total$Cantidad), big.mark=".", decimal.mark=",", format="fg"),
                              ")</span><br>",
                              "<span style='font-size:12pt'>de las llamadas por</span><br>",
-                             "<span style='font-size:12pt; color:#6e3169'>**violencia de género**</span><br>",
-                             "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#6e3169'>**violencia familiar**</span><br>",
+                             "<span style='font-size:12pt; color:#0f216d'>**violencia de género**</span><br>",
+                             "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#0f216d'>**violencia familiar**</span><br>",
                              "<span style='font-size:12pt'>se registraron los días</span><br>",
-                             "<span style='font-size:12pt; color:#6e3169; text-decoration: underline'>**sábado y domingo**</span><br>")),
+                             "<span style='font-size:12pt; color:#0f216d; text-decoration: underline'>**sábado y domingo**</span><br>")),
                 label.color = NA, family="font_sans", halign = 0.5, fill=NA, color="white", text.color="black",
                 show.legend=FALSE, fill=NA, size=4) +
   theme_void() +
@@ -102,5 +108,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=4.5)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=4.5)

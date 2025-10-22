@@ -24,10 +24,14 @@ Data <- Raw %>%
          Tipo = factor(Tipo, levels=c("Fija","Ambulatoria","Personalizada"))) %>%
   mutate(Año = ifelse(Año == "2.025", "2.025*", Año))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Definir colores
-Colores <- c("Fija" = "#ec6489",
-             "Ambulatoria" = "#f2904c",
-             "Personalizada" = "#72bf90")
+Colores <- c("Fija" = "#d3335e",
+             "Ambulatoria" = "#ff9d27",
+             "Personalizada" = "#2b42a0")
 
 # Titulo
 titulo <- ggplot() +
@@ -54,9 +58,11 @@ grafico1 <- ggplot(Data %>% filter(Sujeto == "Agresor"), aes(x=Año, y=Cantidad,
         axis.title.y = element_text(size=15, family="font_sans"),
         axis.text.x = element_text(size=10, family="font_sans", margin=margin(t=5)),
         axis.text.y = element_text(size=10, family="font_sans"),
-        panel.grid = element_line(colour = "#F5F5F5"),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font_serif", face="bold"))
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95", linewidth = 0.5),
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif", face="bold",
+                                  margin=margin(t=10, b=10)))
 
 # Grafico 2
 grafico2 <- ggplot(Data %>% filter(Sujeto == "Víctima"), aes(x=Año, y=Cantidad, fill=Tipo)) +
@@ -77,9 +83,11 @@ grafico2 <- ggplot(Data %>% filter(Sujeto == "Víctima"), aes(x=Año, y=Cantidad
         axis.title.x = element_text(size=15, family="font_sans", margin=margin(t=5)),
         axis.text.x = element_text(size=10, family="font_sans", margin=margin(t=5)),
         axis.text.y = element_text(size=10, family="font_sans"),
-        panel.grid = element_line(colour = "#F5F5F5"),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font_serif", face="bold"))
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95", linewidth = 0.5),
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif", face="bold",
+                                  margin=margin(t=10, b=10)))
 
 grafico <- plot_grid(grafico1, grafico2, ncol=2)
 

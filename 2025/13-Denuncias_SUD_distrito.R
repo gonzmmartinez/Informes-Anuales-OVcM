@@ -39,12 +39,15 @@ Data <- Raw %>%
                       levels=c("2.025 (primer semestre)", "2.024 (todo el año)")))
 
 # Colores
-Colores <- c("Centro" = "#f2904c",
-             "Centro Cafayate" = "#f2904c",
-             "Norte Orán" = "#f7bc7c",
-             "Norte Tartagal" = "#a5549c",
-             "Sur Anta" = "#72bf90",
-             "Sur Metán" = "#1daa6a")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Centro" = "#a782ec",
+             "Centro Cafayate" = "#852f8c",
+             "Norte Orán" = "#01c6d6",
+             "Norte Tartagal" = "#99f6fe",
+             "Sur Anta" = "#ff621d",
+             "Sur Metán" = "#ff9d27")
 
 # Grafico
 grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distrito)) +
@@ -53,27 +56,28 @@ grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distr
                                    "%**</span><br><span style='font-size:8pt'>",
                                    formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                                    "</span>")),
-                color = "black",
-                vjust = ifelse(Data$Porcentaje <=20, -0.2, 1.2),
+                color = "black", nudge_y=15, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   facet_wrap(~Año, nrow=2, scales='free') +
   labs(x="Distrito judicial", y="Porcentaje") +
   scale_fill_manual(values = Colores) +
-  scale_y_continuous(labels=function(z) paste0(abs(z), "%")) +
+  scale_y_continuous(labels=function(z) paste0(abs(z), "%"), limits=c(0, 100), breaks=seq(0, 100, by=25)) +
   scale_x_discrete(labels = function(z) str_wrap(z, width=3)) +
   theme_light() +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(linewidth=0.5, colour = "grey95"),
         axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=5,r=0,b=0,l=0)),
         axis.text.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
         axis.title.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=0,l=0)),
         axis.title.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font_serif", face="bold"))
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif", face="bold",
+                                  margin=margin(t=10, b=10)))
 
 # Imagen
 # imagen <- ggdraw() +  draw_image("https://www.justiciasalta.gov.ar/media/images/distritos_judiciales_web-2024.jpg?timestamp=20240312114917")
@@ -82,7 +86,7 @@ imagen <- ggdraw() +
 
 # Arrange
 grafico <- plot_grid(imagen, grafico, ncol=2) +
-  theme(plot.background = element_rect(fill = "white"),
+  theme(plot.background = element_rect(fill = "white", color=NA),
         panel.border = element_blank())
 
 # Guardar gráfico

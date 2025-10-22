@@ -64,9 +64,12 @@ Data2 <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup()
 
-# Definir colores
-Colores <- c("Violencia de género y/o familiar" = "#a5549c",
-             "Otros delitos penales" = "#1daa6a")
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Violencia de género y/o familiar" = "#f93e35",
+             "Otros delitos penales" = "#2b42a0")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
@@ -84,7 +87,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
                halign = 0.5, fill = NA, size=8, box.color=NA,
                family = "font_sans", lineheight = 0.75) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
-                color = "black", hjust=0.5, lineheight=1,
+                color = "white", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
@@ -109,7 +112,7 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
                halign = 0.5, fill = NA, size=6, box.color=NA,
                family = "font_sans", lineheight = 1) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
-                color = "black", hjust=0.5, lineheight=1,
+                color = "white", hjust=0.5, lineheight=1,
                 label.color = NA, family="font_sans",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
@@ -138,5 +141,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=7, height=3.5)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=7, height=3.5)

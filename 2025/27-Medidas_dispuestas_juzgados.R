@@ -59,6 +59,10 @@ Data <- Data0 %>%
                           Año == "2024" ~ "<span style='font-size:20pt'>**2.024**</span><br><span style='font-size:15pt'>*Todo el año*</span>",
                           Año == "2025" ~ "<span style='font-size:20pt'>**2.025**</span><br><span style='font-size:15pt'>*Primer semestre*</span>"))
 
+# Definir colores
+Colores <- c("#ff621d", "#206170", "#a782ec", "#852f8c", "#0f216d", "#2b42a0", "#386020",
+             "#ff9d27", "#f93e35", "#d3335e", "#5ec5d4", "#839936", "#3348d3", "#d33383", "#f93e35")
+
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   geom_bump(linewidth = 1.5) +
@@ -76,6 +80,8 @@ grafico <- ggplot(Data, aes(x=Año, y=Level, color=Medida, group=Medida)) +
   scale_y_discrete(limits = rev) +
   scale_x_discrete(expand = c(0.3,0.3), position = "top", labels = function(x) Data$Axis[match(x, Data$Año)]) +
   scale_size_continuous(range=c(3, 6)) +
+  scale_color_manual(values=Colores) +
+  scale_fill_manual(values=Colores) +
   labs(x="Año", y="Medidas dispuestas") +
   theme_light() +
   theme(legend.position="none",
