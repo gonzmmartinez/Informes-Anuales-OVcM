@@ -10,6 +10,7 @@ library(dplyr)
 library(stringr)
 library(scales)
 library(googlesheets4)
+library(tidyr)
 
 # Fuentes
 library(showtext)
@@ -35,15 +36,19 @@ Data <- data.frame(matrix(c(2014, 318, 503, 821,
   pivot_longer(cols = c(X2, X3), names_to = "Tipo", values_to = "Cantidad") %>%
   mutate(Tipo = ifelse(Tipo == "X2", "Violaciones", "Otros delitos contra la integridad sexual"))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Definir colores
-Colores <- c("Violaciones" = "#6e3169",
-             "Otros delitos contra la integridad sexual" = "#e54c7c")
+Colores <- c("Violaciones" = "#f93e35",
+             "Otros delitos contra la integridad sexual" = "#a782ec")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   geom_col(position="stack", width=0.75) +
   geom_text(aes(label = formatC(Cantidad, big.mark = ".", decimal.mark=",", format="fg")),
-            family="font_sans", position = position_stack(vjust = 0.5), size=5, color="black") +
+            family="font_sans", position = position_stack(vjust = 0.5), size=5, color="white") +
   geom_text(data = Data %>% group_by(Año) %>% summarise(Cantidad = sum(Cantidad)), inherit.aes=FALSE,
             aes(x=Año, y=Cantidad, label = formatC(Cantidad, big.mark = ".", decimal.mark=",", format="fg")),
             family="font_sans", size=7.5, fontface="bold", color="black", nudge_y=75) +

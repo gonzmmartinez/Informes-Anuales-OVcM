@@ -35,10 +35,13 @@ Data <- Raw %>%
   ungroup %>%
   mutate(Orden = paste0(str_sub(Año, 3,4), "-", formatC(Mes_num, width=2, flag="0")))
 
-# Definir colores
-Colores <- c("Llamadas" = "#f2904c",
-             "Intervenciones" = "#1daa6a",
-             "Intervenciones SAMEC" = "#ec6489")
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Llamadas" = "#ff9d27",
+             "Intervenciones" = "#5ec5d4",
+             "Intervenciones SAMEC" = "#d3335e")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Orden, y=Cantidad, group = Accion)) +
@@ -54,7 +57,12 @@ grafico <- ggplot(Data, aes(x=Orden, y=Cantidad, group = Accion)) +
   scale_x_discrete(labels = c(str_to_title(month(1:12, label = TRUE, abbr = TRUE, locale = "es_ES")), 
                               str_to_title(month(1:6, label = TRUE, abbr = TRUE, locale = "es_ES")))) +
   coord_cartesian(ylim = c(-5, 150), xlim=c(0.75, 18.25), clip="off", expand=FALSE) +
-  theme(text=element_text(family="font_sans"), legend.position="none",
+  theme(text=element_text(family="font_sans"),
+        legend.position="top",
+        legend.justification = "right",
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=12, family="font_sans"),
+        legend.key.spacing.x = unit(1, "cm"),
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
         plot.caption = element_text(size=12, family="font_sans", face="italic"),

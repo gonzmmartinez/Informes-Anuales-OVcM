@@ -23,23 +23,21 @@ font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Cargar datos
-Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/14m3Y-OdpPdvq0QLcFDZ7c0diTdoExJOHmOaY70qaeV8/edit?usp=sharing",
-                  sheet = "Abuso_SNIC")
+Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1_n2tTaEXNYTv7fGRLLXt65W49wvFmE3eDpxiBZqmMZk/edit?usp=sharing",
+                  sheet = "Tasa_nacional")
 
 Data <- Raw %>%
-  arrange(desc(Tasa_2024)) %>%
-  top_n(10, Tasa_2024) %>%
-  mutate(Variación = paste0(formatC(round(Variación*100, 1), big.mark=".", decimal.mark=",", digits=1, format="f"), "%"))
+  filter(Año == 2024)
 
 # Cargar shape
 Mapa_Argentina <- rnaturalearth::ne_states(country = c("argentina"), returnclass = "sf") %>%
   mutate(name = ifelse(name == "Ciudad de Buenos Aires", "CABA", name))
 
 # Modificar datos
-Data_abusos <- Raw %>%
+Data_femicidios <- Data %>%
   rename(name = "Provincia")
 Mapa_Argentina <- Mapa_Argentina %>%
-  left_join(Data_abusos, by="name") %>%
+  left_join(Data_femicidios, by="name") %>%
   replace(is.na(.), 0)
 
 # Colores
@@ -47,32 +45,29 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Tabla
-Tabla <- Data %>%
-  select(Provincia, Cant_2023, Tasa_2023, Cant_2024, Tasa_2024, Variación) %>%
-  mutate(Cant_2023 = formatC(Cant_2023, big.mark=".", decimal.mark=",", format="fg"),
-         Cant_2024 = formatC(Cant_2024, big.mark=".", decimal.mark=",", format="fg"),
-         Tasa_2023 = formatC(round(Tasa_2023,1), big.mark=".", decimal.mark=",", format="fg"),
-         Tasa_2024 = formatC(round(Tasa_2024,1), big.mark=".", decimal.mark=",", format="fg")) %>%
-  rename("Cant. 2023" = "Cant_2023", "Cant. 2024" = "Cant_2024", "Tasa 2023" = "Tasa_2023", "Tasa 2024" = "Tasa_2024")
+Tabla <- Data_femicidios %>%
+  select(name, Femicidio, Tasa) %>%
+  rename(Provincia = "name", n = "Femicidio") %>%
+  arrange(desc(Tasa)) %>%
+  mutate(Tasa = formatC(round(Tasa,2), big.mark=".", decimal.mark = ",")) %>%
+  top_n(n=10)
 
 # Theme
 my_ttheme <- 
   gridExtra::ttheme_default(base_colour="black", base_size=8, base_family="font",
                             colhead = list(fg_params=list(col="white"),
-                                           bg_params=list(fill="#f93e35")),
-                            core = list(bg_params=list(fill = "grey95", col = "white")))
+                                           bg_params=list(fill="#ff9d27")),
+                            core = list(bg_params=list(fill = "#f2f2f2", col = "white")))
 
 # Grafico
 grafico <- ggplot(Mapa_Argentina) +
-  geom_sf(color="black", aes(fill=Tasa_2024)) +
-  geom_sf_text(aes(label=formatC(round(Tasa_2024,1), big.mark=".", decimal.mark=",")),
+  geom_sf(color="black", aes(fill=Tasa)) +
+  geom_sf_text(aes(label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",")),
                color="black", family="font_sans", size=2, show_guide=FALSE) +
-  annotate(geom="table", x=-37, y=-54, label = list(Tabla), table.theme=my_ttheme) +
+  annotate(geom="table", x=-45, y=-47, label = list(Tabla), table.theme=my_ttheme) +
   theme_void() +
   guides(fill = guide_colorbar(theme = theme(legend.frame = element_rect(colour = "black")))) +
-  scale_fill_gradient2(name=str_wrap("Tasa de delitos contra la integridad sexual por 100.000 habitantes (2024)", 30),
-                       low="white", high="#f93e35", midpoint=diff(range(Raw$Tasa_2024))/2, limits=c(min(Raw$Tasa_2024),max(Raw$Tasa_2024)),
-                       breaks=seq(20, 160, by=20)) +
+  scale_fill_gradient2(name="Tasa de femicidios", low="white", high="#ff9d27", midpoint=0.7, limits=c(min(Data$Tasa),max(Data$Tasa)), breaks=seq(0.5,2, by=0.5)) +
   theme(text=element_text(family="font_sans"),
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),

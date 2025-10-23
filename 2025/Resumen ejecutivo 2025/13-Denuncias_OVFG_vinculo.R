@@ -7,6 +7,7 @@ library(dplyr)
 library(stringr)
 library(cowplot)
 library(magick)
+library(googlesheets4)
 
 # Fuentes
 library(showtext)
@@ -49,7 +50,7 @@ grafico <- ggplot(Data, aes(y=Porcentaje, x=reorder(Vínculo, -Ord))) +
             size=7, family="font_sans", fontface="bold", hjust = 0.5, nudge_y = 4) +
   scale_y_continuous(limits = c(0, round(max(Data$Porcentaje) * 1.2, -1)),
                      labels = function(z) paste0(z, "%")) +
-  scale_x_discrete(labels = function(z) str_wrap(z, 30)) +
+  scale_x_discrete(labels = function(z) str_wrap(z, 10)) +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_text(size=40, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=25, family="font_sans", face="italic", margin=margin(t=5,r=0,b=20,l=0)),
@@ -57,7 +58,7 @@ grafico <- ggplot(Data, aes(y=Porcentaje, x=reorder(Vínculo, -Ord))) +
         legend.box.margin=margin(5,5,5,5),
         panel.grid = element_blank(),
         panel.grid.major.x = element_line(color="grey95", linewidth = 0.5),
-        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=0,l=0)),
+        axis.text.x = element_text(size=17.5, margin = margin(t=10,r=0,b=0,l=0)),
         axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=0)),
         axis.title.x = element_text(size=20, margin = margin(t=15, r=0, b=0, l=0)),
         axis.title.y = element_text(size=20, margin = margin(t=0, r=15, b=0, l=0)))
