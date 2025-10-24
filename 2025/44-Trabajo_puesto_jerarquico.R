@@ -18,7 +18,8 @@ library(ggrepel)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -77,11 +78,12 @@ Data <- calculate_tabulates(
   mutate(Label_pos = ifelse(Género == "Mujeres", xmax+5, xmin-5))
 
 # Colores
-Paleta <- c("#5fad56", "#f2c14e", "#f78154", "#4d9078", "#b4436c")
-Paleta2 <- c("#474E93", "#7E5CAD", "#b4436c", "#72BAA9", "#D5E7B5")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
-Colores <- c("Varones" = "#7E5CAD",
-             "Mujeres" = "#72BAA9")
+# Colores
+Colores <- c("Varones" = "#852f8c",
+             "Mujeres" = "#ff621d")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(y=Jerarquia, x=Porcentaje)) +
@@ -94,21 +96,21 @@ grafico <- ggplot(Data, aes(y=Jerarquia, x=Porcentaje)) +
   scale_x_continuous(breaks = 50, labels="50%") +
   coord_cartesian(ylim = c(0.5, 4.5), xlim=c(-10, 110), clip="off", expand=FALSE) +
   theme_light() +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position="top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(0.5, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
         plot.caption = element_text(size=12, family="font", face="italic"),
         panel.grid = element_blank(),
-        panel.grid.major.y = element_line(color="lightgrey"),
-        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=17, margin = margin(t=0,r=10,b=0,l=5)),
+        panel.grid.major.y = element_line(color="grey95"),
+        axis.text.x = element_text(size=15, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=17, family="font_sans", margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_blank(),
-        axis.title.y = element_text(size=15, family="font"),
+        axis.title.y = element_text(size=15, family="font_sans"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
@@ -118,5 +120,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=6)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=6)

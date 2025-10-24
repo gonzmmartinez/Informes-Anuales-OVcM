@@ -18,7 +18,8 @@ library(ggrepel)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -61,40 +62,41 @@ Lineas <- Data %>%
   mutate(x = 1:4 + 0.15)
 
 # Colores
-Paleta <- c("#5fad56", "#f2c14e", "#f78154", "#4d9078", "#b4436c")
-Paleta2 <- c("#474E93", "#7E5CAD", "#b4436c", "#72BAA9", "#D5E7B5")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
-Colores <- c("Varones" = "#7E5CAD",
-             "Mujeres" = "#72BAA9")
+# Colores
+Colores <- c("Varones" = "#852f8c",
+             "Mujeres" = "#ff621d")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Jerarquia, y=Valor)) +
   geom_segment(data=Lineas, aes(x=Jerarquia, xend=Jerarquia, y=ymin, yend=ymax), color="lightgrey", linewidth=1.5) +
   geom_point(aes(color=Género), size=8) +
   geom_text(data=Lineas, aes(x=x, y=ymid, label=Label),
-            family="font", fontface="bold", size=10, color="black", hjust=0) +
+            family="font_sans", fontface="bold", size=10, color="black", hjust=0) +
   scale_color_manual(values = Colores) +
   scale_x_discrete(labels = function(z) str_wrap(z, width=20)) +
   scale_y_continuous(labels=function(z) paste0("$", formatC(z, big.mark = ".", decimal.mark=",", format="d")),
                      expand = c(0,0), breaks=seq(0,2000000, by=500000)) +
   coord_cartesian(xlim=c(1.25, 4.25), ylim=c(0,1750000), clip="off") +
   labs(y="Ingreso promedio") +
-  theme_linedraw() +
-  theme(text=element_text(family="font"),
+  theme_light() +
+  theme(text=element_text(family="font_sans"),
         legend.position="top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=12, family="font"),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(0.5, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
         panel.grid = element_blank(),
-        panel.grid.major.y = element_line(color="lightgrey"),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font"),
-        axis.title.y = element_text(size=15, family="font"),
+        panel.grid.major.y = element_line(color="grey95"),
+        axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(size=15, family="font_sans"),
+        axis.title.y = element_text(size=15, family="font_sans"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
@@ -104,5 +106,6 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
        plot=grafico, dpi=100, width=10, height=6)
-ggsave(filename = paste0(filename, ".pdf"), path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
+ggsave(filename = paste0(filename, ".pdf"),
+       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=6)

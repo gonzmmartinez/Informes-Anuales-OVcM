@@ -19,7 +19,8 @@ library(ggh4x)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -85,8 +86,12 @@ df_segments <- do.call(rbind, lapply(indics, function(ind) {
 df_segments$Indicador <- factor(df_segments$Indicador, levels = indics)
 
 # Colores
-Colores <- c("Varones" = "#f2904c",
-             "Mujeres" = "#1daa6a")
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+# Colores
+Colores <- c("Varones" = "#852f8c",
+             "Mujeres" = "#ff621d")
 
 Labels <- Data %>%
   filter(Año == 2025, Trimestre == 1) %>%
@@ -110,12 +115,11 @@ custom_y <- list(
 grafico <- ggplot(Data, aes(x=Trimestre_Año, y=Valor)) +
   geom_line(aes(color=Género, group=Género), linewidth=2.5, lineend = 'round') +
   geom_point(data=Labels, aes(x=xpos-0.4, y=Valor, color=Género), size=3, show.legend = FALSE) +
-  geom_label_repel(data=Labels, aes(x=xpos, y=Valor,
-                                    label=paste0(formatC(Valor, format = "f", digits = 1, big.mark = ".", decimal.mark = ","), "%"),
-                                    color=Género),
-                   fill="white", family="font", box.padding=0.01, point.padding=0.01, force=0.001,
-                   max.overlaps=Inf, min.segment.length=0, direction="y", vjust = 0.5, hjust=0.5, alpha=0.75,
-                   show.legend = FALSE) +
+  geom_label(data=Labels, aes(x=xpos-0.25, y=Valor,
+                              label=paste0(formatC(Valor, format = "f", digits = 1, big.mark = ".", decimal.mark = ","), "%"),
+                              color=Género),
+                   fill="white", family="font_sans", vjust = 0.5, hjust=0, alpha=0.75,
+                   halign=0.5, show.legend = FALSE) +
   labs(title="",
        x="Trimestre/Año", y="Tasa") +
   geom_text(data = df_labels,
@@ -133,23 +137,24 @@ grafico <- ggplot(Data, aes(x=Trimestre_Año, y=Valor)) +
   scale_y_continuous(labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")) +
   scale_x_discrete(labels = function(z) paste0(str_sub(z, 6, -1), "°")) +
   scale_color_manual(name="Género", values=Colores) +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
-        axis.text.x = element_text(size=10, margin = margin(t=5,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=10, margin = margin(t=0,r=5,b=0,l=5)),
-        axis.title.x = element_text(size=20, margin=margin(t=40)),
-        axis.title.y = element_text(size=20),
+        panel.grid = element_blank(),
+        panel.grid.major = element_line(colour = "grey95"),
+        axis.text.x = element_text(family="font_sans", size=10, margin = margin(t=5,r=0,b=5,l=0)),
+        axis.text.y = element_text(family="font_sans", size=10, margin = margin(t=0,r=5,b=0,l=5)),
+        axis.title.x = element_text(family="font_sans", size=20, margin=margin(t=40)),
+        axis.title.y = element_text(family="font_sans", size=20),
         plot.margin = unit(c(0, 0.5, 0.5, 0.5), "cm"),
         panel.spacing.y = unit(1, "cm"),
-        strip.background = element_rect(color=NA, fill="#FE6244"),
-        strip.text = element_text(size=15, color="white", family="font", face="bold"),
+        strip.background = element_rect(color=NA, fill="#cbc2ce"),
+        strip.text = element_text(size=15, color="black", family="font_serif", face="bold", margin=margin(10,10,10,10)),
         legend.position= "top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font"),
-        legend.text = element_text(size=15),
+        legend.title = element_text(size=10, family="font_serif"),
+        legend.text = element_text(size=15, family="font_sans"),
         legend.box.margin=margin(5,5,5,5),
         legend.key.spacing.x = unit(0.5, "cm"))
 
