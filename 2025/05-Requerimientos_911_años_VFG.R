@@ -36,8 +36,8 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Definir colores
-Colores <- c("Violencia de género" = "#ff621d",
-             "Violencia familiar" = "#852f8c")
+Colores <- c("Violencia de género" = "#f93e35",
+             "Violencia familiar" = "#2b42a0")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
