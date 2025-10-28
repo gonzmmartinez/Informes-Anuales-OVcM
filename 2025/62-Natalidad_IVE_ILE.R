@@ -12,7 +12,8 @@ library(lubridate)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Plantilla
@@ -25,37 +26,42 @@ Data <- Raw %>%
   mutate(Cantidad = round(Cantidad, 0)) %>%
   mutate(Año_mes = paste0(str_sub(Año, 3,4), "-", formatC(Mes_ord, width = 2, flag = "0")))
 
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
 # Crear gráfico
 grafico <- ggplot(Data, aes(x = Año_mes, y = Cantidad)) +
   geom_vline(xintercept=13, linewidth=0.5, linetype=2, color="grey25") +
   annotate(geom="text", x=13.5, y=450, label=str_wrap("Sanción de la Ley N° 27.610 de Acceso a la Interrupción Voluntaria del Embarazo", width=30),
-           size=3, color="grey25", family="font", fontface="italic", hjust=0, lineheight=1) +
+           size=3, color="grey25", family="font_sans", fontface="italic", hjust=0, lineheight=1) +
   geom_line(aes(color = Tipo, group = Tipo), linewidth = 1.5) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark=",", format="fg")) +
   scale_x_discrete(labels = rep(str_to_title(month(ymd("2000-01-01") + months(0:11),
                                                    label = TRUE, abbr = TRUE, locale = "es_ES.UTF-8")), 5)) +
   annotate(geom="text", label = formatC(2020:2024, format="fg", big.mark=".", decimal.mark=","),
-           x=seq(from=6.5, to=54.5, by=12), y=-85, family="font", size=5, color="grey10") +
+           x=seq(from=6.5, to=54.5, by=12), y=-85, family="font_sans", size=5, color="grey10") +
   annotate(geom="segment", x=seq(from=1, to=60, by=12), xend=seq(from=1, to=60, by=12),
            y=-70, yend=-110, linewidth=0.5, color="grey") +
-  labs(x = "Mes", y = "Cantidad") +
-  scale_color_manual(values=c("#60c04c", "#21917b")) +
+  labs(x = "Mes-Año", y = "Cantidad") +
+  scale_color_manual(values=c("#2b42a0", "#852f8c")) +
   theme_light() +
   coord_cartesian(ylim = c(-10, 550), xlim=c(0.5, 60.5), clip="off", expand=FALSE) +
   theme(text = element_text(size=20, family="font"),
-      axis.text.x = element_text(size = 7.5, angle=90, family="font", margin=margin(t=5,b=0,l=0,r=0),
+      axis.text.x = element_text(size = 7.5, angle=90, family="font_sans", margin=margin(t=5,b=0,l=0,r=0),
                                  vjust=0.5),
-      axis.text.y = element_text(size=10, family="font"),
-      axis.title.x = element_text(size=12, family="font", margin=margin(t=35)),
-      axis.title.y = element_text(size=12, family="font"),
-      plot.title = element_text(family="font", face="bold"),
-      plot.subtitle = element_text(size=15, family="font", face="italic"),
-      plot.caption = element_text(size=12, family="font"),
+      axis.text.y = element_text(size=10, family="font_sans"),
+      axis.title.x = element_text(size=12, family="font_sans", margin=margin(t=35)),
+      axis.title.y = element_text(size=12, family="font_sans"),
+      legend.title = element_text(size=12, family="font_serif", margin=margin(b=10)),
+      legend.text = element_text(size=12, family="font_sans"),
+      legend.key.spacing.y = unit(0.5, "cm"),
+      plot.title = element_blank(),
+      plot.subtitle = element_blank(),
+      plot.caption = element_text(size=12, family="font_sans"),
       plot.caption.position = "plot",
-      strip.background = element_rect(fill="black"),
-      strip.text = element_text(color="white", family="font", size=15, face="bold"),
-      panel.grid.minor.x = element_blank(),
-      panel.grid.major = element_line(color="grey95"),
+      panel.grid = element_blank(),
+      panel.grid.major = element_line(color="grey95", linewidth = 0.5),
       panel.spacing.x = unit(0, "line"))
 
 # Guardar gráfico

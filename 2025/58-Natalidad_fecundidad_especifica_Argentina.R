@@ -17,7 +17,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # LEER DATOS DE NACIDOS VIVOS
@@ -61,7 +62,9 @@ Nacidos_vivos <- Raw %>%
   select(Año, Provincia, Edad, Cantidad) %>%
   filter(Edad != "Sin especificar",
          Provincia %ni% c("Lugar no especificado", "Otro país")) %>%
-  rename(Rango_etario = "Edad")
+  rename(Rango_etario = "Edad") %>%
+  group_by(Año, Provincia, Rango_etario) %>%
+  summarise(Cantidad = sum(Cantidad))
 
 Totales_pais <- Nacidos_vivos %>%
   group_by(Año, Rango_etario) %>%
@@ -78,7 +81,7 @@ edades <- c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39",
             "80-84","85-89","90-94","95-99","100+")
 
 Diccionario_edades <- data.frame(Edad = edades,
-                                 Rango_etario = c("Menos de 15 años", "Menos de 15 años", "Menos de 15 años",
+                                 Rango_etario = c(NA, NA, "Menos de 15 años",
                                                   "15-19 años", "20-24 años", "25-29 años", "30-34 años",
                                                   "35-39 años", "40-44 años", "45 años o más", "45 años o más",
                                                   "45 años o más", "45 años o más", "45 años o más", "45 años o más",
@@ -148,63 +151,47 @@ Poblacion_completa <- Poblacion %>%
     bind_rows(nuevos, .x)
   }) %>%
   ungroup() %>%
-  arrange(Provincia, Rango_etario, Año)
+  arrange(Provincia, Rango_etario, Año) %>%
+  filter(Provincia %in% c("Salta", "Argentina"))
 
 
 # UNIÓN DE TODOS LOS DATOS
 Data <- Nacidos_vivos %>%
+  filter(Provincia %in% c("Salta")) %>%
   rename(Nacimientos = "Cantidad") %>%
-  filter(Rango_etario %in% c("15-19 años", "20-24 años", "25-29 años", 
-                             "30-34 años", "35-39 años", "40-44 años", "45 años o más")) %>%
   left_join(Poblacion_completa, 
             by = c("Año", "Provincia", "Rango_etario")) %>%
-  mutate(Tasa = Nacimientos / Poblacion) %>%
-  group_by(Provincia, Año) %>%
-  summarise(TGF = sum(Tasa * 5), .groups = "drop") %>%
+  mutate(Tasa = (1000 * Nacimientos) / Poblacion) %>%
   arrange(Provincia, Año) %>%
-  mutate(Grupo = case_when(Provincia == "Salta" ~ "Salta",
-                           Provincia == "Total del país" ~ "Tasa nacional",
-                           .default = "Resto de provincias")) %>%
-  mutate(Grupo = factor(Grupo, levels=c("Salta", "Tasa nacional", "Resto de provincias"))) %>%
-  mutate(Provincia = factor(Provincia, levels=c("Buenos Aires", "Catamarca", "Chaco", "Chubut",
-                                                "Ciudad Autónoma de Buenos Aires", "Corrientes",
-                                                "Córdoba", "Entre Ríos", "Formosa", "Jujuy", "La Pampa",
-                                                "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro",
-                                                "San Juan", "San Luis", "Santa Cruz", "Santa Fe",
-                                                "Santiago del Estero", "Tucumán", "Tierra del Fuego",
-                                                "Total del país", "Salta")))
+  mutate(Rango_etario = factor(Rango_etario,
+                               levels = c("Menos de 15 años", "15-19 años",
+                                          "20-24 años", "25-29 años", "30-34 años",
+                                          "35-39 años", "40-44 años", "45 años o más")))
 
-Labels <- Data %>%
-  filter(Año == 2023) %>%
-  mutate(Label = case_when(Provincia == "Salta" ~ paste0("<span>Tasa de Salta: **",
-                                                         formatC(round(TGF,1), big.mark=".", decimal.mark=",", format="fg"), "**</span>"),
-                           Provincia == "Total del país" ~ paste0("<span>Tasa nacional: **",
-                                                           formatC(round(TGF,1), big.mark=".", decimal.mark=",", format="fg"), "**</span>"),
-                           .default = NA)) %>%
-  na.omit()
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
-Colores <- c("Salta" = "#72BAA9",
-             "Tasa nacional" = "#f78154",
-             "Resto de provincias" = "#D5E7B5")
+Colores <- c("Menos de 15 años" = "#d3335e",
+             "15-19 años" = "#f93e35",
+             "20-24 años" = "#ff9d27",
+             "25-29 años" = "#a782ec",
+             "30-34 años" = "#852f8c",
+             "35-39 años" = "#2b42a0",
+             "40-44 años" = "#206170",
+             "45 años o más" = "#5ec5d4")
 
 # Grafico
-grafico <- ggplot(Data, aes(x=Año, y=TGF)) +
-  geom_hline(yintercept=2.1, linetype=2, linewidth=0.5, color="grey75") +
-  annotate(geom="text", family="font", fontface="italic", size=2.5,
-           y=2.1+0.1, x=2025.75, hjust=1, label="Nivel de reemplazo", color="grey75") +
-  geom_line(aes(color=Grupo, group=Provincia, linewidth=Grupo), lineend = "round") +
-  geom_point(data=Labels, aes(color=Grupo), size=3, show.legend = FALSE) +
-  geom_richtext(data=Labels, aes(label=Label, color=Grupo), size=3, family="font",
-                hjust=0, nudge_x=0.1, fill=NA, label.colour = NA, show.legend = FALSE) +
+grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
+  geom_line(aes(color=Rango_etario, group=Rango_etario), lineend = "round", linewidth=1) +
   scale_x_continuous(breaks = seq(from=2005, to=2025, by=5),
-                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
+                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg"),
+                     limits=c(2005, 2025)) +
   scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=4, by=1)) +
-  scale_linewidth_manual(values=c(2, 1.5, 0.5)) +
+                     expand = c(0,0), breaks = seq(from=0, to=200, by=25), limits=c(-5, 205)) +
   scale_color_manual(values=Colores) +
   theme_light() +
-  coord_cartesian(xlim=c(2005, 2025), ylim=c(-0.05,4), clip="off") +
-  labs(y="Tasa global de fecundidad\n(promedio de hijos/as por mujer)") +
+  labs(y="Tasas específicas de fecundidad\n(hijos/as por 1.000 mujeres)") +
   theme(text=element_text(family="font"),
         legend.position="bottom",
         legend.justification = "center",
@@ -214,7 +201,7 @@ grafico <- ggplot(Data, aes(x=Año, y=TGF)) +
         plot.title = element_text(size=20, family="font", face="bold"),
         plot.subtitle = element_text(size=15, family="font"),
         plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_line(color="grey90", linewidth = 0.5),
+        panel.grid = element_line(color="grey95", linewidth = 0.5),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),

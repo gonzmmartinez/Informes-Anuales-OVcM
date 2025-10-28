@@ -17,7 +17,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # Leer datos
@@ -32,9 +33,13 @@ Data <- Raw %>%
   mutate(Tipo = ifelse(Tipo == "Vigente", "Cantidad programada", "Cantidad ejecutada")) %>%
   mutate(Tipo = factor(Tipo, levels=c("Cantidad programada", "Cantidad ejecutada")))
 
-Colores <- c("Cantidad ejecutada" = "#72BAA9",
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Cantidad ejecutada" = "#ff621d",
              "Cantidad programada" = "grey85")
-Colores_text <- c("Cantidad ejecutada" = "black",
+Colores_text <- c("Cantidad ejecutada" = "white",
                   "Cantidad programada" = "grey50")
 
 # Grafico
@@ -43,33 +48,36 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
            aes(fill=Tipo), position="identity") +
   geom_col(data = subset(Data, Tipo=="Cantidad ejecutada"),
            aes(fill=Tipo), position="identity") +
-  geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"), size=Cantidad, color=Tipo),
-            family="font", fontface="bold", nudge_y=500000, vjust=0, show.legend = FALSE) +
+  geom_text(data = subset(Data, Tipo=="Cantidad programada"),
+            aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"), color=Tipo),
+            family="font", fontface="bold", nudge_y=500000, vjust=0.5, show.legend = FALSE, size=2.5) +
+  geom_text(data = subset(Data, Tipo=="Cantidad ejecutada"),
+            aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"), color=Tipo),
+            family="font", fontface="bold", nudge_y=-500000, vjust=0.5, show.legend = FALSE, size=2.5) +
   scale_x_continuous(breaks = seq(from=2014, to=2024, by=1),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
   scale_y_continuous(labels = function(z) formatC(z, format = "fg", big.mark = ".", decimal.mark = ","),
                      expand = c(0,0), breaks = seq(from=0, to=18000000, by=3000000)) +
   scale_fill_manual(values=Colores) +
   scale_color_manual(values=Colores_text) +
-  scale_size_continuous(range=c(2.5, 3.5)) +
   theme_light() +
   coord_cartesian(xlim=c(2014-0.2, 2024+0.2), ylim=c(-1000000,20000000), clip="off") +
   labs(y="Cantidad") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position="bottom",
         legend.justification = "center",
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font"),
+        legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_line(color="grey95", linewidth = 0.5),
-        panel.grid.minor.x = element_blank(),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font", lineheight = 1),
-        axis.title.y = element_text(size=15, family="font"),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+        panel.grid.major = element_line(color="grey95", linewidth = 0.5),
+        panel.grid = element_blank(),
+        axis.text.x = element_text(family="font_sans", size=12, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(family="font_sans", size=12, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(family="font_sans", size=15, lineheight = 1),
+        axis.title.y = element_text(size=15, family="font_sans"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico

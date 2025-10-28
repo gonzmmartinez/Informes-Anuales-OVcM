@@ -17,7 +17,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # LEER DATOS DE NACIDOS VIVOS
@@ -68,34 +69,34 @@ Data <- Nacidos_vivos %>%
   group_by(Año) %>%
   summarise(Cantidad = sum(Cantidad))
 
-Colores <- c("Salta" = "#72BAA9",
-             "Tasa nacional" = "#f78154",
-             "Resto de provincias" = "#D5E7B5")
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Grafico
 grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
   geom_col(aes(fill=Cantidad)) +
   geom_text(aes(label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
-            nudge_y=-1000, family="font", fontface="bold", size=3) +
+            nudge_y=-1000, family="font_sans", fontface="bold", size=2.5, color="white") +
   scale_x_continuous(breaks = seq(from=2005, to=2025, by=2), expand = c(0.01, 0.01),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
-  scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
+  scale_y_continuous(labels = function(z) formatC(z, format = "fg", big.mark = ".", decimal.mark = ","),
                      breaks = seq(from=0, to=30000, by=5000)) +
-  scale_fill_gradient2(high="#72BAA9", mid="#72BAA9", low="#f78154", midpoint=mean(Data$Cantidad)) +
+  scale_fill_gradient(high="#a782ec", low="#d3c1f6") +
   theme_light() +
   labs(y="Cantidad de nacidos vivos", x="Año") +
-  theme(text=element_text(family="font"),
+  theme(text=element_text(family="font_sans"),
         legend.position="none",
         legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
         plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_line(color="grey95", linewidth = 0.5),
-        panel.grid.minor.x = element_blank(),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font", lineheight = 1),
-        axis.title.y = element_text(size=15, family="font"),
+        panel.grid.major = element_line(color="grey95", linewidth = 0.5),
+        panel.grid = element_blank(),
+        axis.text.x = element_text(family="font_sans", size=12, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(family="font_sans", size=12, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(size=15, family="font_sans", lineheight = 1),
+        axis.title.y = element_text(size=15, family="font_sans"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
@@ -108,4 +109,3 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=5)
-

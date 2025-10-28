@@ -17,7 +17,8 @@ library(ggtext)
 
 # Fuentes
 library(showtext)
-font_add_google("Barlow", "font")
+font_add_google("Source Sans 3", "font_sans")
+font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
 # LEER DATOS DE NACIDOS VIVOS
@@ -40,8 +41,7 @@ Raw <- map_dfr(anios, function(anio) {
 Codigos_provincias <- read_excel(path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/DEIS/descnac.xlsx"),
                                  sheet="PROVRES") %>%
   rename(Codigo = "CODIGO", Provincia = "VALOR") %>%
-  mutate(Provincia = ifelse(Provincia == "Ciudad Aut. de Buenos Aires", "Ciudad Autónoma de Buenos Aires", Provincia)) %>%
-  add_row(Codigo = "01", Provincia = "Total del país")
+  mutate(Provincia = ifelse(Provincia == "Ciudad Aut. de Buenos Aires", "Ciudad Autónoma de Buenos Aires", Provincia))
 
 # Modificar datos
 Nacidos_vivos <- Raw %>%
@@ -61,17 +61,7 @@ Nacidos_vivos <- Raw %>%
   select(Año, Provincia, Edad, Cantidad) %>%
   filter(Edad != "Sin especificar",
          Provincia %ni% c("Lugar no especificado", "Otro país")) %>%
-  rename(Rango_etario = "Edad") %>%
-  group_by(Año, Provincia, Rango_etario) %>%
-  summarise(Cantidad = sum(Cantidad))
-
-Totales_pais <- Nacidos_vivos %>%
-  group_by(Año, Rango_etario) %>%
-  summarise(Cantidad = sum(Cantidad), .groups = "drop") %>%
-  mutate(Provincia = "Total del país")
-
-Nacidos_vivos <- Nacidos_vivos %>%
-  rbind(Totales_pais)
+  rename(Rango_etario = "Edad")
 
 # LEER DATOS DE POBLACIÓN
 # Rango de edades (etiquetas quinquenales, para adjuntar a los datos)
@@ -80,7 +70,7 @@ edades <- c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39",
             "80-84","85-89","90-94","95-99","100+")
 
 Diccionario_edades <- data.frame(Edad = edades,
-                                 Rango_etario = c(NA, NA, "Menos de 15 años",
+                                 Rango_etario = c("Menos de 15 años", "Menos de 15 años", "Menos de 15 años",
                                                   "15-19 años", "20-24 años", "25-29 años", "30-34 años",
                                                   "35-39 años", "40-44 años", "45 años o más", "45 años o más",
                                                   "45 años o más", "45 años o más", "45 años o más", "45 años o más",
@@ -89,20 +79,20 @@ Diccionario_edades <- data.frame(Edad = edades,
 
 # Definimos en qué rango de celdas está cada año
 rangos <- list(
-  "2010" = "D8:D28",
-  "2011" = "H8:H28",
-  "2012" = "L8:L28",
-  "2013" = "P8:P28",
-  "2014" = "T8:T28",
-  "2015" = "X8:X28",
-  "2016" = "D36:D56",
-  "2017" = "H36:H56",
-  "2018" = "L36:L56",
-  "2019" = "P36:P56",
-  "2020" = "T36:T56",
-  "2021" = "X36:X56",
-  "2022" = "D64:D84",
-  "2023" = "H64:H84"
+  "2010" = "B8:B28",
+  "2011" = "F8:F28",
+  "2012" = "J8:J28",
+  "2013" = "N8:N28",
+  "2014" = "R8:R28",
+  "2015" = "V8:V28",
+  "2016" = "B36:B56",
+  "2017" = "F36:F56",
+  "2018" = "J36:J56",
+  "2019" = "N36:N56",
+  "2020" = "R36:R56",
+  "2021" = "V36:V56",
+  "2022" = "B64:B84",
+  "2023" = "F64:F84"
 )
 
 # Nombres de todas las hojas (provincias)
@@ -135,10 +125,12 @@ Poblacion <- Poblacion_raw %>%
   mutate(Provincia = str_sub(Provincia, start=1, end=2)) %>%
   rename(Codigo = "Provincia") %>%
   left_join(Codigos_provincias, by="Codigo") %>%
-  select(Año, Provincia, Rango_etario, Poblacion)
+  select(Año, Provincia, Rango_etario, Poblacion) %>%
+  group_by(Año, Provincia) %>%
+  summarise(Poblacion = sum(Poblacion))
 
 Poblacion_completa <- Poblacion %>%
-  group_by(Provincia, Rango_etario) %>%
+  group_by(Provincia) %>%
   group_modify(~ {
     modelo <- lm(Poblacion ~ poly(Año, 2), data = .x)
     
@@ -150,53 +142,85 @@ Poblacion_completa <- Poblacion %>%
     bind_rows(nuevos, .x)
   }) %>%
   ungroup() %>%
-  arrange(Provincia, Rango_etario, Año) %>%
-  filter(Provincia %in% c("Salta", "Argentina"))
+  arrange(Provincia, Año)
 
 
 # UNIÓN DE TODOS LOS DATOS
 Data <- Nacidos_vivos %>%
-  filter(Provincia %in% c("Salta")) %>%
+  group_by(Año, Provincia) %>%
+  summarise(Cantidad = sum(Cantidad)) %>%
+  ungroup %>%
   rename(Nacimientos = "Cantidad") %>%
   left_join(Poblacion_completa, 
-            by = c("Año", "Provincia", "Rango_etario")) %>%
+            by = c("Año", "Provincia")) %>%
   mutate(Tasa = (1000 * Nacimientos) / Poblacion) %>%
+  add_row(Año = 2005:2023,
+          Provincia = "Total del país",
+          Tasa = c(18.306, 18.161, 17.967, 18.462, 18.231, 18.314, 18.172, 17.48,
+                   17.683, 18.019, 17.665, 16.789, 16.155, 15.332, 13.902, 11.799,
+                   11.682, 10.926, 11.064)) %>%
   arrange(Provincia, Año) %>%
-  mutate(Rango_etario = factor(Rango_etario,
-                               levels = c("Menos de 15 años", "15-19 años",
-                                          "20-24 años", "25-29 años", "30-34 años",
-                                          "35-39 años", "40-44 años", "45 años o más")))
+  mutate(Grupo = case_when(Provincia == "Salta" ~ "Salta",
+                           Provincia == "Total del país" ~ "Tasa nacional",
+                           .default = "Resto de provincias")) %>%
+  mutate(Grupo = factor(Grupo, levels=c("Salta", "Tasa nacional", "Resto de provincias"))) %>%
+  mutate(Provincia = factor(Provincia, levels=c("Buenos Aires", "Catamarca", "Chaco", "Chubut",
+                                                "Ciudad Autónoma de Buenos Aires", "Corrientes",
+                                                "Córdoba", "Entre Ríos", "Formosa", "Jujuy", "La Pampa",
+                                                "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro",
+                                                "San Juan", "San Luis", "Santa Cruz", "Santa Fe",
+                                                "Santiago del Estero", "Tucumán", "Tierra del Fuego",
+                                                "Total del país", "Salta")))
 
+Labels <- Data %>%
+  filter(Año == 2023, Provincia %in% c("Salta", "Total del país")) %>%
+  mutate(Label = case_when(Provincia == "Salta" ~ paste0("<span>Tasa de Salta: **",
+                                                         formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                         "**</span>"),
+                           Provincia == "Total del país" ~ paste0("<span>Tasa nacional: **",
+                                                           formatC(round(Tasa,1), big.mark=".", decimal.mark=",", format="fg"),
+                                                           "**</span>"),
+                           .default = NA))
 
-Colores <- c("Salta" = "#72BAA9",
-             "Tasa nacional" = "#f78154",
-             "Resto de provincias" = "#D5E7B5")
+# Colores
+Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
+            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+
+Colores <- c("Salta" = "#f93e35",
+             "Tasa nacional" = "#a782ec",
+             "Resto de provincias" = "#bfc6e3")
 
 # Grafico
 grafico <- ggplot(Data, aes(x=Año, y=Tasa)) +
-  geom_line(aes(color=Rango_etario, group=Rango_etario), lineend = "round", linewidth=1) +
+  geom_line(aes(color=Grupo, group=Provincia, linewidth=Grupo), lineend = "round") +
+  geom_point(data=Labels, aes(color=Grupo), size=3, show.legend = FALSE) +
+  geom_richtext(data=Labels, aes(label=Label, color=Grupo), size=3, family="font_sans",
+                hjust=0, nudge_x=0.1, fill=NA, label.colour = NA, show.legend = FALSE,
+                nudge_y=c(0.6, -0.6)) +
   scale_x_continuous(breaks = seq(from=2005, to=2025, by=5),
-                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg"),
-                     limits=c(2005, 2025)) +
-  scale_y_continuous(labels = function(z) formatC(z, format = "f", digits = 1, big.mark = ".", decimal.mark = ","),
-                     expand = c(0,0), breaks = seq(from=0, to=200, by=25), limits=c(0, 200)) +
+                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="fg")) +
+  scale_y_continuous(labels = function(z) formatC(z, format = "fg", big.mark = ".", decimal.mark = ","),
+                     expand = c(0,0), breaks = seq(from=0, to=35, by=5)) +
+  scale_linewidth_manual(values=c(2, 1.5, 0.5)) +
+  scale_color_manual(values=Colores) +
   theme_light() +
-  labs(y="Tasas específicas de fecundidad\n(hijos/as por 1.000 mujeres)") +
-  theme(text=element_text(family="font"),
+  coord_cartesian(xlim=c(2005, 2025), ylim=c(-1,36), clip="off") +
+  labs(y="Tasa bruta de natalidad\n(nacimientos por cada 1.000 habitantes)") +
+  theme(text=element_text(family="font_sans"),
         legend.position="bottom",
         legend.justification = "center",
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font"),
+        legend.text = element_text(size=12, family="font_sans"),
         legend.key.spacing.x = unit(1, "cm"),
-        plot.title = element_text(size=20, family="font", face="bold"),
-        plot.subtitle = element_text(size=15, family="font"),
-        plot.caption = element_text(size=12, family="font", face="italic"),
-        panel.grid = element_line(color="grey90", linewidth = 0.5),
-        panel.grid.minor.x = element_blank(),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+        panel.grid.major = element_line(color="grey90", linewidth = 0.5),
+        panel.grid = element_blank(),
         axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font", lineheight = 1),
-        axis.title.y = element_text(size=15, family="font"),
+        axis.title.x = element_text(size=15, family="font_sans", lineheight = 1),
+        axis.title.y = element_text(size=15, family="font_sans"),
         plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
 
 # Guardar gráfico
@@ -209,4 +233,3 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=10, height=6)
-
