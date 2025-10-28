@@ -40,7 +40,8 @@ Data <- Raw %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
-  mutate(ymid = ymax - (ymax - ymin)/2)
+  mutate(ymid = ymax - (ymax - ymin)/2) %>%
+  mutate(Medio_utilizado = ifelse(Medio_utilizado == "Fuego", "Fuego/otros medios combustibles", Medio_utilizado))
 
 Data <- Data %>%
   mutate(Medio_utilizado = format(Medio_utilizado, levels = (Data %>% arrange(desc(Porcentaje)))$Medio_utilizado))
@@ -53,7 +54,7 @@ Colores <- c("Ahorcamiento" = "#ff9d27",
              "Arma blanca" = "#f93e35",
              "Arma de fuego" = "#d3335e",
              "Fuerza física" = "#2b42a0",
-             "Fuego" = "#a782ec")
+             "Fuego/otros medios combustibles" = "#a782ec")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.5, fill=Medio_utilizado)) +
@@ -65,7 +66,7 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.5, fill=Medio_u
   coord_polar(theta="y") +
   xlim(c(1.5, 4.5)) +
   theme_void() +
-  scale_fill_manual(name="Medio utilizado", values = Colores, labels = function(z) str_wrap(z, width=15)) +
+  scale_fill_manual(name="Medio utilizado", values = Colores, labels = function(z) str_wrap(z, width=20)) +
   theme(text=element_text(family="font_sans"),
         legend.position = "right",
         plot.title = element_blank(),
@@ -74,7 +75,7 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.5, fill=Medio_u
         legend.text = element_text(size=15, family="font_sans"),
         legend.box.margin = margin(t=5,b=5,l=-40,r=40),
         legend.key.spacing.y = unit(0.5, "cm"),
-        plot.margin = margin(t=-50, r=-50, b=-50, l=-70),
+        plot.margin = margin(t=-50, r=-40, b=-50, l=-70),
         plot.background = element_rect(fill = "white", colour = NA))
 
 # Layout

@@ -40,7 +40,8 @@ Data <- Raw %>%
   mutate(ymax = cumsum(Porcentaje)) %>%
   mutate(ymin = c(0, head(ymax, n=-1))) %>%
   rowwise() %>%
-  mutate(ymid = ymax - (ymax - ymin)/2)
+  mutate(ymid = ymax - (ymax - ymin)/2) %>%
+  mutate(Medio_utilizado = ifelse(Medio_utilizado == "Fuego", "Fuego/ Medio combustible", Medio_utilizado))
 
 Data <- Data %>%
   mutate(Medio_utilizado = format(Medio_utilizado, levels = (Data %>% arrange(desc(Porcentaje)))$Medio_utilizado))
@@ -53,7 +54,7 @@ Colores <- c("Ahorcamiento" = "#ff9d27",
              "Arma blanca" = "#f93e35",
              "Arma de fuego" = "#d3335e",
              "Fuerza física" = "#2b42a0",
-             "Fuego" = "#a782ec")
+             "Fuego/ Medio combustible" = "#a782ec")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.5, fill=Medio_utilizado)) +
