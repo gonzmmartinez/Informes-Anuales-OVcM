@@ -1,0 +1,515 @@
+Iniciales,Género,Edad,Rango_etario,Rango_ord,Orientacion,Originarias,Discapacidad,Trabajo,Tipo,Modalidad,Vinculo,Género_agresor,Edad_agresor,Rango_etario_agresor,Rango_agr_ord,Antecedentes,Denuncias,Medidas,Municipio
+A.J.R,Mujer,22,20-24 años,5,Heterosexual,No,No,No,Sexual,En el espacio público / acoso callejero,Otro,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+A.M.E,Mujer,33,30-34 años,7,Heterosexual,Si,No,Sin dato,Física,Obstétrica,Funcionario público,Otro,Sin dato,Sin dato,21,Sin dato,Si,No,Salvador Mazza
+A.M.S,Mujer,47,45-49 años,10,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Otro,Mujer,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+A.S.M.F.,Mujer,31,30-34 años,7,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,35,35-39 años,8,Sin dato,No,No,Salvador Mazza
+C.N.D,Mujer,44,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,57,55-59 años,12,Si,Si,Si,Salvador Mazza
+C.T.Y.N,Mujer,23,20-24 años,5,Heterosexual,Si,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+C.Y.A,Mujer,23,20-24 años,5,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+E.M,Mujer,Sin dato,Sin dato,21,Heterosexual,No,No,Si,Física,Doméstica,Madre/madrastra/tutora,Varón,Sin dato,Sin dato,21,Sin dato,No,No,Salvador Mazza
+F.G.F,Mujer,44,40-44 años,9,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,40,40-44 años,9,No,Si,Si,Salvador Mazza
+F.L.E,Mujer,43,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,46,45-49 años,10,Si,Si,Si,Salvador Mazza
+G.A.M,Mujer,19,15-19 años,4,Heterosexual,No,Sin dato,No,Física,Doméstica,Ex pareja,Varón,20,20-24 años,5,Sin dato,Si,Si,Salvador Mazza
+G.D.D.C,Mujer,29,25-29 años,6,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Otro,Varón,Sin dato,Sin dato,21,Sin dato,No,No,Salvador Mazza
+G.E.M,Mujer,21,20-24 años,5,Heterosexual,No,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,29,25-29 años,6,No,No,No,Salvador Mazza
+G.F.D.L.A,Mujer,24,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,25,25-29 años,6,Sin dato,Si,Si,Salvador Mazza
+G.K.F,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Otro,Varón,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+G.R.N,Mujer,26,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sin dato,No,No,Salvador Mazza
+G.S,Mujer,45,45-49 años,10,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,44,40-44 años,9,No,Si,Si,Salvador Mazza
+L.J.E,Mujer,39,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Otro,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,Salvador Mazza
+LL.V.M,Mujer,45,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,Salvador Mazza
+M.A,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,20,20-24 años,5,No,Si,Si,Salvador Mazza
+M.C.R,Mujer,24,20-24 años,5,Heterosexual,Si,No,Sin dato,Física,Doméstica,Otro,Varón,43,40-44 años,9,Sin dato,Si,Si,Salvador Mazza
+M.W.D.V,Mujer,76,75-79 años,16,Heterosexual,No,Sin dato,No,Económica/Patrimonial,Doméstica,Madre/madrastra/tutora,Varón,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+O. J.U,Mujer,23,20-24 años,5,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,31,30-34 años,7,No,Si,Si,Salvador Mazza
+P.C.A,Mujer,24,20-24 años,5,Heterosexual,No,No,Sin dato,Económica/Patrimonial,En el ambito digital,Ex pareja,Varón,22,20-24 años,5,Sin dato,Si,No,Salvador Mazza
+P.M.E,Mujer,54,50-54 años,11,Heterosexual,Si,No,Si,Psicológica,Doméstica,Otro familiar,Otro,Sin dato,Sin dato,21,Sin dato,Si,No,Salvador Mazza
+P.O.M,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,22,20-24 años,5,No,Si,Si,Salvador Mazza
+Q.F.J.V,Mujer,37,35-39 años,8,Heterosexual,Si,No,Sin dato,Física,Doméstica,Pareja actual,Varón,38,35-39 años,8,Sin dato,Si,Si,Salvador Mazza
+Q.M,Mujer,90,90-94 años,19,Heterosexual,No,No,No,Física,Doméstica,Otro familiar,Varón,33,30-34 años,7,Si,Si,Si,Salvador Mazza
+R.C.C,Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,Salvador Mazza
+R.E.C,Mujer,36,35-39 años,8,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+R.E.Y,Mujer,39,35-39 años,8,Heterosexual,Si,No,Si,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+R.S.I.B,Mujer,29,25-29 años,6,Heterosexual,No,Si,No,Física,Doméstica,Otro,Mujer,50,50-54 años,11,Si,Si,Si,Salvador Mazza
+R.Z.E,Mujer,32,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,No,Si,Si,Salvador Mazza
+T.C.N,Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Psicológica,Institucional,Funcionario público,Otro,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+T.M.A,Mujer,36,35-39 años,8,Heterosexual,Si,No,Si,Física,Doméstica,Ex pareja,Varón,40,40-44 años,9,No,Si,Si,Salvador Mazza
+V.C.C.L,Mujer,36,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,Si,Salvador Mazza
+V.D.A,Mujer,54,50-54 años,11,Heterosexual,No,No,No,Psicológica,Doméstica,Otro,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+V.E.R,Mujer,31,30-34 años,7,Heterosexual,Si,No,Si,Psicológica,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,No,No,No,Salvador Mazza
+V.Y.G,Mujer,21,20-24 años,5,Heterosexual,No,No,Sin dato,Psicológica,Doméstica,Madre/madrastra/tutora,Mujer,42,40-44 años,9,No,Si,Si,Salvador Mazza
+A.C.V,Mujer,35,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+A.T.R,Mujer,40,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Mujer,Sin dato,Sin dato,21,No,Si,No,Salvador Mazza
+C.N,Mujer,42,40-44 años,9,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,Si,No,Salvador Mazza
+H.J.E,Mujer,31,30-34 años,7,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,No,Si,Salvador Mazza
+M.R.I.P,Mujer,42,40-44 años,9,Heterosexual,No,No,No,Física,Doméstica,Otro familiar,Varón,40,40-44 años,9,Si,Si,Si,Salvador Mazza
+M.M.R,Mujer,17,15-19 años,4,Heterosexual,No,No,No,Sexual,Doméstica,Padre/padrastro/tutor,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+N.S.T,Mujer,54,50-54 años,11,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,No,Salvador Mazza
+M.N.A,Mujer,28,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,No,Si,Si,Salvador Mazza
+P.M,Mujer,56,55-59 años,12,Heterosexual,No,No,No,Psicológica,Doméstica,Otro familiar,Varón,Sin dato,Sin dato,21,No,Si,Si,Salvador Mazza
+P.D,Mujer,40,40-44 años,9,Heterosexual,No,Si,No,Psicológica,Doméstica,Otro familiar,Varón,33,30-34 años,7,No,No,No,Salvador Mazza
+R.J.N,Mujer,34,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,48,45-49 años,10,Si,Si,Si,Salvador Mazza
+R.M.C,Mujer,29,25-29 años,6,Heterosexual,Si,No,No,Física,Doméstica,Pareja actual,Varón,23,20-24 años,5,No,No,No,Salvador Mazza
+R.M-L,Mujer,44,40-44 años,9,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,No,Si,No,Salvador Mazza
+T.A,Mujer,40,40-44 años,9,Heterosexual,No,Si,No,Psicológica,Doméstica,Otro familiar,Mujer,20,20-24 años,5,No,Si,Si,Salvador Mazza
+J.V,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,Si,No,Si,Rosario de la Frontera
+M.C,Mujer,62,60-64 años,13,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,70,70-74 años,15,No,Si,No,Rosario de la Frontera
+D.L,Varón,55,55-59 años,12,Heterosexual,No,No,Si,Psicológica,Doméstica,Otro familiar,Mujer,48,45-49 años,10,No,Si,Si,Rosario de la Frontera
+A.L,Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,No,Rosario de la Frontera
+Y.T,Mujer,29,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,31,30-34 años,7,Si,Si,No,Rosario de la Frontera
+L.P,Varón,75,75-79 años,16,Heterosexual,No,Si,Si,Física,En el espacio público / acoso callejero,Otro,Varón,52,50-54 años,11,Sin dato,Si,Si,Rosario de la Frontera
+P.P,Mujer,35,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,66,65-69 años,14,Si,Si,Si,Rosario de la Frontera
+P.R,Varón,58,55-59 años,12,Heterosexual,No,No,Si,Económica/Patrimonial,Laboral,Superior jerárquico,Varón,53,50-54 años,11,Si,Si,No,Rosario de la Frontera
+M.L,Mujer,42,40-44 años,9,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,43,40-44 años,9,No,No,No,Rosario de la Frontera
+M.C,Mujer,52,50-54 años,11,Heterosexual,No,No,Si,Económica/Patrimonial,Laboral,Superior jerárquico,Mujer,56,55-59 años,12,Sin dato,No,No,Rosario de la Frontera
+S.F,Mujer,40,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,42,40-44 años,9,Si,Si,Si,Rosario de la Frontera
+M.G,Mujer,42,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Otro familiar,Mujer,20,20-24 años,5,No,Si,Si,Rosario de la Frontera
+V.E,Mujer,25,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,25,25-29 años,6,Si,Si,Si,Rosario de la Frontera
+L.C,Varón,42,40-44 años,9,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,40,40-44 años,9,No,Si,Si,Rosario de la Frontera
+P.M,Mujer,28,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,32,30-34 años,7,Si,Si,Si,Rosario de la Frontera
+E.R,Mujer,52,50-54 años,11,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,59,55-59 años,12,Si,Si,No,Rosario de la Frontera
+D.F,Mujer,25,25-29 años,6,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,28,25-29 años,6,Si,No,No,Rosario de la Frontera
+C.C,Mujer,58,55-59 años,12,Heterosexual,No,No,Si,Física,En el espacio público / acoso callejero,Sin dato,Varón,48,45-49 años,10,Sin dato,No,No,Rosario de la Frontera
+M.L,Mujer,26,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Otro,Varón,28,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+G.C,Mujer,40,40-44 años,9,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,41,40-44 años,9,Sin dato,Si,Si,Rosario de la Frontera
+C.B,Mujer,25,25-29 años,6,Bisexual,No,No,No,Física,Doméstica,Ex pareja,Varón,31,30-34 años,7,Sin dato,Si,No,Rosario de la Frontera
+A.D,Mujer,65,65-69 años,14,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,70,70-74 años,15,Sin dato,Si,No,Rosario de la Frontera
+M.M,Mujer,26,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,30,30-34 años,7,Sin dato,Si,Si,Rosario de la Frontera
+C.J,Mujer,42,40-44 años,9,Sin dato,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,38,35-39 años,8,Sin dato,No,No,Rosario de la Frontera
+M.M.,Mujer,25,25-29 años,6,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,23,20-24 años,5,Sin dato,Si,Si,Rosario de la Frontera
+M.N.,Mujer,56,55-59 años,12,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,63,60-64 años,13,Si,No,No,Rosario de la Frontera
+R.I,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,35,35-39 años,8,Si,No,No,Rosario de la Frontera
+F.M.,Mujer,78,75-79 años,16,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,78,75-79 años,16,Si,Si,Si,Rosario de la Frontera
+P.J,Mujer,50,50-54 años,11,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Varón,58,55-59 años,12,Sin dato,Si,Si,Rosario de la Frontera
+B.G,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Varón,25,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+B.C,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,28,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+C.F,Mujer,25,25-29 años,6,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+C.P,Mujer,38,35-39 años,8,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,43,40-44 años,9,Sin dato,Si,Si,Rosario de la Frontera
+L.R,Mujer,46,45-49 años,10,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,45,45-49 años,10,Sin dato,Si,Si,Rosario de la Frontera
+O.M,Mujer,53,50-54 años,11,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,61,60-64 años,13,Sin dato,No,No,Rosario de la Frontera
+C.A.,Mujer,58,55-59 años,12,Heterosexual,No,No,Si,Psicológica,Doméstica,Otro familiar,Varón,59,55-59 años,12,No,No,No,Rosario de la Frontera
+M.R,Mujer,46,45-49 años,10,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Pareja actual,Varón,48,45-49 años,10,Sin dato,No,No,Rosario de la Frontera
+C.O,Mujer,25,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,30,30-34 años,7,No,Si,Si,Rosario de la Frontera
+"M,C",Mujer,62,60-64 años,13,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,74,70-74 años,15,Sin dato,No,No,Rosario de la Frontera
+A.D,Mujer,23,20-24 años,5,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Otro,25,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+T.Y,Mujer,41,40-44 años,9,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,28,25-29 años,6,Si,No,Si,Rosario de la Frontera
+R.R,Mujer,20,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,22,20-24 años,5,Si,No,Si,Rosario de la Frontera
+S.L,Mujer,38,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,45,45-49 años,10,Sin dato,No,No,Rosario de la Frontera
+M.L,Mujer,51,50-54 años,11,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,25,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+T.E,Mujer,32,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,No,Rosario de la Frontera
+M.I,Varón,37,35-39 años,8,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Mujer,25,25-29 años,6,No,No,Si,Rosario de la Frontera
+M.R,Mujer,47,45-49 años,10,Sin dato,No,No,Si,Psicológica,Doméstica,Otro familiar,Mujer,48,45-49 años,10,Sin dato,Si,No,Rosario de la Frontera
+T.A,Mujer,35,35-39 años,8,Heterosexual,No,Si,No,Física,Doméstica,Ex pareja,Mujer,52,50-54 años,11,No,Si,No,Rosario de la Frontera
+J.D,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Varón,32,30-34 años,7,No,Si,Si,Rosario de la Frontera
+B.Y,Mujer,33,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,45,45-49 años,10,Si,No,No,Rosario de la Frontera
+L.C,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sin dato,Si,Si,Rosario de la Frontera
+C.M,Mujer,65,65-69 años,14,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,71,70-74 años,15,No,No,Si,Rosario de la Frontera
+M.J,Varón,39,35-39 años,8,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Mujer,29,25-29 años,6,No,No,Si,Rosario de la Frontera
+P.T,Mujer,57,55-59 años,12,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,56,55-59 años,12,Sin dato,No,No,Rosario de la Frontera
+F.C,Mujer,21,20-24 años,5,Heterosexual,No,No,No,Psicológica,Doméstica,Otro familiar,Mujer,25,25-29 años,6,Sin dato,No,Si,Rosario de la Frontera
+"S,M",Mujer,43,40-44 años,9,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,47,45-49 años,10,No,No,No,Rosario de la Frontera
+G.M,Mujer,33,30-34 años,7,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,44,40-44 años,9,No,Si,No,Rosario de la Frontera
+M.R,Mujer,47,45-49 años,10,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,35,35-39 años,8,Sin dato,Si,No,Rosario de la Frontera
+A.M,Mujer,36,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,36,35-39 años,8,No,No,Si,Rosario de la Frontera
+C.M,Mujer,58,55-59 años,12,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,52,50-54 años,11,Si,Si,No,Rosario de la Frontera
+R.F,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,21,20-24 años,5,Si,Si,Si,Rosario de la Frontera
+M.X,Mujer,26,25-29 años,6,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Otro familiar,Mujer,25,25-29 años,6,No,Si,Si,Rosario de la Frontera
+S.S,Mujer,31,30-34 años,7,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,27,25-29 años,6,Sin dato,Si,No,Rosario de la Frontera
+A.S,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,41,40-44 años,9,No,Si,Si,Rosario de la Frontera
+R.D,Varón,38,35-39 años,8,Heterosexual,No,No,Si,Económica/Patrimonial,En el espacio público / acoso callejero,Otro familiar,Mujer,25,25-29 años,6,No,Si,Si,Rosario de la Frontera
+M.M,Mujer,20,20-24 años,5,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,36,35-39 años,8,Sin dato,No,Si,Rosario de la Frontera
+F.M.,Mujer,45,45-49 años,10,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,49,45-49 años,10,No,No,Si,Rosario de la Frontera
+Z.J,Mujer,24,20-24 años,5,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,36,35-39 años,8,No,No,No,Rosario de la Frontera
+A.V,Mujer,34,30-34 años,7,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,32,30-34 años,7,Sin dato,Si,No,Rosario de la Frontera
+L.F,Mujer,24,20-24 años,5,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,26,25-29 años,6,Sin dato,No,Si,Rosario de la Frontera
+R.A,Mujer,34,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,No,Si,No,Rosario de la Frontera
+C.N,Mujer,64,60-64 años,13,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,68,65-69 años,14,Si,Si,No,Rosario de la Frontera
+P.R,Varón,68,65-69 años,14,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Mujer,45,45-49 años,10,Sin dato,No,No,Rosario de la Frontera
+B.C,Varón,29,25-29 años,6,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Mujer,30,30-34 años,7,No,No,No,Rosario de la Frontera
+Q.M,Mujer,31,30-34 años,7,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,34,30-34 años,7,Sin dato,Si,Si,Rosario de la Frontera
+G.C,Mujer,35,35-39 años,8,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,43,40-44 años,9,No,No,Si,Rosario de la Frontera
+T.E,Mujer,24,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Mujer,26,25-29 años,6,No,No,Si,Rosario de la Frontera
+C.D,Varón,22,20-24 años,5,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,22,20-24 años,5,No,Si,No,Rosario de la Frontera
+V.E,Varón,34,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,36,35-39 años,8,Si,Si,No,Rosario de la Frontera
+J.J,Mujer,54,50-54 años,11,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,56,55-59 años,12,Sin dato,Si,No,Rosario de la Frontera
+V.I,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,20,20-24 años,5,Sin dato,Si,Si,Rosario de la Frontera
+M.A,Mujer,29,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,30,30-34 años,7,No,No,No,Rosario de la Frontera
+G.A,Mujer,35,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,47,45-49 años,10,No,Si,No,Rosario de la Frontera
+P.Y,Mujer,34,30-34 años,7,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,36,35-39 años,8,No,No,Si,Rosario de la Frontera
+T.I,Mujer,36,35-39 años,8,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,32,30-34 años,7,No,Si,Si,Rosario de la Frontera
+R.A,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,28,25-29 años,6,No,Si,No,Rosario de la Frontera
+M.I,Varón,24,20-24 años,5,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,25,25-29 años,6,No,Si,No,Rosario de la Frontera
+N.F,Mujer,26,25-29 años,6,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,31,30-34 años,7,No,Si,No,Rosario de la Frontera
+D.M,Mujer,39,35-39 años,8,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sin dato,Si,No,Rosario de la Frontera
+A.N,Mujer,21,20-24 años,5,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,52,50-54 años,11,Si,No,Si,Rosario de la Frontera
+B.J,Mujer,45,45-49 años,10,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,33,30-34 años,7,Si,No,No,Rosario de la Frontera
+A.M,Mujer,37,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Otro familiar,Mujer,19,15-19 años,4,Sin dato,Si,Si,Rosario de la Frontera
+F.M,Varón,41,40-44 años,9,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Mujer,39,35-39 años,8,No,No,Si,Rosario de la Frontera
+C.A,Mujer,19,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,21,20-24 años,5,No,No,No,Rosario de la Frontera
+C.S,Mujer,24,20-24 años,5,Heterosexual,No,No,Si,Psicológica,Doméstica,Pareja actual,Varón,28,25-29 años,6,Si,No,No,Rosario de la Frontera
+M.S,Mujer,29,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,32,30-34 años,7,Sin dato,No,No,Rosario de la Frontera
+V.S,Mujer,48,45-49 años,10,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,49,45-49 años,10,No,No,No,Rosario de la Frontera
+V.N.C,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,No,Si,Si,San Ramón de la Nueva Orán
+J.E.S,Mujer,39,35-39 años,8,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,44,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+M.R,Mujer,18,15-19 años,4,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,25,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+C.R.M,Mujer,21,20-24 años,5,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Pareja actual,Varón,31,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+M.V.F,Mujer,46,45-49 años,10,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,40,40-44 años,9,No,Si,Si,San Ramón de la Nueva Orán
+G.M.C,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,21,20-24 años,5,Si,Si,Si,San Ramón de la Nueva Orán
+Y.D.A,Mujer,41,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,47,45-49 años,10,No,Si,Si,San Ramón de la Nueva Orán
+N.V,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,25,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+K.J.V,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,25,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+D.M.J,Mujer,23,20-24 años,5,Heterosexual,Sin dato,Sin dato,Si,Sexual,En el espacio público / acoso callejero,Otro,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,San Ramón de la Nueva Orán
+N.G.CH,Mujer,32,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,37,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+S.M.Z,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Sexual,En el espacio público / acoso callejero,Otro,Varón,35,35-39 años,8,Sin dato,Si,Si,San Ramón de la Nueva Orán
+Z.E.A,Mujer,39,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,38,35-39 años,8,Si,Si,Si,San Ramón de la Nueva Orán
+N.A.A,Mujer,52,50-54 años,11,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sin dato,No,Sin dato,San Ramón de la Nueva Orán
+A.M,Mujer,43,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,No,No,Sin dato,San Ramón de la Nueva Orán
+L.D.M,Mujer,48,45-49 años,10,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Si,Si,Si,San Ramón de la Nueva Orán
+V.F.G.L,Mujer,27,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,27,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+"S,C.A",Mujer,42,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,46,45-49 años,10,Si,Si,Si,San Ramón de la Nueva Orán
+M.C.Y,Mujer,41,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Si,Si,Si,San Ramón de la Nueva Orán
+A.M.Z,Mujer,45,45-49 años,10,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,No,No,Sin dato,San Ramón de la Nueva Orán
+T.M.O,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Si,Si,Si,San Ramón de la Nueva Orán
+L.V.M,Mujer,18,15-19 años,4,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,19,15-19 años,4,Si,Si,Si,San Ramón de la Nueva Orán
+R.M.B,Mujer,36,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,33,30-34 años,7,Si,Si,Si,San Ramón de la Nueva Orán
+M.R.B,Mujer,27,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,28,25-29 años,6,Sin dato,No,Sin dato,San Ramón de la Nueva Orán
+L.A.A,Mujer,42,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,41,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+G.B.M,Mujer,33,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Psicológica,Doméstica,Pareja actual,Varón,34,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+B.C.A,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,22,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+V.C.S,Mujer,39,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Ex pareja,Varón,42,40-44 años,9,No,Si,Si,San Ramón de la Nueva Orán
+R.G,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+G.V.B,Mujer,68,65-69 años,14,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Otro familiar,Mujer,44,40-44 años,9,Sin dato,Si,Si,San Ramón de la Nueva Orán
+M.A,Mujer,55,55-59 años,12,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,62,60-64 años,13,Sin dato,Si,Si,San Ramón de la Nueva Orán
+S.I.S,Mujer,43,40-44 años,9,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,53,50-54 años,11,No,Si,Si,San Ramón de la Nueva Orán
+A.A.A,Mujer,25,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,Si,Si,Si,San Ramón de la Nueva Orán
+A.C.G,Mujer,42,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Otro familiar,Varón,21,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+C.M.V,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Sexual,En el espacio público / acoso callejero,Otro,Varón,30,30-34 años,7,Sin dato,Si,Si,San Ramón de la Nueva Orán
+M.G.Y,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Pareja actual,Varón,30,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+A.S.C,Mujer,41,40-44 años,9,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,38,35-39 años,8,Si,Si,Si,San Ramón de la Nueva Orán
+G.Z,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Si,No,Física,Doméstica,Ex pareja,Varón,45,45-49 años,10,No,Si,Si,San Ramón de la Nueva Orán
+N.Y.D,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,26,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+C.C.C,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,No,Sexual,En el espacio público / acoso callejero,Otro,Varón,55,55-59 años,12,Sin dato,Si,Si,San Ramón de la Nueva Orán
+N.J.V,Mujer,17,15-19 años,4,Heterosexual,Sin dato,Sin dato,No,Psicológica,En el espacio público / acoso callejero,Pareja actual,Varón,27,25-29 años,6,Sin dato,No,Sin dato,San Ramón de la Nueva Orán
+P.M.E,Mujer,24,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Psicológica,Doméstica,Pareja actual,Varón,31,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+A.F.T,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Ex pareja,Varón,43,40-44 años,9,No,No,Sin dato,San Ramón de la Nueva Orán
+M.A.M.C,Mujer,46,45-49 años,10,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,48,45-49 años,10,No,Si,Si,San Ramón de la Nueva Orán
+D.M.C,Mujer,20,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,18,15-19 años,4,No,Si,Si,San Ramón de la Nueva Orán
+A.B.N,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+M.C.C,Mujer,39,35-39 años,8,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,No,No,Sin dato,San Ramón de la Nueva Orán
+N.T.T,Mujer,23,20-24 años,5,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Otro familiar,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,San Ramón de la Nueva Orán
+B.E.V,Mujer,23,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Pareja actual,Varón,26,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+F.L.H,Mujer,29,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,31,30-34 años,7,No,No,Sin dato,San Ramón de la Nueva Orán
+T.G.B,Mujer,20,20-24 años,5,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Pareja actual,Varón,18,15-19 años,4,No,Si,Si,San Ramón de la Nueva Orán
+A.D.G.M,Mujer,53,50-54 años,11,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Laboral,Otro,Varón,45,45-49 años,10,No,Si,Si,San Ramón de la Nueva Orán
+E.C.G,Mujer,56,55-59 años,12,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,55,55-59 años,12,No,Si,Si,San Ramón de la Nueva Orán
+S.N.A,Mujer,36,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+E.A.B.R,Mujer,21,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+G.C.R,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Ex pareja,Varón,39,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+A.B.P,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+Y.A.R,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,28,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+P.G.E,Mujer,33,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,No,No,Sin dato,San Ramón de la Nueva Orán
+E.B.P,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+F.P.N.B,Mujer,30,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+C.L.Q,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Ex pareja,Varón,34,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+L.I.CH,Mujer,47,45-49 años,10,Heterosexual,Sin dato,Sin dato,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,48,45-49 años,10,Sin dato,Si,Si,San Ramón de la Nueva Orán
+N.A.P,Mujer,30,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Sin dato,Si,Si,San Ramón de la Nueva Orán
+A.D.S,Mujer,30,30-34 años,7,Heterosexual,Sin dato,Si,No,Física,Doméstica,Ex pareja,Varón,32,30-34 años,7,Si,Si,Si,San Ramón de la Nueva Orán
+I.V.A,Mujer,30,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,58,55-59 años,12,No,No,Sin dato,San Ramón de la Nueva Orán
+C.M.M.M,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Padre/padrastro/tutor,Varón,38,35-39 años,8,Sin dato,Si,Si,San Ramón de la Nueva Orán
+N.M.F,Mujer,29,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sin dato,Si,Si,San Ramón de la Nueva Orán
+A.S.C,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Padre/padrastro/tutor,Varón,55,55-59 años,12,Sin dato,Si,Si,San Ramón de la Nueva Orán
+R.A.A,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Sin dato,Si,Si,San Ramón de la Nueva Orán
+G.R.R,Mujer,26,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,27,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+G.M.L,Mujer,32,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,36,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+L.I.G,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+G.F,Mujer,45,45-49 años,10,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,55,55-59 años,12,No,No,Sin dato,San Ramón de la Nueva Orán
+B.S.L,Mujer,48,45-49 años,10,Heterosexual,Sin dato,Sin dato,No,Psicológica,En el espacio público / acoso callejero,Otro,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,San Ramón de la Nueva Orán
+A.P.A.M,Mujer,37,35-39 años,8,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,42,40-44 años,9,No,Si,Si,San Ramón de la Nueva Orán
+D.A.R,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Otro familiar,Varón,56,55-59 años,12,No,Si,Si,San Ramón de la Nueva Orán
+L.J.CH,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,37,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+G.A.C,Mujer,33,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,28,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+A.E.M,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Psicológica,Doméstica,Pareja actual,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+M.F.T,Mujer,32,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,56,55-59 años,12,Si,Si,Si,San Ramón de la Nueva Orán
+V.N.J,Mujer,24,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+I.C.M,Mujer,44,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,48,45-49 años,10,Si,Si,Si,San Ramón de la Nueva Orán
+L.M.R,Mujer,36,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Otro familiar,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,San Ramón de la Nueva Orán
+R.P.M,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,41,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+E.A.Z,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Si,Si,Física,Doméstica,Ex pareja,Varón,41,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+F.E.G,Mujer,23,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,23,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+J.A.S,Mujer,31,30-34 años,7,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,Si,Si,Si,San Ramón de la Nueva Orán
+M.I.P,Mujer,29,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+G.D.P,Mujer,33,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,36,35-39 años,8,Si,Si,Si,San Ramón de la Nueva Orán
+M.F.N,Mujer,32,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,35,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+L.D.A,Mujer,24,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,26,25-29 años,6,No,Si,Si,San Ramón de la Nueva Orán
+L.L.V,Mujer,44,40-44 años,9,Heterosexual,Sin dato,Sin dato,No,Psicológica,Doméstica,Ex pareja,Varón,44,40-44 años,9,No,Si,Si,San Ramón de la Nueva Orán
+C.A.F,Mujer,21,20-24 años,5,Heterosexual,Sin dato,Si,No,Física,Doméstica,Ex pareja,Varón,41,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+N.E.Q,Mujer,64,60-64 años,13,Heterosexual,Sin dato,Sin dato,Si,Psicológica,Doméstica,Otro familiar,Mujer,Sin dato,Sin dato,21,No,No,Sin dato,San Ramón de la Nueva Orán
+N.P.C,Mujer,25,25-29 años,6,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,43,40-44 años,9,Si,Si,Si,San Ramón de la Nueva Orán
+L.B.H,Mujer,40,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,52,50-54 años,11,Si,Si,Si,San Ramón de la Nueva Orán
+S.E.M,Mujer,46,45-49 años,10,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Si,Si,Si,San Ramón de la Nueva Orán
+M.D,Mujer,29,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,33,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+R.C,Mujer,44,40-44 años,9,Heterosexual,Sin dato,Sin dato,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+V.Y.A,Mujer,34,30-34 años,7,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,San Ramón de la Nueva Orán
+D.A.T,Mujer,28,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,33,30-34 años,7,No,Si,Si,San Ramón de la Nueva Orán
+S.P.R,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,42,40-44 años,9,No,No,Sin dato,San Ramón de la Nueva Orán
+M.N.O,Mujer,27,25-29 años,6,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,28,25-29 años,6,No,No,Sin dato,San Ramón de la Nueva Orán
+F.N.S,Mujer,45,45-49 años,10,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,60,60-64 años,13,No,No,Sin dato,San Ramón de la Nueva Orán
+S.M.L,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,Si,Sexual,Doméstica,Ex pareja,Varón,39,35-39 años,8,Si,Si,Si,San Ramón de la Nueva Orán
+L.V.C,Mujer,38,35-39 años,8,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,40,40-44 años,9,No,No,Sin dato,San Ramón de la Nueva Orán
+F.E.C,Mujer,49,45-49 años,10,Heterosexual,Sin dato,Si,No,Sexual,En el espacio público / acoso callejero,Otro,Varón,65,65-69 años,14,Sin dato,Si,Si,San Ramón de la Nueva Orán
+P.J.S,Mujer,19,15-19 años,4,Heterosexual,Sin dato,Sin dato,No,Sexual,Doméstica,Padre/padrastro/tutor,Varón,38,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+M.A.D,Mujer,20,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Sexual,Doméstica,Otro familiar,Varón,36,35-39 años,8,No,Si,Si,San Ramón de la Nueva Orán
+B.C.S,Mujer,21,20-24 años,5,Heterosexual,Sin dato,Sin dato,No,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,Si,Si,San Ramón de la Nueva Orán
+A.A,Mujer,26,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,No,No,No,General Mosconi
+A.P,Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Si,Si,Si,General Mosconi
+A.Y,Mujer,28,25-29 años,6,Heterosexual,No,No,Si,Física,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,21,Sin dato,Sin dato,Sin dato,General Mosconi
+-,Mujer,Sin dato,Sin dato,21,Sin dato,Sin dato,Sin dato,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,44,40-44 años,9,Si,Si,No,General Mosconi
+"A,v. M",Mujer,50,50-54 años,11,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Varón,44,40-44 años,9,No,No,No,General Mosconi
+"C, I.M",Mujer,29,25-29 años,6,Heterosexual,No,Si,No,Sexual,Doméstica,Ex pareja,Varón,21,20-24 años,5,No,Si,No,General Mosconi
+"C. B, A",Mujer,23,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,28,25-29 años,6,No,No,No,General Mosconi
+"C. R, V",Mujer,37,35-39 años,8,Heterosexual,No,Si,No,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,No,Si,Si,General Mosconi
+"C. F,R",Otro,69,65-69 años,14,Gay,No,No,No,Económica/Patrimonial,Doméstica,Otro familiar,Mujer,50,50-54 años,11,No,Si,Si,General Mosconi
+C. E,Mujer,47,45-49 años,10,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,45,45-49 años,10,Si,Si,Si,General Mosconi
+"C. Z, M,D",Mujer,16,15-19 años,4,Heterosexual,Sin dato,No,No,Psicológica,Doméstica,Padre/padrastro/tutor,Sin dato,Sin dato,Sin dato,21,No,Si,Si,General Mosconi
+E. M,Mujer,39,35-39 años,8,Heterosexual,Sin dato,No,Si,Económica/Patrimonial,Doméstica,Pareja actual,Varón,46,45-49 años,10,No,Si,Si,General Mosconi
+"F. C,C",Mujer,24,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Compañero/a de trabajo,Sin dato,30,30-34 años,7,Si,Si,Si,General Mosconi
+"F. K, C",Mujer,23,20-24 años,5,Heterosexual,Sin dato,No,No,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Si,Si,Si,General Mosconi
+"G. C,A",Mujer trans,31,30-34 años,7,Gay,No,No,No,Psicológica,Doméstica,Otro familiar,Mujer,72,70-74 años,15,No,No,No,General Mosconi
+"G. N, E",Mujer,38,35-39 años,8,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,No,No,No,General Mosconi
+LDE,Mujer,52,50-54 años,11,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,29,25-29 años,6,Si,Si,Si,General Mosconi
+LLM,Mujer,38,35-39 años,8,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,35,35-39 años,8,No,Si,Si,General Mosconi
+LJMF,Mujer,37,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,No,Si,Si,General Mosconi
+MAV,Mujer,42,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Otro,Varón,23,20-24 años,5,No,Si,Si,General Mosconi
+MCM,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Psicológica,Doméstica,Otro familiar,Mujer,30,30-34 años,7,No,No,No,General Mosconi
+MSA,Mujer,44,40-44 años,9,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,48,45-49 años,10,No,Si,Si,General Mosconi
+MSE,Mujer,28,25-29 años,6,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,34,30-34 años,7,No,Si,Si,General Mosconi
+NME,Mujer,40,40-44 años,9,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,36,35-39 años,8,No,Si,Si,General Mosconi
+NCR,Mujer,37,35-39 años,8,Heterosexual,Si,No,No,Física,Doméstica,Ex pareja,Varón,42,40-44 años,9,No,Si,Si,General Mosconi
+PADLA,Mujer,19,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Otro,Otro,Sin dato,Sin dato,21,No,No,Si,General Mosconi
+SN,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,Si,Si,Si,General Mosconi
+SAP,Mujer,29,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,35,35-39 años,8,No,Si,Si,General Mosconi
+VBR,Mujer,19,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,Si,General Mosconi
+VCE,Mujer,36,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Otro,Mujer,43,40-44 años,9,Si,Si,Si,General Mosconi
+ONE,Mujer,28,25-29 años,6,Heterosexual,No,Si,Si,Física,Doméstica,Ex pareja,Varón,41,40-44 años,9,No,Si,Si,General Mosconi
+RJA,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,39,35-39 años,8,No,Si,Si,General Mosconi
+SNE,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Si,Si,Si,General Mosconi
+TZDC,Mujer,49,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,57,55-59 años,12,Si,Si,Si,General Mosconi
+MR,Mujer,42,40-44 años,9,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,45,45-49 años,10,Si,Si,Si,San José de Metán
+LM,Mujer,28,25-29 años,6,Heterosexual,Si,No,No,Psicológica,Doméstica,Pareja actual,Varón,30,30-34 años,7,Si,Si,No,San José de Metán
+NA,Mujer,42,40-44 años,9,Heterosexual,No,No,No,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,80,80-84 años,17,No,Si,No,San José de Metán
+CA,Mujer,46,45-49 años,10,Heterosexual,No,No,No,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,80,80-84 años,17,No,Si,No,San José de Metán
+Z.A.M.,Mujer,31,30-34 años,7,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,La Merced
+D.G.H.,Mujer,38,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,No,No,La Merced
+L.R.G.,Mujer,40,40-44 años,9,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,La Merced
+M.V.L.,Mujer,19,15-19 años,4,Heterosexual,No,No,Sin dato,Psicológica,Doméstica,Ex pareja,Varón,20,20-24 años,5,Sin dato,Si,Si,La Merced
+A.D.R.,Mujer,46,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Sin dato,Si,Si,La Merced
+N.C.V.,Mujer,37,35-39 años,8,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,40,40-44 años,9,Sin dato,Si,Si,La Merced
+Q.C.,Mujer,43,40-44 años,9,Heterosexual,No,No,Sin dato,Física,Doméstica,Padre/padrastro/tutor,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,La Merced
+A.L.E.,Mujer,28,25-29 años,6,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,No,No,La Merced
+A.M.Á.,Mujer,49,45-49 años,10,Heterosexual,No,No,Sin dato,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,La Merced
+A.C.R.L.,Mujer,47,45-49 años,10,Sin dato,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,Si,Si,La Merced
+Z.Y.,Mujer,34,30-34 años,7,Heterosexual,No,No,Si,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,No,No,La Merced
+C.C.A.,Mujer,31,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,Sin dato,Si,Si,La Merced
+L.R.B.,Mujer,28,25-29 años,6,Heterosexual,No,No,No,Psicológica,Doméstica,Otro familiar,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,La Merced
+R.M.C.,Mujer,59,55-59 años,12,Heterosexual,No,No,No,Psicológica,Doméstica,Otro familiar,Mujer,36,35-39 años,8,Sin dato,Si,Si,La Merced
+L.A.P.,Mujer,30,30-34 años,7,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,No,No,La Merced
+R.C.A.,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Psicológica,Institucional,Otro,Varón,60,60-64 años,13,Sin dato,Si,Si,La Merced
+B.G.S.,Mujer,26,25-29 años,6,Heterosexual,No,No,Si,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,21,Sin dato,Sin dato,Sin dato,La Merced
+"D.F., A.",Mujer trans,26,25-29 años,6,Sin dato,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,No,No,Joaquín Victor Gonzalez
+"S. R. N. , H",Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,Si,No,Joaquín Victor Gonzalez
+"M. T. , L",Mujer,32,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,40,40-44 años,9,Si,Si,Si,Joaquín Victor Gonzalez
+M. G. F,Mujer,36,35-39 años,8,Heterosexual,Sin dato,No,Si,Física,Doméstica,Ex pareja,Varón,37,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+D. R. V,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,Si,Si,Joaquín Victor Gonzalez
+M. L. F.,Mujer,45,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,39,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+D. D. G.,Mujer,19,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,56,55-59 años,12,Si,Si,Si,Joaquín Victor Gonzalez
+I. D. G.,Mujer,47,45-49 años,10,Heterosexual,No,No,Si,Psicológica,Laboral,Compañero/a de trabajo,Varón,55,55-59 años,12,Si,Si,Si,Joaquín Victor Gonzalez
+Y. A. S.,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Si,Si,Si,Joaquín Victor Gonzalez
+C. G. C.,Mujer,27,25-29 años,6,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,25,25-29 años,6,Si,Si,Si,Joaquín Victor Gonzalez
+N. D. V. V.,Mujer,30,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,30,30-34 años,7,Si,Si,Si,Joaquín Victor Gonzalez
+M.P. A,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,23,20-24 años,5,Si,Si,Si,Joaquín Victor Gonzalez
+R. F. F.,Mujer,31,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,35,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+G. N. U,Mujer,20,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Padre/padrastro/tutor,Varón,44,40-44 años,9,Si,Si,Si,Joaquín Victor Gonzalez
+A. D. M.,Mujer,20,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,22,20-24 años,5,Sin dato,Si,Si,Joaquín Victor Gonzalez
+M.D.A.,Mujer,38,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,29,25-29 años,6,Si,Si,Si,Joaquín Victor Gonzalez
+V. C. S.,Mujer,32,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,24,20-24 años,5,Si,Si,Si,Joaquín Victor Gonzalez
+M. R. C.,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,26,25-29 años,6,Si,Si,Si,Joaquín Victor Gonzalez
+M. L. C.,Mujer,23,20-24 años,5,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+D. J. O.,Mujer,25,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,38,35-39 años,8,Sin dato,No,No,Joaquín Victor Gonzalez
+F.A. R.,Mujer,21,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,20,20-24 años,5,Si,Si,Si,Joaquín Victor Gonzalez
+L. L- G.,Mujer,27,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,28,25-29 años,6,Si,Si,Si,Joaquín Victor Gonzalez
+C. T. L.,Mujer,28,25-29 años,6,Heterosexual,No,No,Si,Psicológica,Laboral,Superior jerárquico,Varón,40,40-44 años,9,Si,Si,Si,Joaquín Victor Gonzalez
+M. M. M.,Mujer,49,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,56,55-59 años,12,Si,Si,Si,Joaquín Victor Gonzalez
+L. L. B.,Mujer,20,20-24 años,5,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,23,20-24 años,5,Sin dato,No,No,Joaquín Victor Gonzalez
+M. B. F.,Mujer,29,25-29 años,6,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,39,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+L. V. C.,Mujer,33,30-34 años,7,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+N. A. O.,Mujer,46,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,44,40-44 años,9,Si,Si,Si,Joaquín Victor Gonzalez
+F. M. B. C.,Mujer,35,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Pareja actual,Varón,63,60-64 años,13,No,No,No,Joaquín Victor Gonzalez
+F. A.,Mujer,47,45-49 años,10,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,59,55-59 años,12,No,No,No,Joaquín Victor Gonzalez
+D. S. O.,Mujer,36,35-39 años,8,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,38,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+F. D.,Mujer,27,25-29 años,6,Heterosexual,No,No,Si,Física,Doméstica,Ex pareja,Varón,39,35-39 años,8,Si,Si,Si,Joaquín Victor Gonzalez
+R.V.A,Mujer,34,30-34 años,7,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,34,30-34 años,7,Si,Si,Si,General Güemes
+C.G.R.,Mujer,34,30-34 años,7,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,25,25-29 años,6,No,Si,Si,General Güemes
+C.A.A.,Mujer,48,45-49 años,10,Heterosexual,No,No,Si,Psicológica,Doméstica,Ex pareja,Varón,72,70-74 años,15,No,Si,Sin dato,General Güemes
+G.S.A,Mujer,26,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Sin dato,Sin dato,General Güemes
+M.R.S.B,Mujer,37,35-39 años,8,Heterosexual,No,No,Si,Psicológica,Doméstica,Otro familiar,Varón,Sin dato,Sin dato,21,No,Si,Si,General Güemes
+O.V.R,Mujer,49,45-49 años,10,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,47,45-49 años,10,No,Si,Si,General Güemes
+O.A.M.,Mujer,24,20-24 años,5,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,21,20-24 años,5,No,Si,Si,General Güemes
+R.G.E.,Mujer,Sin dato,Sin dato,21,Heterosexual,No,No,No,Psicológica,Sin dato,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,General Güemes
+R.S.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,No,No,No,Psicológica,Sin dato,Ex pareja,Varón,Sin dato,Sin dato,21,No,Si,Si,General Güemes
+"S,V.E.",Mujer,8,5-9 años,2,Heterosexual,No,No,No,Sexual,Sin dato,Sin dato,Varón,Sin dato,Sin dato,21,No,Si,Si,General Güemes
+S.G.E.,Mujer,30,30-34 años,7,Heterosexual,No,No,No,Física,En el espacio público / acoso callejero,Sin dato,Varón,23,20-24 años,5,No,Si,Si,General Güemes
+F.P.N.,Mujer,20,20-24 años,5,Heterosexual,No,No,Sin dato,Física,Doméstica,Pareja actual,Varón,19,15-19 años,4,No,Si,Si,General Güemes
+G.A.S.,Mujer,42,40-44 años,9,Heterosexual,No,No,Sin dato,Psicológica,Sin dato,Pareja actual,Varón,Sin dato,Sin dato,21,No,Si,Si,General Güemes
+H.R.F.,Mujer,42,40-44 años,9,Heterosexual,No,No,Sin dato,Física,Doméstica,Pareja actual,Varón,49,45-49 años,10,No,Si,Si,General Güemes
+L.L.D,Mujer,44,40-44 años,9,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,44,40-44 años,9,No,Si,Si,General Güemes
+M.U.M,Mujer,36,35-39 años,8,Heterosexual,No,No,Sin dato,Psicológica,Sin dato,Ex pareja,Varón,35,35-39 años,8,No,Si,Si,General Güemes
+M.G.B,Mujer,33,30-34 años,7,Heterosexual,No,No,Sin dato,Física,Doméstica,Pareja actual,Varón,27,25-29 años,6,No,Si,Si,General Güemes
+C.T.E,Mujer,42,40-44 años,9,Heterosexual,No,No,Sin dato,Física,Doméstica,Ex pareja,Varón,50,50-54 años,11,Sin dato,Si,Si,General Güemes
+C.O.A.M,Mujer,Sin dato,Sin dato,21,Heterosexual,No,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,Sin dato,21,Sin dato,Sin dato,Sin dato,General Güemes
+C.A.E.,Mujer,36,35-39 años,8,Heterosexual,No,No,Sin dato,Física,Sin dato,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,General Güemes
+C.H.R.B,Mujer,26,25-29 años,6,Heterosexual,No,No,Sin dato,Física,Sin dato,Ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Si,General Güemes
+C.C.L.A,Mujer,22,20-24 años,5,Heterosexual,No,No,Sin dato,Sexual,Doméstica,Otro familiar,Varón,40,40-44 años,9,Sin dato,Si,Si,General Güemes
+C.C.G.,Mujer,33,30-34 años,7,Heterosexual,No,No,No,Psicológica,Doméstica,Familiar de la pareja/ex pareja,Varón,Sin dato,Sin dato,21,Sin dato,Si,Sin dato,General Güemes
+E. C,Mujer,32,30-34 años,7,Heterosexual,No,No,Sí,Psicológica,Doméstica,Ex pareja,Varón,36,35-39 años,8,No,Sí,Sí,Colonia Santa Rosa
+E.M,Mujer,25,25-29 años,6,Heterosexual,No,No,No,Física,Doméstica,Ex pareja,Varón,24,20-24 años,5,No,No,No,Colonia Santa Rosa
+P. L,Mujer,34,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,37,35-39 años,8,Sin datos,No,No,Colonia Santa Rosa
+L. A,Mujer,36,35-39 años,8,Heterosexual,No,No,No,Psicológica,Doméstica,Ex pareja,Varón,35,35-39 años,8,Sin datos,No,No,Colonia Santa Rosa
+D. V,Mujer,34,30-34 años,7,Heterosexual,No,No,No,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sin datos,Sí,Sí,Colonia Santa Rosa
+A. D,Mujer,26,25-29 años,6,Heterosexual,No,No,Sí,Física,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Colonia Santa Rosa
+A. B,Mujer,42,40-44 años,9,Heterosexual,No,No,No,Psicológica,Doméstica,Otro,Varón,Sin dato,Sin dato,21,Sí,Sí,Sí,Colonia Santa Rosa
+N. J,Mujer,30,30-34 años,7,Heterosexual,No,No,No,Psicológica,Doméstica,Pareja actual,Varón,29,25-29 años,6,No,No,No,Colonia Santa Rosa
+B. B,Mujer,18,15-19 años,4,Heterosexual,No,No,No,Psicológica,Doméstica,Sin dato,Sin dato,Sin dato,Sin dato,21,Sin datos,Sí,Sí,Colonia Santa Rosa
+D. C,Mujer,31,30-34 años,7,Heterosexual,No,No,Sí,Psicológica,Doméstica,Pareja actual,Varón,31,30-34 años,7,Sin datos,No,No,Colonia Santa Rosa
+J. C,Mujer,33,30-34 años,7,Heterosexual,No,No,Sí,Psicológica,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,Sí,No,Colonia Santa Rosa
+M.P,Mujer,41,40-44 años,9,Heterosexual,No,No,Sí,Psicológica,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sin datos,Sí,No,Colonia Santa Rosa
+J.M.,Mujer,31,30-34 años,7,Heterosexual,No,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,35,35-39 años,8,Sí,No,No,Apolinario Saravia
+D.H.,Mujer,25,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+M.L.P.,Mujer,19,15-19 años,4,Heterosexual,Sin dato,No,No,Física,Doméstica,Pareja actual,Varón,22,20-24 años,5,Sin datos,No,No,Apolinario Saravia
+D.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+Y.M.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+Y.F.,Mujer,28,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,36,35-39 años,8,Sin datos,No,No,Apolinario Saravia
+M.G.B.,Mujer,24,20-24 años,5,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+O.V.A.,Mujer,32,30-34 años,7,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sí,No,No,Apolinario Saravia
+A.T.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+S.B.,Mujer,24,20-24 años,5,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+B.C.,Mujer,28,25-29 años,6,Heterosexual,No,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+C.B.A.,Mujer,23,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+L.G.,Mujer,43,40-44 años,9,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+L.R.T.,Mujer,26,25-29 años,6,Heterosexual,No,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,34,30-34 años,7,Sí,No,No,Apolinario Saravia
+M.H.,Mujer,36,35-39 años,8,Heterosexual,Sin dato,No,No,Psicológica,Doméstica,Pareja actual,Varón,67,65-69 años,14,Sí,Sí,No,Apolinario Saravia
+Y.L.,Mujer,Sin dato,Sin dato,21,Heterosexual,No,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+B.R.,Mujer,38,35-39 años,8,Heterosexual,No,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,41,40-44 años,9,Sí,Sí,No,Apolinario Saravia
+A.Z.,Mujer,26,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+N.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,No,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.V.C.,Mujer,25,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+S.C.T.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.M.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.P.,Mujer,40,40-44 años,9,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,22,20-24 años,5,Sin datos,No,No,Apolinario Saravia
+M.A.P.,Mujer,29,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+S.P.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+V.G.C.,Mujer,37,35-39 años,8,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,42,40-44 años,9,Sin datos,No,No,Apolinario Saravia
+L.F.S.,Mujer,29,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+X.J.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.C.,Mujer,41,40-44 años,9,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Pareja actual,Varón,46,45-49 años,10,Sin datos,No,No,Apolinario Saravia
+A.C.,Mujer,23,20-24 años,5,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,25,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+C.S.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+N.C.,Mujer,24,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,41,40-44 años,9,Sin datos,No,No,Apolinario Saravia
+S.G.,Mujer,28,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.G.,Mujer,40,40-44 años,9,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,57,55-59 años,12,Sin datos,No,No,Apolinario Saravia
+N.A.,Mujer,43,40-44 años,9,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,41,40-44 años,9,Sí,No,No,Apolinario Saravia
+C.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sí,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+Z.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+G.F.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.O.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Psicológica,Institucional,Funcionario público,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+L.C.,Mujer,31,30-34 años,7,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,30,30-34 años,7,Sí,No,No,Apolinario Saravia
+D.B.,Mujer,24,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sí,No,No,Apolinario Saravia
+N.G.,Mujer,20,20-24 años,5,Heterosexual,Sin dato,No,No,Psicológica,Doméstica,Ex pareja,Varón,23,20-24 años,5,Sí,No,No,Apolinario Saravia
+N.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+A.O.,Mujer,37,35-39 años,8,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+N.N.,Mujer,47,45-49 años,10,Heterosexual,Sin dato,Si,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,Sí,Sí,Apolinario Saravia
+M.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+G.L.,Mujer,27,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,Sí,Sí,Apolinario Saravia
+L.B.D.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+C.F.,Mujer,21,20-24 años,5,Heterosexual,Sí,No,Sin dato,Psicológica,Contra la libertad reproductiva,Madre/madrastra/tutora,Mujer,Sin dato,Sin dato,21,Sí,Sí,Sí,Apolinario Saravia
+R.R.,Mujer,33,30-34 años,7,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,33,30-34 años,7,Sí,No,No,Apolinario Saravia
+N.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.P.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+S.A.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,Si,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,Sí,No,Apolinario Saravia
+R.V.P.,Mujer,29,25-29 años,6,Heterosexual,Sin dato,No,Sí,Psicológica,Doméstica,Ex pareja,Varón,26,25-29 años,6,Sí,No,No,Apolinario Saravia
+A.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+N.N.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.S.M.,Mujer,32,30-34 años,7,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sí,Sí,Sí,Apolinario Saravia
+P.V.,Mujer,41,40-44 años,9,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,Sí,Sí,Apolinario Saravia
+C.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+V.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+B.C.,Mujer,29,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.R.,Mujer,34,30-34 años,7,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,38,35-39 años,8,Sin datos,No,No,Apolinario Saravia
+A.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.T.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+A.M.I.,Mujer,26,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,26,25-29 años,6,Sí,Sí,Sí,Apolinario Saravia
+C.R.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+I.A.D.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.T.C.,Mujer,33,30-34 años,7,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,33,30-34 años,7,Sí,Sí,Sí,Apolinario Saravia
+M.P.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.S.,Mujer,27,25-29 años,6,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,28,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+C.C.,Mujer,20,20-24 años,5,Heterosexual,Sin dato,No,No,Física,Doméstica,Pareja actual,Varón,29,25-29 años,6,Sí,No,No,Apolinario Saravia
+V.I.S.,Mujer,29,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,29,25-29 años,6,Sí,No,No,Apolinario Saravia
+M.A.,Mujer,39,35-39 años,8,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+M.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+F.F.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.L.P.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+S.M.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+R.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.L.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+E.Z.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+L.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.L.T.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.D.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.F.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+D.B.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+P.N.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+N.D.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+L.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.M.T.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+V.P.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+E.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+F.C.,Mujer,28,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,30,30-34 años,7,Sin datos,No,No,Apolinario Saravia
+E.M.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+L.M.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.E.A.,Mujer,28,25-29 años,6,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,52,50-54 años,11,Sin datos,No,No,Apolinario Saravia
+F.G.Z.,Mujer,21,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,25,25-29 años,6,Sin datos,No,No,Apolinario Saravia
+O.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+G.S.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+J.P.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.D.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sí,No,Sí,Económica/Patrimonial,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+A.F.,Mujer,18,15-19 años,4,Heterosexual,Sin dato,No,No,Física,Doméstica,Pareja actual,Varón,22,20-24 años,5,Sí,No,No,Apolinario Saravia
+E.P.,Mujer,22,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,21,20-24 años,5,Sí,No,No,Apolinario Saravia
+S.B.F.,Mujer,45,45-49 años,10,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,45,45-49 años,10,Sí,Sí,No,Apolinario Saravia
+K.D.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+M.E.H.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+A.T.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+Y.J.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.G.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sí,Física,Doméstica,Pareja actual,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.F.,Mujer,21,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+M.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+S.S.R.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.M.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+A.M.S.,Mujer,37,35-39 años,8,Heterosexual,Sin dato,No,Sí,Física,Doméstica,Ex pareja,Varón,39,35-39 años,8,Sí,Sí,No,Apolinario Saravia
+D.E.T.,Mujer,40,40-44 años,9,Heterosexual,Sin dato,No,Sí,Sexual,Doméstica,Otro familiar,Varón,46,45-49 años,10,Sí,Sí,Sí,Apolinario Saravia
+G.R.,Mujer,41,40-44 años,9,Heterosexual,Sin dato,No,Sí,Psicológica,Doméstica,Pareja actual,Varón,39,35-39 años,8,Sí,Sí,No,Apolinario Saravia
+B.C.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+A.M.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+N.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,No,Económica/Patrimonial,Doméstica,Ex pareja,Varón,52,50-54 años,11,Sin datos,No,No,Apolinario Saravia
+M.V.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+V.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sin datos,No,No,Apolinario Saravia
+C.A.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Económica/Patrimonial,Doméstica,Ex pareja,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
+N.A.,Mujer,20,20-24 años,5,Heterosexual,Sin dato,No,Sí,Económica/Patrimonial,Doméstica,Ex pareja,Varón,21,20-24 años,5,Sí,Sí,Sí,Apolinario Saravia
+I.S.,Mujer,Sin dato,Sin dato,21,Heterosexual,Sin dato,No,Sin dato,Psicológica,Doméstica,Padre/padrastro/tutor,Varón,Sin dato,Sin dato,21,Sí,Sí,No,Apolinario Saravia
+J.A.G.,Mujer trans,43,40-44 años,9,Sin dato,Sin dato,No,Sí,Simbólica,Laboral,Superior jerárquico,Varón,Sin dato,Sin dato,21,Sí,No,No,Apolinario Saravia
