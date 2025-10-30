@@ -45,7 +45,8 @@ Data <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup() %>%
   mutate(Año = formatC(Año, big.mark = ".", decimal.mark = ",", format="fg")) %>%
-  mutate(Año = ifelse(Año == "2.025", "2.025*", Año))
+  mutate(Año = ifelse(Año == "2.025", "2.025*", Año)) %>%
+  mutate(Sujeto = ifelse(Sujeto == "Víctima", "Víctima", "Persona denunciada"))
 
 # Grafico
 grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Sujeto)) +

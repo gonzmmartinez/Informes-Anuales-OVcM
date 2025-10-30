@@ -8,6 +8,7 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(ggfittext)
+library(googlesheets4)
 
 # Fuentes
 library(showtext)
@@ -48,14 +49,16 @@ grafico1 <- ggplot(Data %>% filter(Sujeto == "Agresor"), aes(x=Año, y=Cantidad,
             vjust = -1, size= 4,
             color="black", family="font_sans") +
   facet_wrap(~Tipo, ncol=1, scales="free_x") +
-  labs(title="Agresores") +
+  labs(title="Personas denunciadas", y ="Cantidad de consignas policiales",
+       caption = "") +
   scale_fill_manual(values=Colores) +
   scale_y_continuous(limits=c(0,700)) +
   theme_light() +
   theme(legend.position = "none",
         plot.title = element_text(size= 20, family= "font_serif", face="bold", hjust = 0.5, margin = margin(t=0,r=0,b=10,l=0)),
+        plot.caption = element_text(size=8, family="font_sans", face="italic", margin=margin(t=10)),
         axis.title.x = element_text(size=15, family="font_sans", margin=margin(t=5)),
-        axis.title.y = element_text(size=15, family="font_sans"),
+        axis.title.y = element_text(size=15, family="font_sans", margin=margin(r=10)),
         axis.text.x = element_text(size=10, family="font_sans", margin=margin(t=5)),
         axis.text.y = element_text(size=10, family="font_sans"),
         panel.grid = element_blank(),
