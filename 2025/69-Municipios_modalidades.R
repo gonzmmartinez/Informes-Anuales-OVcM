@@ -49,8 +49,7 @@ grafico <- ggplot(Data, aes(x=Porcentaje, y=reorder(Modalidad, -Ord))) +
             family="font_sans", color="black", size=3, vjust=1.25) +
   annotate(geom="text", y=0.75, x=80, label=paste0("Sin dato: ", nrow(Sin_dato)), size=4,
            family="font_sans", fontface="italic", color="darkgrey") +
-  labs(title="",
-       y="Modalidad de violencia", x="Porcentaje") +
+  labs(y="Modalidad de violencia", x="Porcentaje") +
   theme_light() +
   scale_alpha_continuous(range=c(0.5, 1)) +
   scale_y_discrete(labels = function(z) str_wrap(z, width=20)) +

@@ -46,11 +46,12 @@ Colores <- c("Mujer" = "#8cb369",
 # Gr?fico
 grafico <- ggplot(Data, aes(x=reorder(Rango_etario, Rango_ord), y=Cantidad)) +
   geom_col(aes(alpha = Cantidad), fill=c(rep("#f93e35",17), "#cbc2ce")) +
-  geom_text(aes(y=ifelse(Cantidad>10,Cantidad/2,Cantidad+2), label=Cantidad), family="font_sans", color="white", size=5) +
+  geom_text(aes(y=Cantidad, label=Cantidad), family="font_sans", color="black", size=5, nudge_y=max(Data$Cantidad)*0.04) +
   labs(title="",
        x="Rango etario", y="Cantidad") +
   theme_light() +
-  scale_alpha_continuous(range=c(0.5, 1)) +
+  scale_alpha_continuous(range=c(0.5, 1), limits=c(0, max(Data %>% filter(Rango_etario != "Sin dato") %>% select(Cantidad) %>% pull()))) +
+  scale_y_continuous(limits=c(0, max(Data$Cantidad)*1.1)) +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_text(size=20, family="font_sans", face="bold"),
         plot.subtitle = element_text(size=15, family="font_sans"),
