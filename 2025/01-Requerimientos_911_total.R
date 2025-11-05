@@ -18,7 +18,8 @@ showtext_auto()
 
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
-                   sheet = "Mes")
+                   sheet = "Mes") %>%
+  mutate(Accion = ifelse(Accion %in% c("Llamadas SAMEC", "Intervenciones SAMEC"), "Intervenciones SAMEC", Accion))
 
 Data1 <- Raw %>%
   filter(Año == 2025, Tipo != "Abuso sexual") %>%

@@ -26,7 +26,8 @@ Data <- Raw %>%
   filter(Tipo != "Abuso sexual", Año %in% c(2024,2025)) %>%
   mutate(Accion = factor(case_when(Accion == "Llamadas" ~ "Llamadas recibidas por el 911",
                                    Accion == "Intervenciones" ~ "Intervenciones por agencia policial",
-                                   Accion == "Intervenciones SAMEC" ~ "Intervenciones conjuntas con agencia SAMEC"),
+                                   Accion == "Intervenciones SAMEC" ~ "Intervenciones conjuntas con agencia SAMEC",
+                                   Accion == "Llamadas SAMEC" ~ "Llamadas recibidas por el 911"),
                          levels=c("Llamadas recibidas por el 911","Intervenciones por agencia policial","Intervenciones conjuntas con agencia SAMEC")),
          Tipo = factor(Tipo, levels=c("Violencia de género", "Violencia familiar en curso", "Violencia familiar histórica"))) %>%
   group_by(Año,Accion, Tipo) %>%
