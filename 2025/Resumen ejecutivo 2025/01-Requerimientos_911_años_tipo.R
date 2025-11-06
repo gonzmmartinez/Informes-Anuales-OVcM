@@ -19,13 +19,13 @@ showtext_auto()
 
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
-                  sheet = "Mes") %>%
-  filter(Accion != "Llamadas SAMEC")
+                  sheet = "Mes")
 
 # Año anterior
 Data <- Raw %>%
   filter(Tipo != "Abuso sexual", Año %in% c(2024,2025)) %>%
   mutate(Accion = factor(case_when(Accion == "Llamadas" ~ "Llamadas recibidas por el 911",
+                                   Accion == "Llamadas SAMEC" ~ "Llamadas recibidas por el 911",
                                    Accion == "Intervenciones" ~ "Intervenciones por agencia policial",
                                    Accion == "Intervenciones SAMEC" ~ "Intervenciones conjuntas con agencia SAMEC"),
                          levels=c("Llamadas recibidas por el 911","Intervenciones por agencia policial","Intervenciones conjuntas con agencia SAMEC")),
