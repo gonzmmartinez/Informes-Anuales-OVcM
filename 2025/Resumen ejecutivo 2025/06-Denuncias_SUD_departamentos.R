@@ -51,12 +51,12 @@ Paleta2 <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
-  geom_col(fill="#25879e") +
+  geom_col(fill="#40b6d2") +
   geom_text(aes(label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg")),
-            color="#25879e", size=3, nudge_y=1000, family="font_sans") +
+            color="#25879e", size=4, nudge_y=1000, family="font_sans") +
   geom_point(aes(y=Tasa*5000), size=5, color="#d3335e") +
-  geom_text(aes(y = Tasa*5000, label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",", format="fg")),
-            color="#d3335e", size=4, nudge_y=1500, family="font_sans") +
+  geom_text(aes(y = Tasa*5000, label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",", format="f", digits=2)),
+            color="#d3335e", size=6, nudge_y=1750, family="font_sans") +
   labs(title="",
        x="Departamento", y="Cantidad de denuncias") +
   facet_wrap(~Año, nrow=2, scales="free_x") +

@@ -12,6 +12,7 @@ library(directlabels)
 library(forecast)
 library(tseries)
 library(googlesheets4)
+library(ggtext)
 
 # Fuentes
 library(showtext)
@@ -68,13 +69,16 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
   annotate(geom="text", x=10, y=Estimacion,
            label = formatC(Estimacion, big.mark = ".", decimal.mark=",", format="d"),
            vjust=2, family="font_sans", fontface="bold", color="black", size=6) +
-  annotate(geom="text", x=10, y=Estimacion+750,
+  annotate(geom="text", x=10, y=Estimacion+3000,
            label = str_wrap("Proyección del número total de denuncias para el año 2.025 completo", width=20),
-           vjust=0, family="font_sans", fontface="italic", color="gray", size=4) +
-  annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#f93e35", linewidth=1) +
-  annotate(geom="text", x=8, y=29037+750,
-           label = "Estimación realizada\nen 2.024:\n 29.037 denuncias",
-           vjust=0, hjust=0, family="font_sans", fontface="italic", color="#f93e35", size=4) +
+           vjust=0, family="font_sans", fontface="italic", color="gray30", size=4, lineheight=1) +
+  annotate(geom="segment", y=29000, yend=31000, x=10, xend=10, linetype=1, color="grey50") +
+  annotate(geom="segment", y=29037, yend=29037, x=8, xend=9.45, linetype=1, color="#f93e35") +
+  annotate(geom = "richtext",
+    x = 8, y = 29037 + 400,
+    label = "Estimación realizada<br>en 2024:<br><b>29.037 denuncias</b>",
+    vjust = 0, hjust = 0, family = "font_sans", color = "#f93e35",  size = 4,
+    lineheight = 1, fontface = "italic", label.color = NA, fill = NA) +
   labs(title="",
        x="Año", y="Cantidad") +
   scale_y_continuous(limits=c(0,max(Data$Cantidad+7000)), labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d")) +
@@ -84,8 +88,8 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_text(size=12, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
-        panel.grid.major.x = element_blank(),
+        panel.grid.major = element_line(colour = "grey95"),
+        panel.grid = element_blank(),
         axis.text.x = element_text(size=20, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)),
         axis.text.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20, family="font_sans"),
