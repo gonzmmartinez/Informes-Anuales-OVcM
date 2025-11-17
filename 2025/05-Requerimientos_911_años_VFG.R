@@ -46,7 +46,7 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark=",", format="fg"), "%")),
             family="font", position = position_fill(vjust = 0.5), size=7.5, color="white") +
   labs(y="Porcentaje", x="Año",
-       caption="* las proporciones se calculan en base a los datos correspondientes al primer trimestre únicamente.") +
+       caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   scale_y_continuous(labels = function(x) paste0(x * 100, "%")) +
   scale_fill_manual(name = str_wrap("Motivo del requerimiento", width=20),
                     values = Colores) +

@@ -51,7 +51,7 @@ grafico <- ggplot(Data, aes(x="", y=Hora, fill=Porcentaje)) +
   facet_wrap(~Año, nrow=1) +
   geom_text(aes(label=paste0(round(Porcentaje,1),"%")), family="font", size=3, color="white", alpha=0.7) +
   labs(y="Hora del día",
-       caption="* las proporciones se calculan en base a los datos correspondientes al primer trimestre únicamente.") +
+       caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   scale_y_discrete(limits = rev) + 
   scale_fill_gradient(low="#ffd283", high="#852f8c") +
   theme_light() +
