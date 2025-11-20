@@ -9,6 +9,7 @@ library(cowplot)
 library(magick)
 library(ggtext)
 library(googlesheets4)
+library(scales)
 
 # Fuentes
 library(showtext)
@@ -21,33 +22,35 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWb
                   sheet = "SUD_db_completa") %>%
   filter(Tipo != "Penal")
 
-Data1 <- Raw %>%
+margen <- 15
+
+Data <- Raw %>%
   filter(Año == 2025) %>%
   group_by(Organismo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   mutate(Organismo = ifelse(Organismo == "OOD", "OOyD", Organismo)) %>%
-  mutate(Organismo = factor(Organismo,
-                            levels = c("OVFG", "OOyD", "Fiscalías", "Comisarías"))) %>%
-  arrange(Organismo) %>%
-  mutate(Label = paste0("<span style='font-size:10pt'>**",
-                        formatC(round(Porcentaje,1), big.mark=".", decimal.mark=","),
-                        "%**</span><br><span style='font-size:6pt'>",
-                        formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
-                        "</span>")) %>%
-  mutate(Label2 = ifelse(Porcentaje >= 50, paste0("<span style='font-size:15pt'>**",
-                                                  formatC(round(Porcentaje,1), big.mark=".", decimal.mark=",", digits=1, format="f"),
-                                                  "%**</span><br><span style='font-size:10pt'>",
-                                                  formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
-                                                  "</span>"), NA)) %>%
-  mutate(Label = ifelse(Porcentaje >= 5, Label, "")) %>%
-  mutate(ymax = cumsum(Porcentaje)) %>%
-  mutate(ymin = c(0, head(ymax, n=-1))) %>%
-  rowwise() %>%
-  mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup() %>%
-  mutate(Leyenda = ifelse(Porcentaje >= 10, as.character(Organismo),
-                          paste0(Organismo, " (", formatC(round(Porcentaje,1), big.mark=".", decimal.mark = ","), "%)")))
+  arrange(desc(Porcentaje)) %>%
+  mutate(
+    Organismo = forcats::fct_reorder(Organismo, Porcentaje, .desc = TRUE),
+    
+    # --- calcular radio equivalente al size_area(max_size = 80) ---
+    area  = scales::rescale(Porcentaje, to = c(0, 80)),
+    radio = sqrt(area / pi),
+    
+    # --- posiciones acumuladas en x según el radio ---
+    x_raw = cumsum(lag(radio, default = 0) + radio + margen),
+    
+    # --- reescalar x_raw al rango 1–4 ---
+    x = scales::rescale(x_raw, to = c(1, 4)),
+    
+    # tus nudges
+    nudge_y = rescale(sqrt(Porcentaje), to = c(1.2, 1.7)),
+    nudge_y_text = rescale(sqrt(Porcentaje), to = c(0.8, 0.3))
+  )
+
+
 
 # Definir colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
@@ -58,40 +61,19 @@ Colores <- c("OVFG" = "#2b42a0",
              "Fiscalías" = "#ff9d27",
              "Comisarías" = "#a782ec")
 
-# Total
-Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
-                  "**", formatC(sum(Data1$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"),
-                  "**")
-
-# Gr?fico1
-grafico <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Organismo)) +
-  geom_rect() +
-  geom_textbox(x = 1.5, y = 0, label = Total1, hjust = 0.5,
-               halign = 0.5, fill = NA, size=8, box.color=NA,
-               family = "font_sans", lineheight = 0.75) +
-  geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
-                color = "white", hjust=0.5, lineheight=1,
-                label.color = NA, family="font_sans",
-                show.legend=FALSE, fill=NA) +
-  geom_richtext(aes(x = 3.5, y=ymid, label=Label2),
-                color = "white", hjust=0.5, lineheight=1.125,
-                label.color = NA, family="font_sans", label.padding = unit(2, "mm"),
-                show.legend=FALSE, fill="#a782ec", text.color="white") +
-  coord_polar(theta="y") +
-  xlim(c(1.5, 4)) +
+# Gráfico
+# Gráfico
+grafico <- ggplot(Data, aes(x=x, y=1)) +
+  geom_point(aes(color=Organismo, size=Porcentaje)) +
+  geom_text(aes(label=paste0(formatC(round(Porcentaje, 1), big.mark=".", decimal.mark = ",", format="fg"), "%"),
+                y=nudge_y, color=Organismo), size=15, family="font_sans", fontface="bold") +
+  geom_text(aes(label=Organismo, y=nudge_y_text), size=12, family="font_sans", color="grey20") +
+  scale_size_area(max_size = 80) +
+  scale_x_continuous(limits=c(0.5,4.25)) +
+  scale_y_continuous(limits=c(0,2)) +
+  scale_color_manual(values=Colores) +
   theme_void() +
-  scale_fill_manual(name = str_wrap("Boca de denuncia", width=20),
-                    values = Colores,
-                    labels=str_wrap(Data1$Leyenda, 25)) +
-  labs(title="2.025",
-       subtitle = "primer semestre") +
-  theme(text=element_text(family="font_sans"),
-        legend.position = "right",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_serif"),
-        legend.text = element_text(size=10, family="font_sans"),
-        legend.key.spacing.y = unit(0.25, "cm"))
+  theme(legend.position = "none")
 
 
 # Guardar gráfico
@@ -100,7 +82,8 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=5, height=3.5)
+       plot=grafico, dpi=100, width=10, height=5)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=5, height=3.5)
+       plot=grafico, dpi=72, width=10, height=5)
+

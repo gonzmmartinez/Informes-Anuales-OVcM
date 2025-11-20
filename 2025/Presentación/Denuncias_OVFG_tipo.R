@@ -9,6 +9,7 @@ library(cowplot)
 library(magick)
 library(ggtext)
 library(googlesheets4)
+library(scales)
 
 # Fuentes
 library(showtext)
@@ -31,8 +32,9 @@ Data <- Raw %>%
 Data <- Data %>%
   filter(Tipo != "Otros") %>%
   arrange(desc(Porcentaje)) %>%
-  mutate(xpos = c(1, 2, 1, 2, 1.5)) %>%
-  mutate(ypos = c(2, 2, 1.5, 1.5, 1))
+  mutate(xpos = 1) %>%
+  mutate(ypos = c(2, 1.7, 1.45, 1.2, 1)) %>%
+  mutate(xpos_text = xpos * rescale(sqrt(Porcentaje), to = c(0.9, 1)))
 
 # Definir colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
@@ -46,13 +48,13 @@ Colores <- c("Física" = "#206170",
 # Gráfico1
 grafico <- ggplot(Data, aes(x=xpos, y=ypos, color=Tipo)) +
   geom_point(aes(size=Porcentaje), shape = 15) +
-  geom_text(aes(label=paste0(formatC(Porcentaje, digits=2, big.mark=".", decimal.mark=",", format="f"), "%")),
-            color="black", size=7.5, family="font_sans", fontface="bold", nudge_x=0.35, nudge_y=-0.05) +
-  geom_text(aes(label=str_wrap(Tipo, 15)), color="black", size=5, family="font_sans",
-            nudge_x=0.35, nudge_y=0.05, lineheight=0.75, vjust=0) +
+  geom_text(aes(x=xpos_text, label=paste0(formatC(Porcentaje, digits=1, big.mark=".", decimal.mark=",", format="f"), "%")),
+            color="black", size=7.5, family="font_sans", fontface="bold", nudge_y=0, nudge_x=0.3, vjust=1) +
+  geom_text(aes(x=xpos_text, label=str_wrap(Tipo, 15)), color="black", size=5, family="font_sans",
+            nudge_x=0.3, nudge_y=0.025, lineheight=0.75, vjust=0) +
   theme_void() +
   scale_size_continuous(range=c(2, 30)) +
-  xlim(0.75, 2.5) +
+  xlim(0.8, 1.5) +
   ylim(0.9, 2.1) +
   scale_color_manual(values=Colores) +
   theme(text=element_text(family="font_sans"),
@@ -67,7 +69,8 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=6, height=3.5)
+       plot=grafico, dpi=100, width=3, height=5)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=6, height=3.5)
+       plot=grafico, dpi=72, width=3, height=5)
+

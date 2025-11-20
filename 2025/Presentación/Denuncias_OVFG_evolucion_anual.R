@@ -81,20 +81,22 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
     lineheight = 1, fontface = "italic", label.color = NA, fill = NA) +
   labs(title="",
        x="Año", y="Cantidad") +
-  scale_y_continuous(limits=c(0,max(Data$Cantidad+8000)), labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d")) +
-  theme_light() +
+  scale_y_continuous(limits=c(0,max(Data$Cantidad+8500)),
+                     labels = function(z) formatC(z, big.mark=".", decimal.mark=",", format="d"),
+                     expand = c(0,0)) +
+  theme_void() +
   scale_fill_gradient(low="#8790b6", high="#0f216d") +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
-        plot.caption = element_text(size=12, family="font_sans", face="italic"),
-        panel.grid.major = element_line(colour = "grey95"),
+        plot.caption = element_blank(),
+        panel.grid.major = element_blank(),
         panel.grid = element_blank(),
-        axis.text.x = element_text(size=20, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20, family="font_sans"),
-        axis.title.y = element_text(size=20, family="font_sans"),
-        plot.background = element_rect(fill=NA, color=NA),
+        axis.text.x = element_text(size=25, family="font_sans", margin = margin(t=20,r=0,b=5,l=0)),
+        axis.text.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.background = element_blank(),
         panel.background = element_rect(fill=NA, color=NA))
 
 # Guardar gráfico

@@ -19,12 +19,8 @@ showtext_auto()
 # Crear datos
 Data <- data.frame(Organismo = c("S.E. 911","SUD", "OVFG", "Juzgados"),
                    Cantidad = c(84440, 20400, 13787, 11065),
-                   Tamaño = c(84440/2, 20400, 13787, 11065),
-                   Texto = c("S.E. 911", "Denuncias totales SUD", "OVFG", "Juzgados de VFG"),
-                   Descripcion = c("Registra requerimientos ante situaciones de violencia de género, violencia familiar en curso o histórica, y abusos sexuales.",
-                                   "Se establecen parámetros y filtros estandarizados para calificar denuncias de VFG.",
-                                   "Análisis específico y filtración por operadores jurídicos de las denuncias que configuran VFG.",
-                                   "Causas nuevas y causas en trámite.")) %>%
+                   Tamaño = c(84440/1.5, 20400, 13787, 11065),
+                   Texto = c("Requerimientos totales S.E. 911", "Denuncias totales SUD", "OVFG", "Juzgados de VFG")) %>%
   mutate(xmin = 0 - Tamaño/2,
          xmax = 0 + Tamaño/2) %>%
   arrange(Tamaño) %>%
@@ -72,15 +68,12 @@ grafico <- ggplot(Data, aes(x=Cantidad, y=Level, fill=Organismo)) +
   geom_rect(aes(xmin = xmin, xmax=xmax, ymin = ymin, ymax=ymax)) +
   geom_text(aes(x=0, y=Level, label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
             family="font_sans", size=20, fontface="bold", color="white") +
-  geom_text(aes(x=xmax, label=str_wrap(Texto, width=15), color=Organismo),
-            family="font_sans", fontface="bold", size=20, nudge_x = 1000, hjust=0, lineheight=0.75) +
-  geom_text(aes(x=xmin, label=str_wrap(Descripcion, width=30)),
-            family="font_sans", color="grey20", size=12, nudge_x=-11000,
-            lineheight=0.8) +
+  geom_text(aes(x=xmax, label=str_wrap(Texto, width=20), color=Organismo),
+            family="font_sans", fontface="bold", size=20, nudge_x = 2000, hjust=0, lineheight=0.75) +
   theme_void() +
   scale_fill_manual(values = Colores, name="") +
   scale_color_manual(values = Colores, name="") +
-  scale_x_continuous(limits = c(-40000, 28000)) +
+  scale_x_continuous(limits = c(-29000, 45000)) +
   theme(text=element_text(family="font_sans"),
         legend.position = "none",
         plot.title = element_blank(),
@@ -90,7 +83,8 @@ grafico <- ggplot(Data, aes(x=Cantidad, y=Level, fill=Organismo)) +
         axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.title.x = element_blank(),
-        axis.title.y = element_blank())
+        axis.title.y = element_blank(),
+        plot.margin = unit(c(0,0,0,0), "cm"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

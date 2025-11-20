@@ -51,22 +51,22 @@ grafico <- ggplot(Data, aes(x=Edades, y=Cantidad, fill=Cantidad)) +
   scale_alpha_continuous(range=c(0.6,1)) +
   scale_fill_gradient(low="#95a1d0", high="#2b42a0",
                        labels = function(x) str_wrap(x, width = 20)) +
-  scale_x_discrete(labels = function(x) str_wrap(x, width=15)) +
-  scale_y_continuous(breaks=1:5, limits=c(0, max(Data$Cantidad)*1.2), labels = function(z) round(z,0)) +
-  theme_light() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width=10)) +
+  scale_y_continuous(breaks=1:5, limits=c(0, max(Data$Cantidad)*1.2), labels = function(z) round(z,0), expand=c(0,0)) +
+  theme_void() +
   theme(text=element_text(family="font_sans"),
         legend.position="none",
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font_sans"),
-        plot.title = element_text(size=20, family="font_sans", face="bold"),
-        plot.subtitle = element_text(size=15, family="font_sans"),
-        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+        legend.text = element_blank(),
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.grid.major = element_line(color="grey95", linewidth=0.5),
-        axis.text.x = element_text(size=25, margin = margin(t=10,r=0,b=5,l=0), lineheight=0.75),
-        axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
+        panel.grid.major = element_blank(),
+        axis.text.x = element_text(size=30, margin = margin(t=10,r=0,b=5,l=0), lineheight=0.75),
+        axis.text.y = element_blank(),
         axis.title.x = element_text(size=20),
-        axis.title.y = element_text(size=20),
+        axis.title.y = element_blank(),
         plot.background = element_rect(fill=NA, color=NA),
         panel.background = element_rect(fill=NA, color=NA))
 

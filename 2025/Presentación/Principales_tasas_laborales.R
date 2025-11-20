@@ -96,7 +96,7 @@ grafico <- ggplot(Data, aes(x=Género, y=Valor)) +
        x="Género", y="Valor de la tasa") +
   facet_wrap(~Indicador, nrow=1, ncol=4, dir="v", scales="free") +
   theme_light() +
-  coord_cartesian(xlim=c(0.3, 2.7), clip="off", expand=FALSE) +
+  coord_cartesian(xlim=c(0.475, 2.525), clip="off", expand=FALSE) +
   facetted_pos_scales(y = custom_y) +
   scale_y_continuous(labels = function(z) paste0(formatC(z, big.mark = ".", decimal.mark=",", format="fg"), "%")) +
   scale_x_discrete(labels = function(z) paste0(str_sub(z, 6, -1), "°")) +
@@ -109,14 +109,14 @@ grafico <- ggplot(Data, aes(x=Género, y=Valor)) +
         axis.text.x = element_blank(),
         axis.text.y = element_text(size=10, margin = margin(t=0,r=5,b=0,l=5)),
         axis.title.x = element_blank(),
-        axis.title.y = element_text(size=15),
+        axis.title.y = element_blank(),
         axis.ticks.x = element_blank(),
         plot.margin = unit(c(0, 0.5, 0.5, 0.5), "cm"),
         panel.spacing.y = unit(1, "cm"),
         strip.background = element_rect(color=NA, fill="#cbc2ce"),
         strip.text = element_text(size=17.5, color="black", family="font_serif", face="bold", margin=margin(t=10, b=10)),
-        legend.position= "top",
-        legend.justification = "right",
+        legend.position= "bottom",
+        legend.justification = "center",
         legend.title = element_text(size=10, family="font_serif"),
         legend.text = element_text(size=15),
         legend.box.margin=margin(5,5,5,5),
@@ -131,7 +131,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=12.5, height=5)
+       plot=grafico, dpi=100, width=10, height=6)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=12.5, height=5)
+       plot=grafico, dpi=72, width=10, height=6)
