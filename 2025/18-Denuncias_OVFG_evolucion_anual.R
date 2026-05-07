@@ -22,7 +22,8 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsMEHscsfUC9YOtnKtFvt1bOZI_B4c/edit?usp=sharing",
                   sheet = "Ingresadas") %>%
-  filter(Tipo != "No configura VFG")
+  filter(Tipo != "No configura VFG") %>%
+  filter(Año != 2025 | (Año == 2025 & Trimestre < 3))
 
 # Crear serie temporal
 Data_trimestral <- Raw %>%
