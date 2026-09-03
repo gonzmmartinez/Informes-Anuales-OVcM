@@ -19,7 +19,7 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWbTfAquSDR25YWnSDTL8T5MFkllvU/edit?usp=sharing",
                   sheet = "SUD_db_completa") %>%
-  filter(Año %in% c(2024, 2025), Tipo %in% c("Género", "Familiar", "No penal"))
+  filter(Año %in% c(2025, 2026), Tipo %in% c("Género", "Familiar", "No penal"))
 
 Data <- Raw %>%
   group_by(Año, Distrito) %>%
@@ -34,9 +34,9 @@ Data <- Raw %>%
                               Distrito == "Norte-Tartagal" ~ "Norte Tartagal",
                               Distrito == "Sur-Anta" ~ "Sur Anta",
                               Distrito == "Sur-Metán" ~ "Sur Metán"),
-         Año = factor(case_when(Año == 2024 ~ "2.024 (todo el año)",
-                                Año == 2025 ~ "2.025 (primer semestre)"),
-                      levels=c("2.025 (primer semestre)", "2.024 (todo el año)")))
+         Año = factor(case_when(Año == 2025 ~ "2025 (todo el año)",
+                                Año == 2026 ~ "2026 (primer semestre)"),
+                      levels=c("2026 (primer semestre)", "2025 (todo el año)")))
 
 # Colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
@@ -52,7 +52,7 @@ Colores <- c("Centro" = "#a782ec",
 # Grafico
 grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distrito)) +
   geom_col() +
-  geom_richtext(aes(label = paste0("<span style='font-size:15pt'>**",round(Porcentaje,1),
+  geom_richtext(aes(label = paste0("<span style='font-size:15pt'>**",formatC(Porcentaje, big.mark=".", decimal.mark=",", digits=1, format="f"),
                                    "%**</span><br><span style='font-size:8pt'>",
                                    formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                                    "</span>")),

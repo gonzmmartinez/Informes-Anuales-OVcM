@@ -18,18 +18,30 @@ font_add_google("Source Sans 3", "font_sans")
 font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
+# Diccionarios
+Mes_ord <- data.frame(Mes = c("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                     "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"),
+             Ord = 1:12)
+
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWbTfAquSDR25YWnSDTL8T5MFkllvU/edit?usp=sharing",
                   sheet = "SUD_db_completa")
 
 Data <- Raw %>%
-  filter(Año %in% c(2024, 2025), Tipo %ni% c("Penal")) %>%
-  group_by(Año, Mes, Mes_ord) %>%
-  summarise(Cantidad = sum(Cantidad)) %>%
-  arrange(Año, Mes_ord) %>%
-  mutate(Label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")) %>%
-  ungroup %>%
-  mutate(Ord = row_number())
+  filter(Año %in% c(2025, 2026), Tipo %ni% c("Penal")) %>%
+  group_by(Año, Mes) %>%
+  summarise(Cantidad = sum(Cantidad), .groups = "drop") %>%
+  left_join(Mes_ord, by = "Mes") %>%
+  arrange(Año, Ord) %>%
+  mutate(
+    Label = formatC(
+      Cantidad,
+      big.mark = ".",
+      decimal.mark = ",",
+      format = "fg"
+    ),
+    Ord = row_number()
+  )
 
 # Definir colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
@@ -41,12 +53,12 @@ grafico <- ggplot(Data, aes(x=reorder(Label, Ord), y=Cantidad)) +
   geom_text(aes(label=Label), size=5, family="font_sans",
             fontface="bold", color="white", hjust=0.5, nudge_y=-200) +
   scale_y_continuous(labels = function(z) formatC(z, big.mark = ".", decimal.mark=",", format="fg")) +
-  scale_x_discrete(labels = c(str_to_title(month(1:12, label = TRUE, abbr = TRUE, locale = "es_ES")), 
-                              str_to_title(month(1:6, label = TRUE, abbr = TRUE, locale = "es_ES")))) +
+  scale_x_discrete(labels = c(str_to_title(month(1:12, label = TRUE, abbr = TRUE, locale = "Spanish_Argentina.utf8")), 
+                              str_to_title(month(1:6, label = TRUE, abbr = TRUE, locale = "Spanish_Argentina.utf8")))) +
   scale_fill_gradient(low="#e999af", high="#d3335e") +
   labs(title="",
        x="Mes/Año", y="Cantidad") +
-  annotate(geom="text", y=-700, x=c(6.5, 15.5), label=formatC(c(2024, 2025), big.mark=".", decimal.mark=",", format="d"),
+  annotate(geom="text", y=-700, x=c(6.5, 15.5), label=c(2025,2026),
            size=8, color="black", family="font_sans") +
   annotate(geom="segment", x=c(1,13,18), xend=c(1,13,18), y=-500, yend=-900, color="grey", linewidth=0.25) +
   theme_light() +

@@ -26,7 +26,7 @@ Poblacion <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1
                         sheet = "Poblacion")
 
 Data <- Raw %>%
-  filter(Año %in% c(2024, 2025), Tipo %in% c("Género", "Familiar", "No penal")) %>%
+  filter(Año %in% c(2025, 2026), Tipo %in% c("Género", "Familiar", "No penal")) %>%
   group_by(Año, Departamento) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   ungroup %>%
@@ -39,9 +39,9 @@ Data <- Raw %>%
          Dept_facet = factor(paste(Departamento, Año),
                              levels = paste(Departamento, Año)[order(Ord)])) %>%
   ungroup() %>%
-  mutate(Año = factor(case_when(Año == 2024 ~ "2.024 (todo el año)",
-                                Año == 2025 ~ "2.025 (primer semestre)"),
-                      levels = c("2.025 (primer semestre)", "2.024 (todo el año)")))
+  mutate(Año = factor(case_when(Año == 2025 ~ "2025 (todo el año)",
+                                Año == 2026 ~ "2026 (primer semestre)"),
+                      levels = c("2026 (primer semestre)", "2025 (todo el año)")))
 
 # Colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
@@ -50,17 +50,17 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
 # Gráfico
 grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
   geom_col(fill="#25879e") +
-  geom_text(aes(label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg")),
+  geom_text(aes(label=formatC(Cantidad, big.mark=".", digits=0, decimal.mark=",", format="f")),
             color="#25879e", size=3, nudge_y=1000, family="font_sans") +
   geom_point(aes(y=Tasa*5000), size=5, color="#d3335e") +
-  geom_text(aes(y = Tasa*5000, label=formatC(round(Tasa,2), big.mark=".", decimal.mark=",", format="fg")),
+  geom_text(aes(y = Tasa*5000, label=formatC(Tasa, digits=2, big.mark=".", decimal.mark=",", format="f")),
             color="#d3335e", size=4, nudge_y=1500, family="font_sans") +
   labs(title="",
        x="Departamento", y="Cantidad de denuncias") +
   facet_wrap(~Año, nrow=2, scales="free_x") +
   theme_light() +
   scale_x_discrete(labels = function(z) str_sub(z, start=1, end=-6)) +
-  scale_y_continuous(limits=c(0, 23000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ","),
+  scale_y_continuous(limits=c(0, 27000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(transform=~./5000, name=str_wrap("Tasa de denuncias por cada 100 habitantes", 30))) +
   theme(text=element_text(family="font_sans"), legend.position="none",
         plot.title = element_blank(),
