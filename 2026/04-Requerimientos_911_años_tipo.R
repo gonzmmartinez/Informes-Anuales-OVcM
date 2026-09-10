@@ -17,25 +17,30 @@ font_add_google("Source Sans 3", "font_sans")
 font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
+Año_1 <- 2026
+Año_2 <- 2025
+
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
                   sheet = "Mes")
 
 # Año anterior
 Data <- Raw %>%
-  filter(Tipo != "Abuso sexual", Año %in% c(2024,2025)) %>%
+  filter(Tipo %ni% c("Abuso sexual", "Abuso sexual (tentativa)"),
+         Año %in% c(Año_2, Año_1)) %>%
   mutate(Accion = factor(case_when(Accion == "Llamadas" ~ "Llamadas recibidas por el 911",
                                    Accion == "Intervenciones" ~ "Intervenciones por agencia policial",
                                    Accion == "Intervenciones SAMEC" ~ "Intervenciones conjuntas con agencia SAMEC",
                                    Accion == "Llamadas SAMEC" ~ "Llamadas recibidas por el 911"),
                          levels=c("Llamadas recibidas por el 911","Intervenciones por agencia policial","Intervenciones conjuntas con agencia SAMEC")),
-         Tipo = factor(Tipo, levels=c("Violencia de género", "Violencia familiar en curso", "Violencia familiar histórica"))) %>%
+         Tipo = factor(Tipo, levels=c("Violencia de género", "Violencia de género histórica",
+                                      "Violencia familiar en curso", "Violencia familiar histórica"))) %>%
   group_by(Año,Accion, Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   ungroup %>%
-  mutate(Año = factor(case_when(Año == 2024 ~ "2.024 (todo el año)",
-                                Año == 2025 ~ "2.025 (primer semestre)"),
-                      levels=c("2.025 (primer semestre)", "2.024 (todo el año)")))
+  mutate(Año = factor(case_when(Año == 2025 ~ "2025 (todo el año)",
+                                Año == 2026 ~ "2026 (primer semestre)"),
+                      levels=c("2026 (primer semestre)", "2025 (todo el año)")))
 
 Title_ypos <- round(max(Data$Cantidad) * 1.4, -3)
 
@@ -50,15 +55,16 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Definir colores
-Colores <- c("Violencia de género" = "#ff621d",
-             "Violencia familiar en curso" = "#a782ec",
-             "Violencia familiar histórica" = "#852f8c")
+Colores <- c("Violencia de género" = "#f93e35",
+             "Violencia de género histórica" = "#ff621d",
+             "Violencia familiar en curso" = "#852f8c",
+             "Violencia familiar histórica" = "#a782ec")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(x=Accion, y=Cantidad, fill=Tipo)) +
   geom_col(position="dodge") +
   geom_text(aes(label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg"), group=Tipo),
-            position=position_dodge(width=0.9), vjust=-0.5, size=7, family="font_sans", color="black") +
+            position=position_dodge(width=0.9), vjust=-0.5, size=5, family="font_sans", color="black") +
   facet_wrap(~Año, nrow=2, scales='free') +
   geom_text(data=Totales, aes(x=Accion, y=y, label=formatC(Total, big.mark=".", decimal.mark=",", format="fg")),
             inherit.aes = FALSE, size=10, family="font_sans", fontface="bold") +
