@@ -19,20 +19,18 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
                   sheet = "Dia") %>%
-  filter(Accion == "Llamadas", Tipo != "Abuso sexual")
+  filter(Accion == "Llamadas")
 
 Dia_lvl <- c("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")
-Mes_lvl <- c("Junio", "Mayo", "Abril", "Marzo", "Febrero", "Enero")
 
 Data <- Raw %>%
-  filter(Año == 2025) %>%
+  filter(Año == 2026) %>%
   mutate(Dia = factor(Dia, levels = Dia_lvl)) %>%
-  mutate(Mes = factor(Mes, levels= Mes_lvl)) %>%
-  group_by(Año, Mes, Dia) %>%
+  group_by(Dia) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
-  group_by(Año) %>%
   mutate(Porcentaje = Cantidad/sum(Cantidad) * 100) %>%
-  ungroup
+  ungroup %>%
+  mutate(text_anchor = ifelse(Dia %in% c("Miércoles", "Jueves", "Viernes"), 1, 0))
 
 Total <- Data %>%
   filter(Dia %in% c("Sábado", "Domingo")) %>%
@@ -43,10 +41,8 @@ Total <- Data %>%
 Total_anterior <- Raw %>%
   filter(Año == 2025) %>%
   mutate(Dia = factor(Dia, levels = Dia_lvl)) %>%
-  mutate(Mes = factor(Mes, levels = Mes_lvl)) %>%
-  group_by(Año, Mes, Dia) %>%
+  group_by(Año, Dia) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
-  group_by(Año) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   ungroup %>%
   filter(Dia %in% c("Sábado", "Domingo")) %>%
@@ -59,55 +55,58 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
             "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
 
 # Gráfico
-grafico1 <- ggplot(Data, aes(x=Dia, y=Mes, fill=Cantidad)) +
-  geom_tile() +
-  geom_text(aes(label = formatC(Cantidad, big.mark=".", decimal.mark=",")),
-            family="font_sans", size=3, color="white", alpha=0.7) +
-  annotate(geom="rect", ymin=0.5, ymax=6.5, xmin=5.5, xmax=7.5, color="#852f8c", fill="#852f8c", alpha=0.1) +
-  labs(x="Día de la semana", y="Mes") +
-  scale_fill_gradient(low="#ffd283", high="#852f8c") +
+grafico1 <- ggplot(Data, aes(x = Dia, y = Cantidad)) +
+  geom_col(aes(fill = Cantidad),
+    width = 0.9) +
+  geom_text(aes(x=Dia, y=Cantidad/2, label=formatC(Cantidad, big.mark=".", decimal.mark = ",", format="fg")),
+            hjust = 0.5, vjust = 0.5, family="font_sans", color="white", size=3) +
+  coord_polar(start = 0) +
+  ylim(-2000, NA) +
+  scale_y_continuous(limits = c(-2000, NA),
+                     expand = c(0.1, 0)) +
+  scale_fill_gradient(
+    low = "#ffd283",
+    high = "#852f8c"
+  ) +
   theme_light() +
-  theme(text=element_text(family="font_sans"), legend.position="none",
-        plot.title = element_blank(),
-        plot.subtitle = element_blank(),
-        panel.grid = element_blank(),
-        panel.grid.major = element_line(colour = "grey95"),
-        plot.background = element_rect(fill = "white", color="white"),
-        panel.border = element_blank(),
-        axis.text.x = element_text(size=12, family="font_sans", margin = margin(t=10,r=0,b=0,l=0)),
-        axis.text.y = element_text(size=12, family="font_sans", margin = margin(t=0,r=5,b=0,l=5)),
-        axis.title.x = element_text(size=15, family="font_sans", margin = margin(t=5,r=0,b=5,l=0)),
-        axis.title.y = element_text(size=15, family="font_sans", margin = margin(t=0,r=5,b=0,l=0)))
+  theme(
+    text = element_text(family = "font_sans"),
+    legend.position = "none",
+    panel.grid = element_blank(),
+    plot.background = element_rect(fill = "white", color = "white"),
+    panel.border = element_blank(),
+    axis.text.x = element_text(size = 12,
+      family = "font_sans"),
+    axis.ticks = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title = element_blank()
+  )
 
-grafico2 <- ggplot(x=1:2, y=1:2) +
-  geom_textbox(aes(x=1.5, y=1.5,
-                label=paste0("<span style='font-size:40pt; color:#0f216d'>**",
-                             formatC(round(sum(Total$Porcentaje),0), big.mark=".", decimal.mark=","),
-                             "%**</span><br>",
-                             "<span style='font-size:8pt'>(",
-                             formatC(sum(Total$Cantidad), big.mark=".", decimal.mark=",", format="fg"),
-                             ")</span><br>",
-                             "<span style='font-size:12pt'>de las llamadas por</span><br>",
-                             "<span style='font-size:12pt; color:#0f216d'>**violencia de género**</span><br>",
-                             "<span style='font-size:12pt'>y </span><span style='font-size:12pt; color:#0f216d'>**violencia familiar**</span><br>",
-                             "<span style='font-size:12pt'>se registraron los días</span><br>",
-                             "<span style='font-size:12pt; color:#0f216d; text-decoration: underline'>**sábado y domingo**</span><br>")),
-                label.color = NA, family="font_sans", halign = 0.5, fill=NA, color="white", text.color="black",
-                show.legend=FALSE, fill=NA, size=4) +
+grafico2 <- ggplot() +
+  geom_text(aes(x = 1.5, y = 5.0), label = paste0(formatC(round(sum(Total$Porcentaje), 0), big.mark = ".", decimal.mark = ","), "%"), family = "font_sans", size = 20, color = "#0f216d", fontface = "bold") +
+  geom_text(aes(x = 1.5, y = 4.60), label = paste0("(", formatC(sum(Total$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"), ")"), family = "font_sans", size = 4, color = "black") +
+  geom_text(aes(x = 1.5, y = 4.35), label = "de las llamadas por", family = "font_sans", size = 5, color = "black") +
+  geom_text(aes(x = 1.5, y = 4.0), label = "violencia de género\ny violencia familiar", family = "font_sans", size = 5, color = "#0f216d", fontface = "bold", lineheight = 1) +
+  geom_text(aes(x = 1.5, y = 3.65), label = "se registraron los días", family = "font_sans", size = 5, color = "black") +
+  geom_text(aes(x = 1.5, y = 3.40), label = "sábado y domingo", family = "font_sans", size = 5, color = "#0f216d", fontface = "bold") +
+  coord_cartesian(xlim = c(1, 2), ylim = c(2, 6)) +
   theme_void() +
-  theme(plot.background = element_rect(fill = "white", colour = "white"),
-        panel.border = element_blank())
+  theme(plot.background = element_rect(fill = "white", colour = "white"), panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank())
 
-grafico <- plot_grid(grafico1, grafico2, ncol=2,
-                     rel_widths = c(5,1))
+grafico <- plot_grid(grafico1,grafico2,
+  ncol = 2, rel_widths = c(4, 2),
+  align = "h")
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
                     str_length(unlist(basename(rstudioapi::getSourceEditorContext()$path)))-2)
 
-ggsave(filename = paste0(filename, ".png"),
-       path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=10, height=4.5)
+ggsave(
+  filename = paste0(filename, ".png"),
+  path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Graficos/PNG/"),
+  plot = grafico, dpi = 100, width = 6.5, height = 4.5, bg = "white")
+
 ggsave(filename = paste0(filename, ".pdf"),
-       path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=10, height=4.5)
+  path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Graficos/PDF/"),
+  plot = grafico, dpi = 72, width = 6.5, height = 4.5, bg = "white")
+

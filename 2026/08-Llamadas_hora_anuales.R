@@ -19,17 +19,17 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
                   sheet = "Hora") %>%
-  filter(Accion == "Llamadas", Tipo != "Abuso sexual")
+  filter(Accion == "Llamadas")
 
 Data <- Raw %>%
   group_by(Año, Hora) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Hora = factor(Hora),
-         Año = formatC(Año, big.mark=".", decimal.mark=",")) %>%
+         Año = as.character(Año)) %>%
   group_by(Año) %>%
   mutate(Porcentaje = Cantidad/sum(Cantidad) * 100) %>%
   ungroup %>%
-  mutate(Año = ifelse(Año %in% c("2.023", "2.025"), paste0(Año, "*"), Año))
+  mutate(Año = ifelse(Año %in% c("2023", "2026"), paste0(Año, "*"), Año))
 
 Test <- Raw %>%
   group_by(Año, Hora) %>%
@@ -49,7 +49,7 @@ Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
 grafico <- ggplot(Data, aes(x="", y=Hora, fill=Porcentaje)) +
   geom_tile() +
   facet_wrap(~Año, nrow=1) +
-  geom_text(aes(label=paste0(round(Porcentaje,1),"%")), family="font", size=3, color="white", alpha=0.7) +
+  geom_text(aes(label=paste0(round(Porcentaje,1),"%")), family="font", size=4, color="white", alpha=0.7) +
   labs(y="Hora del día",
        caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente.") +
   scale_y_discrete(limits = rev) + 

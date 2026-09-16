@@ -1,6 +1,9 @@
 # Limpiar todo
 rm(list = ls())
 
+# Funciones
+`%ni%` <- Negate(`%in%`)
+
 # Librerías
 library(ggplot2)
 library(dplyr)
@@ -18,7 +21,7 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB1SoU5tpTK7ysVvxJeyVAE0C5gro/edit?usp=sharing",
                   sheet = "Dia") %>%
-  filter(Accion == "Llamadas", Tipo != "Abuso sexual")
+  filter(Accion == "Llamadas")
 
 Levels <- c("Domingo", "Sábado", "Viernes", "Jueves", "Miércoles", "Martes", "Lunes")
 
@@ -30,7 +33,7 @@ Data <- Raw %>%
   group_by(Año) %>%
   mutate(Porcentaje = Cantidad/sum(Cantidad) * 100) %>%
   ungroup %>%
-  mutate(Año = ifelse(Año %in% c("2.023", "2.025"), paste0(Año, "*"), Año))
+  mutate(Año = ifelse(Año %in% c("2023", "2026"), paste0(Año, "*"), Año))
 
 # Colores
 Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",

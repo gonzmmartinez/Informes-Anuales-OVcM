@@ -1,7 +1,7 @@
 # Limpiar todo
 rm(list = ls())
 
-# Librer?as
+# Librerías
 library(ggplot2)
 library(dplyr)
 library(stringr)
@@ -17,7 +17,7 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsMEHscsfUC9YOtnKtFvt1bOZI_B4c/edit?usp=sharing",
                   sheet = "Vinculo") %>%
-  filter(Año == 2025)
+  filter(Año == 2026)
 
 Data1 <- Raw %>%
   group_by(Vínculo) %>%

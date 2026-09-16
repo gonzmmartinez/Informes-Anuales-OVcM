@@ -22,11 +22,14 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1fX8iWndJKs_UTTcB
                   sheet = "Mes")
 
 Data <- Raw %>%
-  filter(Tipo != "Abuso sexual") %>%
-  mutate(Tipo = ifelse(Tipo == "Violencia de género", Tipo, "Violencia familiar")) %>%
-  mutate(Año = formatC(Año, big.mark=".", decimal.mark=",", format="fg"),
+  filter(Tipo %ni% c("Abuso sexual", "Abuso sexual (tentativa)")) %>%
+  mutate(Tipo = case_when(Tipo == "Violencia de género" ~ "Violencia de género",
+                          Tipo == "Violencia de género histórica" ~ "Violencia de género",
+                          Tipo == "Violencia familiar en curso" ~ "Violencia familiar",
+                          Tipo == "Violencia familiar histórica" ~ "Violencia familiar")) %>%
+  mutate(Año = as.character(Año),
          Tipo = factor(Tipo, levels=c("Violencia familiar", "Violencia de género"))) %>%
-  mutate(Año = as.factor(ifelse(Año %in% c("2.023", "2.025"), paste0(Año, "*"), Año))) %>%
+  mutate(Año = as.factor(ifelse(Año %in% c("2023", "2026"), paste0(Año, "*"), Año))) %>%
   group_by(Año, Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad/sum(Cantidad))
@@ -76,3 +79,4 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=12, height=7)
+
