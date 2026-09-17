@@ -15,13 +15,17 @@ font_add_google("Source Sans 3", "font_sans")
 font_add_google("Source Serif 4", "font_serif")
 showtext_auto()
 
+# Años
+Año_1 <- 2026
+Año_2 <- 2025
+
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsMEHscsfUC9YOtnKtFvt1bOZI_B4c/edit?usp=sharing",
                   sheet = "Persona_denunciada")
 
 # Modificar datos
 Data1 <- Raw %>%
-  filter(Año == 2025) %>%
+  filter(Año == Año_1) %>%
   group_by(Año, Género) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
@@ -37,7 +41,7 @@ Data1 <- Raw %>%
   ungroup()
 
 Data2 <- Raw %>%
-  filter(Año == 2024) %>%
+  filter(Año == Año_2) %>%
   group_by(Año, Género) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
@@ -71,7 +75,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Gén
   theme_void() +
   scale_fill_manual(name = "Género",
                     values = Colores) +
-  labs(title="2.025",
+  labs(title=Año_1,
        subtitle = "primer semestre") +
   theme(text=element_text(family="font_sans"),
         legend.position = "right",
@@ -93,7 +97,7 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Gén
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(values = Colores) +
-  labs(title="2.024",
+  labs(title=Año_2,
        subtitle="Todo el año") +
   theme(text=element_text(family="font_sans"),
         legend.position = "none",
