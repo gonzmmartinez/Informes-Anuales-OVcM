@@ -2,21 +2,30 @@
 rm(list = ls())
 
 # Funciones
-`%ni%` <- Negate(`%in%`)
+`%ni%` <- function(x, table) !(x %in% table)
 
-# Librer?as
+# Librerías
 library(ggplot2)
 library(dplyr)
 library(stringr)
-library(scales)
+library(cowplot)
+library(magick)
+library(ggtext)
 library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+
+font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
+
 showtext_auto()
 
+# Años
 Año_1 <- 2026
 Año_2 <- 2025
 
@@ -51,8 +60,8 @@ Totales <- Data %>%
   summarise(Cantidad = sum(Cantidad))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+             "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
 # Posiciones
 pos_anios <- c(seq(1.5, 11.5, by = 2), 13)
@@ -62,7 +71,7 @@ pos_lineas <- c(0.25, seq(2.5, 12.5, by = 2), 13.75)
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   geom_col(aes(fill=Cantidad)) +
   
-  geom_text(aes(label=Label), family="font_sans", size=5,
+  geom_text(aes(label=Label), family="font_body", size=5,
             fontface="bold", color="white", nudge_y=-7500, hjust=0.5) +
   
   # Totales anuales
@@ -78,13 +87,13 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
       y=147500,
       label=formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg")
     ),
-    size=5, color="white", family="font_sans", fontface="bold"
+    size=5, color="white", family="font_body", fontface="bold"
   ) +
   
   geom_text(
     data=Totales,
     aes(x=pos_anios, y=154000, label=Año),
-    size=4, color="white", family="font_serif"
+    size=4, color="white", family="font_title"
   ) +
   
   # Años debajo del gráfico
@@ -93,7 +102,7 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
     y=-25000,
     x=pos_anios,
     label=2020:2026,
-    size=8, color="black", family="font_sans"
+    size=8, color="black", family="font_body"
   ) +
   
   # Líneas divisorias
@@ -126,16 +135,16 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   ) +
   
   scale_fill_gradient2(
-    high="#2b42a0",
-    low="#95a1d0",
-    mid="#2b42a0",
+    high="#4c2158",
+    low="#C289D2",
+    mid="#833A98",
     midpoint=mean(Data$Cantidad, na.rm=TRUE)
   ) +
   
   scale_color_gradient2(
-    high="#2b42a0",
-    low="#95a1d0",
-    mid="#2b42a0",
+    high="#4c2158",
+    low="#C289D2",
+    mid="#833A98",
     midpoint=mean(Totales$Cantidad, na.rm=TRUE)
   ) +
   
@@ -151,14 +160,14 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   ) +
   
   theme(
-    text=element_text(family="font"),
+    text=element_text(family="font_body"),
     legend.position="none",
     legend.title=element_blank(),
-    legend.text=element_text(size=12, family="font_sans"),
-    plot.title=element_text(size=20, family="font_sans", face="bold"),
-    plot.subtitle=element_text(size=15, family="font_sans"),
+    legend.text=element_text(size=12, family="font_body"),
+    plot.title=element_text(size=20, family="font_title", face="bold"),
+    plot.subtitle=element_text(size=15, family="font_subtitle"),
     plot.caption=element_text(
-      size=10, family="font_sans", face="italic",
+      size=10, family="font_body", face="italic",
       margin=margin(t=10)
     ),
     axis.text.x=element_text(
