@@ -13,9 +13,16 @@ library(ggrepel)
 library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Leer datos
@@ -44,17 +51,17 @@ Data <- Raw %>%
                       levels = c("2026 (primer semestre)", "2025 (todo el año)")))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
-  geom_col(fill="#25879e") +
+  geom_col(fill="#119ca0") +
   geom_text(aes(label=formatC(Cantidad, big.mark=".", digits=0, decimal.mark=",", format="f")),
-            color="#25879e", size=3, nudge_y=1000, family="font_sans") +
-  geom_point(aes(y=Tasa*5000), size=5, color="#d3335e") +
+            color="#119ca0", size=3, nudge_y=1000, family="font_body") +
+  geom_point(aes(y=Tasa*5000), size=5, color="#7c428a") +
   geom_text(aes(y = Tasa*5000, label=formatC(Tasa, digits=2, big.mark=".", decimal.mark=",", format="f")),
-            color="#d3335e", size=4, nudge_y=1500, family="font_sans") +
+            color="#7c428a", size=4, nudge_y=2000, family="font_body") +
   labs(title="",
        x="Departamento", y="Cantidad de denuncias") +
   facet_wrap(~Año, nrow=2, scales="free_x") +
@@ -62,19 +69,19 @@ grafico <- ggplot(Data, aes(x=Dept_facet, y=Cantidad)) +
   scale_x_discrete(labels = function(z) str_sub(z, start=1, end=-6)) +
   scale_y_continuous(limits=c(0, 27000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ","),
                      sec.axis = sec_axis(transform=~./5000, name=str_wrap("Tasa de denuncias por cada 100 habitantes", 30))) +
-  theme(text=element_text(family="font_sans"), legend.position="none",
+  theme(text=element_text(family="font_body"), legend.position="none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
         panel.grid = element_blank(),
         panel.grid.major = element_line(colour = "grey95"),
-        axis.text.x = element_text(size=12, margin = margin(t=5,r=0,b=5,l=0), angle=45, hjust=1),
-        axis.text.y = element_text(size=15, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20),
-        axis.title.y = element_text(size=20, margin=margin(r=10, l=10)),
-        axis.title.y.right = element_text(size=20, margin=margin(r=10, l=10)),
+        axis.text.x = element_text(family="font_title", size=12, margin = margin(t=5,r=0,b=5,l=0), angle=45, hjust=1),
+        axis.text.y = element_text(family="font_title", size=10, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(family="font_title", size=20),
+        axis.title.y = element_text(family="font_title", size=20, margin=margin(r=10, l=10)),
+        axis.title.y.right = element_text(family="font_title", size=20, margin=margin(r=10, l=10)),
         strip.background = element_rect(color=NA, fill="#cbc2ce"),
-        strip.text = element_text(size=15, color="black", family="font_serif",
+        strip.text = element_text(size=15, color="black", family="font_title",
                                   face="bold", margin=margin(t=10, b=10)))
 
 # Guardar gráfico

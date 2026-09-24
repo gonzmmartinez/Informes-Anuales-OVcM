@@ -1,19 +1,26 @@
 # Limpiar todo
 rm(list = ls())
 
+# Funciones
+`%ni%` <- function(x, table) !(x %in% table)
+
 # Librerías
 library(ggplot2)
 library(dplyr)
 library(stringr)
 library(cowplot)
 library(magick)
-library(googlesheets4)
 library(ggtext)
+library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
+font_add("font_body_b",     file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Leer datos
@@ -51,44 +58,43 @@ Total_anterior <- Raw %>%
             Porcentaje = sum(Porcentaje))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
 # Gráfico
 grafico1 <- ggplot(Data, aes(x = Dia, y = Cantidad)) +
   geom_col(aes(fill = Cantidad),
     width = 0.9) +
   geom_text(aes(x=Dia, y=Cantidad/2, label=formatC(Cantidad, big.mark=".", decimal.mark = ",", format="fg")),
-            hjust = 0.5, vjust = 0.5, family="font_sans", color="white", size=3) +
+            hjust = 0.5, vjust = 0.5, family="font_body", color="white", size=3) +
   coord_polar(start = 0) +
   ylim(-2000, NA) +
   scale_y_continuous(limits = c(-2000, NA),
                      expand = c(0.1, 0)) +
   scale_fill_gradient(
-    low = "#ffd283",
-    high = "#852f8c"
+    low="#b8d6ac", high="#4c2158"
   ) +
   theme_light() +
   theme(
-    text = element_text(family = "font_sans"),
+    text = element_text(family = "font_body"),
     legend.position = "none",
     panel.grid = element_blank(),
     plot.background = element_rect(fill = "white", color = "white"),
     panel.border = element_blank(),
     axis.text.x = element_text(size = 12,
-      family = "font_sans"),
+      family = "font_subtitle"),
     axis.ticks = element_blank(),
     axis.text.y = element_blank(),
     axis.title = element_blank()
   )
 
 grafico2 <- ggplot() +
-  geom_text(aes(x = 1.5, y = 5.0), label = paste0(formatC(round(sum(Total$Porcentaje), 0), big.mark = ".", decimal.mark = ","), "%"), family = "font_sans", size = 20, color = "#0f216d", fontface = "bold") +
-  geom_text(aes(x = 1.5, y = 4.60), label = paste0("(", formatC(sum(Total$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"), ")"), family = "font_sans", size = 4, color = "black") +
-  geom_text(aes(x = 1.5, y = 4.35), label = "de las llamadas por", family = "font_sans", size = 5, color = "black") +
-  geom_text(aes(x = 1.5, y = 4.0), label = "violencia de género\ny violencia familiar", family = "font_sans", size = 5, color = "#0f216d", fontface = "bold", lineheight = 1) +
-  geom_text(aes(x = 1.5, y = 3.65), label = "se registraron los días", family = "font_sans", size = 5, color = "black") +
-  geom_text(aes(x = 1.5, y = 3.40), label = "sábado y domingo", family = "font_sans", size = 5, color = "#0f216d", fontface = "bold") +
+  geom_text(aes(x = 1.5, y = 5.05), label = paste0(formatC(round(sum(Total$Porcentaje), 0), big.mark = ".", decimal.mark = ","), "%"), family = "font_title", size = 20, color = "#0f216d", fontface = "bold") +
+  geom_text(aes(x = 1.5, y = 4.60), label = paste0("(", formatC(sum(Total$Cantidad), big.mark = ".", decimal.mark = ",", format = "fg"), ")"), family = "font_subtitle", size = 4, color = "black") +
+  geom_text(aes(x = 1.5, y = 4.35), label = "de las llamadas por", family = "font_subtitle", size = 5, color = "black") +
+  geom_text(aes(x = 1.5, y = 4.0), label = "violencia de género\ny violencia familiar", family = "font_title", size = 5, color = "#0f216d", fontface = "bold", lineheight = 1) +
+  geom_text(aes(x = 1.5, y = 3.65), label = "se registraron los días", family = "font_subtitle", size = 5, color = "black") +
+  geom_text(aes(x = 1.5, y = 3.40), label = "sábado y domingo", family = "font_title", size = 5, color = "#0f216d", fontface = "bold") +
   coord_cartesian(xlim = c(1, 2), ylim = c(2, 6)) +
   theme_void() +
   theme(plot.background = element_rect(fill = "white", colour = "white"), panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank())

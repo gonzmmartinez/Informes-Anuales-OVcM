@@ -2,22 +2,27 @@
 rm(list = ls())
 
 # Funciones
-`%ni%` <- Negate(`%in%`)
+`%ni%` <- function(x, table) !(x %in% table)
 
 # Librerías
 library(ggplot2)
 library(dplyr)
 library(stringr)
-library(directlabels)
-library(ggrepel)
+library(cowplot)
+library(magick)
+library(ggtext)
 library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
 showtext_auto()
 
+# Años
 Año_1 <- 2026
 Año_2 <- 2025
 
@@ -51,23 +56,23 @@ Labels <- Data %>%
                           .default = Cantidad))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
-Colores <- c("2026" = "#ff621d",
-             "2025" = "#f93e35",
-             "2024" = "#eb55a1",
-             "2023" = "#c676e3",
-             "2022" = "#9497fe",
-             "2021" = "#63b3f3",
-             "2020" = "#5ec5d4")
+Colores <- c("2020" = "#ec6230",
+             "2021" = "#d47700",
+             "2022" = "#b18b00",
+             "2023" = "#86991b",
+             "2024" = "#54a159",
+             "2025" = "#1da182",
+             "2026" = "#119ca0")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   geom_line(aes(color=Año), linewidth=2) +
   geom_point(aes(color=Año), size=3) +
   geom_label(data=Labels, aes(x=xpos, y=ypos, label=Label, fill=Año), color="white",
-             family="font_serif", alpha=0.75) +
+             family="font_body", alpha=0.75) +
   labs(title="",
        x="Mes", y="Cantidad") +
   theme_light() +
@@ -75,15 +80,15 @@ grafico <- ggplot(Data, aes(x=reorder(Mes, Mes_num), y=Cantidad, group=Año)) +
   scale_y_continuous(limits=c(5000, 25000), labels = function(z) formatC(z, format="fg", big.mark = ".", decimal.mark = ",")) +
   scale_color_manual(values=Colores) +
   scale_fill_manual(values=Colores) +
-  theme(text=element_text(family="font_sans"), legend.position="none",
-        plot.title = element_text(size=20, family="font_sans", face="bold"),
-        plot.subtitle = element_text(size=15, family="font_sans"),
-        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+  theme(text=element_text(family="font_body"), legend.position="none",
+        plot.title = element_blank(),
+        plot.subtitle = element_blank(),
+        plot.caption = element_blank(),
         panel.grid.major = element_line(colour = "#F5F5F5"),
-        axis.text.x = element_text(size=15, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=10, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=20),
-        axis.title.y = element_text(size=20))
+        axis.text.x = element_text(family="font_subtitle", size=15, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(family="font_subtitle", size=10, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(family="font_subtitle", size=20),
+        axis.title.y = element_text(family="font_subtitle", size=20))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

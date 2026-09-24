@@ -117,12 +117,12 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
         legend.position = "right",
         plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
         plot.subtitle = element_text(family="font_subtitle", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_subtitle"),
-        legend.text = element_text(size=10, family="font_body"),
+        legend.title = element_text(size=10, family="font_title"),
+        legend.text = element_text(size=10, family="font_subtitle"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
-# Gr?fico2
+# Gráfico2
 grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) +
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total2, hjust = 0.5,

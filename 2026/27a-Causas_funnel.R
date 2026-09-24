@@ -1,24 +1,34 @@
 # Limpiar todo
 rm(list = ls())
 
-# Librer?as
+# Funciones
+`%nin%` <- function(x, table) !(x %in% table)
+
+# Librerías
 library(ggplot2)
 library(dplyr)
 library(stringr)
 library(cowplot)
 library(magick)
 library(ggtext)
-library(tidyr)
+library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Crear datos
 Data <- data.frame(Organismo = c("SUD", "OVFG", "Juzgados"),
-                   Cantidad = c(20400, 13787, 11065),
+                   Cantidad = c(21219, 13905, 10488),
                    Texto = c("Denuncias totales SUD", "OVFG", "Juzgados de VFG"),
                    Descripcion = c("Se establecen parámetros y filtros estandarizados para calificar denuncias de VFG.",
                                    "Análisis específico y filtración por operadores jurídicos de las denuncias que configuran VFG.",
@@ -52,28 +62,29 @@ Trapezoides <- do.call(rbind, lapply(1:nrow(Data), function(i){
 }))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
-Colores <- c("SUD" = "#ff621d",
-             "OVFG" = "#0f216d",
-             "Juzgados" = "#852f8c")
+Colores <- c("SUD" = "#4c2158",
+             "OVFG" = "#1e7b34",
+             "Juzgados" = "#ec6230")
 
 # Grafico
 grafico <- ggplot(Data, aes(x=Cantidad, y=Level, fill=Organismo)) +
   geom_polygon(data = Trapezoides, aes(x = x, y = y, group = Organismo, fill=Organismo), alpha = 0.5) +
   geom_rect(aes(xmin = xmin, xmax=xmax, ymin = ymin, ymax=ymax)) +
   geom_text(aes(x=0, y=Level, label = formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg")),
-            family="font_sans", size=17.5, fontface="bold", color="white") +
+            family="font_body", size=17.5, fontface="bold", color="white") +
   geom_text(aes(x=xmax, label=str_wrap(Texto, width=15), color=Organismo),
-            family="font_sans", fontface="bold", size=12, nudge_x = 1000, hjust=0) +
+            family="font_title", fontface="bold", size=12, nudge_x = 1000,
+            hjust=0, lineheight = 0.9, vjust=0.5) +
   geom_text(aes(x=xmin, label=str_wrap(Descripcion, width=35)),
-            family="font_sans", color="grey20", size=6, nudge_x=-6000) +
+            family="font_title", color="grey20", size=6, nudge_x=-6000) +
   theme_void() +
   scale_fill_manual(values = Colores, name="") +
   scale_color_manual(values = Colores, name="") +
   scale_x_continuous(limits = c(-20000, 17500)) +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "none",
         plot.title = element_blank(),
         plot.subtitle = element_blank(),

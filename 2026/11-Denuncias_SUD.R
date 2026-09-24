@@ -1,6 +1,9 @@
 # Limpiar todo
 rm(list = ls())
 
+# Funciones
+`%nin%` <- function(x, table) !(x %in% table)
+
 # Librerías
 library(ggplot2)
 library(dplyr)
@@ -11,10 +14,21 @@ library(ggtext)
 library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
+
+# Años
+Año_1 <- 2026
+Año_2 <- 2025
 
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWbTfAquSDR25YWnSDTL8T5MFkllvU/edit?usp=sharing",
@@ -25,7 +39,7 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1mUMxGbv3x1hoVxWb
                           Tipo == "No penal" ~ "No penal"))
 
 Data1 <- Raw %>%
-  filter(Año == 2026) %>%
+  filter(Año == Año_1) %>%
   group_by(Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
@@ -44,7 +58,7 @@ Data1 <- Raw %>%
   ungroup()
 
 Data2 <- Raw %>%
-  filter(Año == 2025) %>%
+  filter(Año == Año_2) %>%
   group_by(Tipo) %>%
   summarise(Cantidad = sum(Cantidad)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
@@ -62,13 +76,13 @@ Data2 <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup()
 
-# Definir colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+# Colores
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
-Colores <- c("Penal por violencia de género" = "#852f8c",
-             "Penal por violencia familiar" = "#2b42a0",
-             "No penal" = "#ff621d")
+Colores <- c("Penal por violencia de género" = "#6963aa",
+             "Penal por violencia familiar" = "#c72a29",
+             "No penal" = "#119ca0")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
@@ -84,24 +98,24 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total1, hjust = 0.5,
                halign = 0.5, fill = NA, size=8, box.color=NA,
-               family = "font_sans", lineheight = 0.75) +
+               family = "font_title", lineheight = 0.75) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
                 color = "white", hjust=0.5, lineheight=1,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(name = str_wrap("Tipo de denuncia", width=20),
                     values = Colores, labels=function(z) str_wrap(z, width=20)) +
-  labs(title="2026",
+  labs(title=as.character(Año_1),
        subtitle = "primer semestre") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "right",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_serif"),
-        legend.text = element_text(size=10, family="font_sans"),
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
+        legend.title = element_text(size=10, family="font_title"),
+        legend.text = element_text(size=10, family="font_title"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
@@ -110,23 +124,21 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   geom_rect() +
   geom_textbox(x = 1.5, y = 0, label = Total2, hjust = 0.5,
                halign = 0.5, fill = NA, size=6, box.color=NA,
-               family = "font_sans", lineheight = 1) +
+               family = "font_title", lineheight = 1) +
   geom_richtext(aes(x = 3.5, y=ymid, label=Label), size=3,
                 color = "white", hjust=0.5, lineheight=1,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
   theme_void() +
   scale_fill_manual(values = Colores) +
-  labs(title="2026",
+  labs(title=as.character(Año_2),
        subtitle = "enero-diciembre") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "none",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_blank(),
-        legend.text = element_text(size=15),
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_subtitle", size=10, face="italic", hjust=0.5),
         legend.box.margin=margin(5,5,5,5))
 
 # Layout
@@ -144,3 +156,4 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
        plot=grafico, dpi=72, width=7, height=3.5)
+

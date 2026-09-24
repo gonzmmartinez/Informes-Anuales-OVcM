@@ -18,11 +18,9 @@ library(sysfonts)
 library(showtext)
 
 dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
-
 font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
 font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
 font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
-
 showtext_auto()
 
 # Años
@@ -170,14 +168,10 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
       size=10, family="font_body", face="italic",
       margin=margin(t=10)
     ),
-    axis.text.x=element_text(
-      size=15, margin=margin(t=5,r=0,b=5,l=0)
-    ),
-    axis.text.y=element_text(
-      size=10, margin=margin(t=0,r=5,b=0,l=5)
-    ),
-    axis.title.x=element_text(size=15, margin=margin(t=40)),
-    axis.title.y=element_text(size=15),
+    axis.text.x=element_text(family="font_subtitle", size=15, margin=margin(t=5,r=0,b=5,l=0)),
+    axis.text.y=element_text(family="font_subtitle", size=10, margin=margin(t=0,r=5,b=0,l=5)),
+    axis.title.x=element_text(family="font_subtitle", size=15, margin=margin(t=40)),
+    axis.title.y=element_text(family="font_subtitle", size=15),
     plot.margin=unit(c(0.5,0.5,0.5,0.5), "cm"),
     panel.grid=element_blank(),
     panel.grid.major=element_line(
@@ -196,4 +190,3 @@ ggsave(filename = paste0(filename, ".png"),
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/pdf/"),
        plot=grafico, dpi=72, width=14, height=7)
-
