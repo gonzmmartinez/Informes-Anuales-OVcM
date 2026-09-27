@@ -16,13 +16,14 @@ library(googlesheets4)
 # Fuentes
 library(sysfonts)
 library(showtext)
-
 dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
-
-font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
 font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
-font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
-
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Años
@@ -125,9 +126,9 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   theme(text=element_text(family="font_body"),
         legend.position = "right",
         plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_subtitle", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_subtitle"),
-        legend.text = element_text(size=10, family="font_body"),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
+        legend.title = element_text(size=10, family="font_title", face="bold"),
+        legend.text = element_text(size=10, family="font_title"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
@@ -150,9 +151,7 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
   theme(text=element_text(family="font_body"),
         legend.position = "none",
         plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_subtitle", size=10, face="italic", hjust=0.5),
-        legend.title = element_blank(),
-        legend.text = element_text(size=15),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
         legend.box.margin=margin(5,5,5,5))
 
 # Layout

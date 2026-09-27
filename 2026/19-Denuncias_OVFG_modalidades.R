@@ -1,6 +1,9 @@
 # Limpiar todo
 rm(list = ls())
 
+# Funciones
+`%ni%` <- Negate(`%in%`)
+
 # Librer?as
 library(ggplot2)
 library(dplyr)
@@ -10,17 +13,28 @@ library(magick)
 library(ggtext)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
+
+# Años
+Año_1 <- 2026
+Año_2 <- 2025
 
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsMEHscsfUC9YOtnKtFvt1bOZI_B4c/edit?usp=sharing",
                   sheet = "Modalidad")
 
 Levels <- (Raw %>%
-  filter(Año == 2026, Modalidad != "Sin especificar") %>%
+  filter(Año == Año_1, Modalidad != "Sin especificar") %>%
   group_by(Año, Modalidad) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
@@ -30,7 +44,7 @@ Levels <- (Raw %>%
   add_row(Modalidad = "Otras"))$Modalidad
 
 Data1 <- Raw %>%
-  filter(Año == 2026, Modalidad != "Sin especificar") %>%
+  filter(Año == Año_1, Modalidad != "Sin especificar") %>%
   mutate(Modalidad = factor(Modalidad, levels=Levels)) %>%
   group_by(Año, Modalidad) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
@@ -51,7 +65,7 @@ Data1 <- Raw %>%
                           paste0(Modalidad, " (", formatC(Porcentaje, format="g", digits=1, big.mark=".", decimal.mark = ","), "%)")))
 
 Data2 <- Raw %>%
-  filter(Año == 2025, Modalidad != "Sin especificar") %>%
+  filter(Año == Año_2, Modalidad != "Sin especificar") %>%
   mutate(Modalidad = factor(Modalidad, levels=Levels)) %>%
   group_by(Año, Modalidad) %>%
   summarise(Cantidad = sum(Frecuencia)) %>%
@@ -69,17 +83,18 @@ Data2 <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup()
 
-# Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce",
+            "#d6a62e", "#3f6f9f", "#b05c7a")
 
-Colores <- c("Doméstica" = "#852f8c",
-             "Acoso callejero" = "#a782ec",
-             "Institucional" = "#ff9d27",
-             "Laboral" = "#5ec5d4",
-             "Mediática" = "#2b42a0",
-             "Obstétrica" = "#206170",
-             "Política" = "#f93e35",
+Colores <- c("Doméstica" = "#6963aa",
+             "Acoso callejero" = "#3f6f9f",
+             "Institucional" = "#ec6230",
+             "Laboral" = "#119ca0",
+             "Mediática" = "#d6a62e",
+             "Obstétrica" = "#1e7b34",
+             "Política" = "#c72a29",
+             "Digital" = "#b05c7a",
              "Otras" = "#cbc2ce")
 
 # Gráfico1
@@ -87,7 +102,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
                 color = "white", hjust=0.5, lineheight=1.25,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -95,14 +110,14 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
   scale_fill_manual(name = str_wrap("Modalidad de violencia", width = 30),
                     values = Colores,
                     labels = Data1$Leyenda) +
-  labs(title="2026",
+  labs(title=as.character(Año_1),
        subtitle = "primer semestre") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "right",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_serif"),
-        legend.text = element_text(size=7.5, family="font_sans"),
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
+        legend.title = element_text(size=10, family="font_title", face="bold"),
+        legend.text = element_text(size=7.5, family="font_title"),
         legend.key.spacing.y = unit(0.2, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
@@ -111,20 +126,18 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Moda
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
                 color = "white", hjust=0.5, lineheight=1.25,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4.5)) +
   theme_void() +
   scale_fill_manual(values = Colores) +
-  labs(title="2025",
+  labs(title=as.character(Año_2),
        subtitle="Todo el año") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "none",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_blank(),
-        legend.text = element_text(size=15),
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
         legend.box.margin=margin(5,5,5,5))
 
 # Layout

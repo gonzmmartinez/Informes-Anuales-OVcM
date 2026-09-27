@@ -16,13 +16,14 @@ library(googlesheets4)
 # Fuentes
 library(sysfonts)
 library(showtext)
-
 dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
-
-font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
 font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
-font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
-
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Cargar datos
@@ -73,16 +74,16 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad, fill=Tipo)) +
   theme(text=element_text(family="font_body"),
         legend.position="top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font_title"),
-        legend.text = element_text(size=12, family="font_body"),
-        legend.key.spacing.x = unit(1, "cm"),
+        legend.title = element_text(size=12, family="font_title", face="bold", margin=margin(r=15)),
+        legend.text = element_text(size=12, family="font_title"),
+        legend.key.spacing.x = unit(0.5, "cm"),
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
         panel.grid = element_blank(),
         panel.grid.major = element_line(color="grey95", linewidth=0.5),
         axis.text.x = element_text(family="font_subtitle", size=15, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(family="font_subtitle", size=15, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.text.y = element_text(family="font_subtitle", size=10, margin = margin(t=0,r=10,b=0,l=5)),
         axis.title.x = element_text(size=20, family="font_subtitle"),
         axis.title.y = element_text(size=20, family="font_subtitle"))
 

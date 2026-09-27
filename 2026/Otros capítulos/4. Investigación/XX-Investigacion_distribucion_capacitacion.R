@@ -2,7 +2,7 @@
 rm(list = ls())
 
 # Funciones
-`%nin%` <- function(x, table) !(x %in% table)
+`%ni%` <- function(x, table) !(x %in% table)
 
 # Librerías
 library(ggplot2)
@@ -16,11 +16,14 @@ library(googlesheets4)
 # Fuentes
 library(sysfonts)
 library(showtext)
-dir <- paste0(str_sub(dirname(rstudioapi::getActiveDocumentContext()$path), 1, 36),
-              "/Fonts/")
-font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+dir <- paste0(str_sub(getwd(), 1, -34), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
 font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
-font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Leer datos
@@ -74,7 +77,7 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Realizó)
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font_body"),
+        legend.text = element_text(size=12, family="font_title"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 

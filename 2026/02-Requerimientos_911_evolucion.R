@@ -100,7 +100,8 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
     y=-25000,
     x=pos_anios,
     label=2020:2026,
-    size=8, color="black", family="font_body"
+    size=8, color="black", family="font_title",
+    fontface="bold"
   ) +
   
   # Líneas divisorias

@@ -18,11 +18,13 @@ library(sysfonts)
 library(showtext)
 
 dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
-
-font_add("font_title",    file.path(dir, "CreatoDisplay-ExtraBold.otf"))
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
 font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
-font_add("font_body",     file.path(dir, "RobotoSlab-Regular.ttf"))
-
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Años
@@ -81,10 +83,10 @@ Paleta2 <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
              "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
 # Definir colores
-Colores <- c("Violencia de género" = "#c72a29",
-             "Violencia de género histórica" = "#ec6230",
-             "Violencia familiar en curso" = "#6963aa",
-             "Violencia familiar histórica" = "#7c428a")
+Colores <- c("Violencia de género" = "#6963aa",
+             "Violencia de género histórica" = "#7c428a",
+             "Violencia familiar en curso" = "#c72a29",
+             "Violencia familiar histórica" = "#ec6230")
 
 # Total
 Total1 <- paste0( "<span style='font-size:15pt'>Total</span><br>",
@@ -117,7 +119,7 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Tipo)) 
         legend.position = "right",
         plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
         plot.subtitle = element_text(family="font_subtitle", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_title"),
+        legend.title = element_text(size=10, family="font_title", face="bold"),
         legend.text = element_text(size=10, family="font_subtitle"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
