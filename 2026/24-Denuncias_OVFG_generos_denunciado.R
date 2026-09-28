@@ -8,11 +8,19 @@ library(stringr)
 library(cowplot)
 library(magick)
 library(ggtext)
+library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Años
@@ -56,19 +64,20 @@ Data2 <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2) %>%
   ungroup()
 
-# Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+# Definir colores
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce",
+            "#d6a62e", "#3f6f9f", "#b05c7a")
 
-Colores <- c("Mujeres" = "#ff621d",
-             "Varones" = "#852f8c")
+Colores <- c("Mujeres" = "#6963aa",
+             "Varones" = "#1e7b34")
 
 # Gráfico1
 grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Género)) +
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
                 color = "white", hjust=0.5, lineheight=1.25,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -77,12 +86,12 @@ grafico1 <- ggplot(Data1, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Gén
                     values = Colores) +
   labs(title=Año_1,
        subtitle = "primer semestre") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "right",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_text(size=10, family="font_serif"),
-        legend.text = element_text(size=10, family="font_sans"),
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5),
+        legend.title = element_text(size=10, family="font_title", face="bold"),
+        legend.text = element_text(size=10, family="font_title"),
         legend.key.spacing.y = unit(0.25, "cm"),
         plot.background = element_rect(fill = "white", colour = NA))
 
@@ -91,7 +100,7 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Gén
   geom_rect() +
   geom_richtext(aes(x = 3, y=ymid, label=Label),
                 color = "white", hjust=0.5, lineheight=1,
-                label.color = NA, family="font_sans",
+                label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   coord_polar(theta="y") +
   xlim(c(1.5, 4)) +
@@ -99,13 +108,10 @@ grafico2 <- ggplot(Data2, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.25, fill=Gén
   scale_fill_manual(values = Colores) +
   labs(title=Año_2,
        subtitle="Todo el año") +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "none",
-        plot.title = element_text(family="font_serif", size=25, face="bold", hjust=0.5),
-        plot.subtitle = element_text(family="font_serif", size=10, face="italic", hjust=0.5),
-        legend.title = element_blank(),
-        legend.text = element_text(size=15),
-        legend.box.margin=margin(5,5,5,5))
+        plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),
+        plot.subtitle = element_text(family="font_title", size=10, hjust=0.5))
 
 # Layout
 grafico <- plot_grid(grafico2, grafico1, ncol=2,

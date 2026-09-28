@@ -10,9 +10,16 @@ library(magick)
 library(ggtext)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Años
@@ -46,15 +53,16 @@ SE <- Raw %>%
   group_by(Año, Género) %>%
   summarise(Cantidad = sum(Frecuencia))
 
-# Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+# Definir colores
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce",
+            "#d6a62e", "#3f6f9f", "#b05c7a")
 
-Colores <- c("Mujeres" = "#ff621d",
-             "Varones" = "#852f8c")
+Colores <- c("Mujeres" = "#6963aa",
+             "Varones" = "#1e7b34")
 
 # Texto
-Texto <- paste0("<span style='font-size:30pt; color:#0f216d'>**",
+Texto <- paste0("<span style='font-size:30pt; color:#1e7b34'>**",
                 formatC(round(abs(sum((Data1 %>% filter(Año == Año_1, Género == "Varones",
                                                         Rango_etario %in% c("22-29 años", "30-39 años")))$Porcentaje)),1),
                         big.mark = ".", decimal.mark = ",", format="fg"),
@@ -63,45 +71,45 @@ Texto <- paste0("<span style='font-size:30pt; color:#0f216d'>**",
                 "de las personas</span><br>",
                 "<span style='font-size:10pt'>",
                 "denunciadas son</span><br>",
-                "<span style='font-size:10pt; color:#0f216d'>**varones entre 22 y 39 años**</span>")
+                "<span style='font-size:10pt; color:#1e7b34'>**varones entre 22 y 39 años**</span>")
 
 # Grafico 1
 grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Rango_etario, Ord), fill=Género)) +
   geom_col(position = "stack") +
   annotate(geom="rect", ymin=2.5, ymax=4.5, xmin=0, xmax=max(Data1$Porcentaje),
            linetype=2, color="grey", fill=NA) +
-  geom_textbox(aes(y=6, x=20), label=Texto, label.color = NA, family="font", halign = 0.5,
+  geom_textbox(aes(y=6.5, x=20), label=Texto, family="font_title", halign = 0.5,
                fill=NA, color="white", text.color="black",
-               show.legend=FALSE, fill=NA, size=4) +
+               show.legend=FALSE, size=4) +
   annotate(geom = "text", x = 23, y = 1.75,
            label = paste0("Edad sin especificar:\nMujeres: ",
                           formatC(SE$Cantidad[1], big.mark = ".",decimal.mark = ",", format = "fg"),
                           "\nVarones: ", formatC(SE$Cantidad[2], big.mark = ".", decimal.mark = ",", format = "fg")),
-           family = "font_sans", size = 3, color = "grey40", vjust=1) +
+           family = "font_title", size = 3, color = "grey40", vjust=1) +
   theme_light() +
   labs(x="Porcentaje", y="Rango etario") +
-  geom_text(aes(label = paste0(formatC(round(abs(Porcentaje),1), big.mark = ".", decimal.mark = ","), "%")), family="font", size=2,
-            hjust = ifelse(Data1$Género == "Mujeres", ifelse(abs(Data1$Porcentaje) <= 1.6, 1.2, -0.2),
-                           ifelse(Data1$Porcentaje <= 1.6, -0.2, 1.2))) +
+  geom_text(aes(label = paste0(formatC(round(abs(Porcentaje),1), big.mark = ".", decimal.mark = ","), "%"),
+                hjust = ifelse(Género == "Mujeres", 1, 0),
+                nudge_x = ifelse(Género == "Mujeres", -0.25, 0.25)),
+            family="font_body", size=2) +
   scale_x_continuous(limits=c(min(Data1$Porcentaje) - 3, max(Data1$Porcentaje) + 3), labels = function(z) paste0(abs(z), "%")) +
   scale_fill_manual(name = "Género",
                     values = Colores) +
-  theme(text=element_text(family="font_sans"),
+  theme(text=element_text(family="font_body"),
         legend.position = "top",
         legend.justification = "right",
-        legend.title = element_text(size=10, family="font_serif"),
-        legend.text = element_text(size=12, family="font_sans"),
+        legend.title = element_text(size=10, family="font_title", face="bold"),
+        legend.text = element_text(size=10, family="font_title"),
         plot.title = element_blank(),
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size=15, family="font_sans"),
-        plot.caption = element_text(size=12, family="font_sans", face="italic"),
+        plot.subtitle = element_blank(),
+        plot.caption = element_blank(),
         panel.grid.major = element_line(colour = "#F5F5F5"),
         panel.grid.major.y = element_line(color="grey95", linewidth = 0.5),
         panel.grid.minor.y = element_blank(),
-        axis.text.x = element_text(size=12, margin = margin(t=10,r=0,b=5,l=0)),
-        axis.text.y = element_text(size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_text(size=15),
-        axis.title.y = element_text(size=15))
+        axis.text.x = element_text(family="font_title", size=10, margin = margin(t=10,r=0,b=5,l=0)),
+        axis.text.y = element_text(family="font_title", size=12, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title.x = element_text(family="font_title", size=15),
+        axis.title.y = element_text(family="font_title", size=15))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
