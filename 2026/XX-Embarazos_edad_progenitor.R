@@ -31,17 +31,20 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1cl0-rAT-ARDgQQQIjCApJ_hXtrWXjImAGrFnmzMDukw/edit?usp=sharing",
                   sheet = "Edades",
-                  range = "A3:C7")
+                  range = "E3:G9")
 
 # Crear datos
 Data <- Raw %>%
-  mutate(Edad = factor(Edad)) %>%
+  filter(Edad != "Sin dato") %>%
+  mutate(Edad = factor(Edad, levels = c("Menor de 15 años", "15 a 19 años",
+                                        "20 a 25 años", "26 a 35 años",
+                                        "Mayor de 35 años"))) %>%
   pivot_longer(
-    cols = c("Año 2024", "Año 2025"),
+    cols = c("2024", "2025"),
     names_to = "Año",
     values_to = "Cantidad"
   ) %>%
-  mutate(Año = str_sub(Año, start = 5)) %>%
+  mutate(Año = as.character(Año)) %>%
   group_by(Edad) %>%
   arrange(Año, .by_group = TRUE) %>%
   mutate(
@@ -66,9 +69,19 @@ Data <- Raw %>%
     )
   )
 
+Sin_dato <- Raw %>%
+  filter(Edad == "Sin dato") %>%
+  mutate(Texto = paste0("Sin dato:<br>2024: **", `2024`, "**<br>2025: **", `2025`, "** (+",
+                        formatC(round(100 * (`2025` - `2024`)/`2024`, 1), format="fg", decimal.mark=","), "%)")) %>%
+  pull(Texto)
+
+# Colores
+Paleta2 <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+             "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
+
 # Definir colores
-Colores <- c("2024" = "#6963aa",
-             "2025" = "#4c2158")
+Colores <- c("2024" = "#ec6230",
+             "2025" = "#c72a29")
 
 # Gráfico
 grafico <- ggplot(Data, aes(x = Edad, y = Cantidad)) +
@@ -78,6 +91,8 @@ grafico <- ggplot(Data, aes(x = Edad, y = Cantidad)) +
     aes(y = Cantidad + round(max(Data$Cantidad) * 0.025, 1), label = Label, group = Año),
     family = "font_body", color = "black", size = 5, vjust = 0, fill = NA,
     label.color = NA, position = position_dodge(width = 0.85)) +
+  geom_richtext(aes(x=4.5, y=60, label=Sin_dato), size=5, vjust=0.5, hjust=0, family="font_title",
+                fill = NA, label.color = NA, color="grey", lineheight = 1.15) +
   labs(y="Cantidad", x="Edad de la persona gestante") +
   scale_y_continuous(expand = c(0.05, 0), limits=c(0, max(Data$Cantidad)*1.2)) +
   scale_fill_manual(values = Colores) +
