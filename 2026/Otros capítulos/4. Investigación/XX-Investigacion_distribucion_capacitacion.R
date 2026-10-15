@@ -58,7 +58,7 @@ Colores <- c("No" = "#c72a29",
 Titulos_leyenda <- c("No" = str_wrap("No, no la realicé", 30),
                      "Si_1" = str_wrap("Sí, realicé cursos de forma voluntaria", 30),
                      "Si_2" = str_wrap("Sí, realicé cursos obligatorios en el trabajo", 30),
-                     "Si_3" = str_wrap("Sí, relicé cursos obligatorios y voluntarios", 30))
+                     "Si_3" = str_wrap("Sí, realicé cursos obligatorios y voluntarios", 30))
 
 # Gráfico1
 grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Realizó)) +

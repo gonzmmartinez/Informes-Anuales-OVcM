@@ -1,0 +1,61 @@
+ID,Nombre,Departamento,Capacitacion
+660021,General Pizarro,Anta,FALSE
+660245,San Antonio de los Cobres,Los Andes,TRUE
+660420,San José de Metán,Metán,TRUE
+660287,Seclantás,Molinos,FALSE
+660308,Pichanal,Orán,TRUE
+660294,Colonia Santa Rosa,Orán,FALSE
+660399,Los Toldos,Santa Victoria,FALSE
+660007,Apolinario Saravia,Anta,FALSE
+660014,El Quebrachal,Anta,FALSE
+660028,Joaquín Victor González,Anta,FALSE
+660105,Las Lajitas,Anta,FALSE
+660042,Cachi,Cachi,TRUE
+660056,Cafayate,Cafayate,FALSE
+660063,Salta,Capital,TRUE
+660098,El Carril,Chicoana,FALSE
+660106,Campo Santo,General Güemes,FALSE
+660112,El Bordo,General Güemes,FALSE
+660119,General Güemes,General Güemes,TRUE
+660126,Aguaray,General José de San Martín,TRUE
+660133,Embarcación,General José de San Martín,TRUE
+660140,General Ballivián,General José de San Martín,FALSE
+660147,General Mosconi,General José de San Martín,FALSE
+660154,Salvador Mazza,General José de San Martín,FALSE
+660161,Tartagal,General José de San Martín,TRUE
+660175,Iruya,Iruya,FALSE
+660182,Isla de Cañas,Iruya,FALSE
+660196,Vaqueros,La Caldera,FALSE
+660203,El Jardín,La Candelaria,FALSE
+660224,La Poma,La Poma,FALSE
+660231,Coronel Moldes,La Viña,FALSE
+660238,La Viña,La Viña,FALSE
+660259,El Galpón,Metán,FALSE
+660315,San Ramón de la Nueva Orán,Orán,TRUE
+660357,Rosario de la Frontera,Rosario de la Frontera,FALSE
+660378,Angastaco,San Carlos,FALSE
+660385,Animaná,San Carlos,FALSE
+660049,Payogasta,Cachi,FALSE
+660070,San Lorenzo,Capital,FALSE
+660077,Cerrillos,Cerrillos,FALSE
+660084,La Merced,Cerrillos,FALSE
+660091,Chicoana,Chicoana,FALSE
+660168,Guachipas,Guachipas,FALSE
+660189,La Caldera,La Caldera,FALSE
+660217,La Candelaria,La Candelaria,FALSE
+660210,El Tala,La Candelaria,FALSE
+660252,Tolar Grande,Los Andes,FALSE
+660280,Río Piedras,Metán,FALSE
+660273,Molinos,Molinos,FALSE
+660301,Hipólito Yrigoyen,Orán,FALSE
+660322,Urundel,Orán,FALSE
+660316,Aguas Blancas,Orán,FALSE
+660343,Santa Victoria Este,Rivadavia,TRUE
+660336,Rivadavia Banda Sur,Rivadavia,TRUE
+660329,Rivadavia Banda Norte,Rivadavia,FALSE
+660350,El Potrero,Rosario de la Frontera,FALSE
+660371,Rosario de Lerma,Rosario de Lerma,FALSE
+660364,Campo Quijano,Rosario de Lerma,FALSE
+660392,San Carlos,San Carlos,FALSE
+660406,Nazareno,Santa Victoria,FALSE
+660413,Santa Victoria Oeste,Santa Victoria,FALSE
