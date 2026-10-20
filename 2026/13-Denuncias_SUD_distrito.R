@@ -89,7 +89,7 @@ grafico <- ggplot(Data, aes(x=reorder(Distrito, Orden), y=Porcentaje, fill=Distr
 # Imagen
 # imagen <- ggdraw() +  draw_image("https://www.justiciasalta.gov.ar/media/images/distritos_judiciales_web-2024.jpg?timestamp=20240312114917")
 imagen <- ggdraw() +
-  draw_image(paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Anexos/Mapa_distritos_judiciales.jpg"))
+  draw_image(paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Anexos/Mapa_distritos_judiciales.png"))
 
 # Arrange
 grafico <- plot_grid(imagen, grafico, ncol=2) +
@@ -102,8 +102,8 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=15, height=6)
+       plot=grafico, dpi=100, width=14, height=6)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=15, height=6)
+       plot=grafico, dpi=72, width=14, height=6)
 

@@ -8,7 +8,6 @@ library(ggforce)
 library(ggplot2)
 library(ggthemes)
 library(devtools)
-library(rgdal)
 library(geogrid)
 library(sf)
 library(tmap)
@@ -17,9 +16,16 @@ library(ggpp)
 library(googlesheets4)
 
 # Fuentes
+library(sysfonts)
 library(showtext)
-font_add_google("Source Sans 3", "font_sans")
-font_add_google("Source Serif 4", "font_serif")
+dir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Fonts/")
+font_add(family = "font_title",
+         bold = file.path(dir, "CreatoDisplay-ExtraBold.otf"),
+         regular = file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add("font_subtitle", file.path(dir, "CreatoDisplay-Regular.otf"))
+font_add(family = "font_body",
+         regular = file.path(dir, "RobotoSlab-Regular.ttf"),
+         bold = file.path(dir, "RobotoSlab-Bold.ttf"))
 showtext_auto()
 
 # Cargar shape
@@ -33,7 +39,7 @@ Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1_n2tTaEXNYTv7fGR
 
 # Modificar datos
 Data_femicidios <- Raw %>%
-  filter(Año == 2025) %>%
+  filter(Año == 2026) %>%
   group_by(Localidad) %>%
   summarise(Cantidad = n()) %>%
   ungroup %>%
@@ -46,31 +52,20 @@ Mapa_Salta <- Mapa_Salta %>%
   mutate(Labels = ifelse(Cantidad != 0, etiqueta, NA))
 
 # Colores
-Paleta <- c("#206170", "#5ec5d4", "#a782ec", "#852f8c", "#0f216d", "#2b42a0",
-            "#ff9d27", "#ff621d", "#f93e35", "#d3335e", "#cbc2ce")
+Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
+            "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
-Colores <- colorRampPalette(c("white", "#206170"))(3)
-
-# Tabla
-Tabla <- Data_femicidios %>%
-  rename(Departamento = "etiqueta") %>%
-  arrange(desc(Cantidad))
-
-# Theme
-my_ttheme <- 
-  gridExtra::ttheme_default(base_colour="black", base_size=10, base_family="font",
-                            colhead = list(fg_params=list(col="white"),
-                                           bg_params=list(fill="#206170")),
-                            core = list(bg_params=list(fill = "grey95", col = "white")))
+Colores <- colorRampPalette(c("white", "#7c428a"))(4)
 
 # Grafico
 grafico <- ggplot(Mapa_Salta) +
   geom_sf(color="black", aes(fill=Cantidad), linewidth=0.5) +
-  annotate(geom="table", x=-68.5, y=-22.25, label = list(Tabla), table.theme=my_ttheme) +
   theme_void() +
   scale_fill_manual(values=Colores) +
   guides(color = guide_legend(override.aes=list(shape = 16))) +
-  geom_sf_label(aes(label=Labels, fill=Cantidad), color="white", alpha=0.5, family="font", show_guide=FALSE) +
+  geom_sf_label(aes(label=Labels, fill=Cantidad), color="white",
+                alpha=0.75, family="font_title", show.legend = FALSE,
+                size=4) +
   annotation_scale(location = "br", width_hint = 0.2) +
   annotation_north_arrow(location = "br", which_north = "true", 
                          pad_x = unit(0.0, "in"), pad_y = unit(0.2, "in"),
@@ -80,7 +75,8 @@ grafico <- ggplot(Mapa_Salta) +
         legend.key.size = unit(0.7, "cm"),
         legend.text = element_text(family="font", size=12),
         legend.key.spacing.y = unit(0, "cm"),
-        plot.background = element_rect(fill="white", color=NA))
+        plot.background = element_rect(fill="white", color=NA),
+        plot.margin = margin(r=10))
 
 # Guardar gr?fico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -88,7 +84,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=9, height=6)
+       plot=grafico, dpi=100, width=8, height=6)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=9, height=6)
+       plot=grafico, dpi=72, width=8, height=6)
