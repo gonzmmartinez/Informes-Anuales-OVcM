@@ -49,7 +49,7 @@ Mapa_Salta <- Mapa_Salta %>%
   left_join(Data_femicidios, by="etiqueta") %>%
   replace(is.na(.), 0) %>%
   mutate(Cantidad = as.factor(Cantidad)) %>%
-  mutate(Labels = ifelse(Cantidad != 0, etiqueta, NA))
+  mutate(Labels = ifelse(Cantidad != 0, str_wrap(etiqueta, 15), NA))
 
 # Colores
 Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
@@ -63,17 +63,23 @@ grafico <- ggplot(Mapa_Salta) +
   theme_void() +
   scale_fill_manual(values=Colores) +
   guides(color = guide_legend(override.aes=list(shape = 16))) +
+  geom_sf_label(data = Mapa_Salta %>% filter(Cantidad != 0),
+                aes(label=Cantidad, fill=Cantidad), color="black",
+                alpha=0.9, family="font_title", show.legend = FALSE,
+                size=5, fontface="bold", lineheight = 0.9, border.color = NA,
+                label.padding = unit(0.3, "lines"), vjust=0.5) +
   geom_sf_label(aes(label=Labels, fill=Cantidad), color="white",
-                alpha=0.75, family="font_title", show.legend = FALSE,
-                size=4) +
+                alpha=0.9, family="font_title", show.legend = FALSE,
+                size=3.5, lineheight = 0.9, label.padding = unit(0.3, "lines"),
+                vjust=1, nudge_y = -0.1) +
   annotation_scale(location = "br", width_hint = 0.2) +
   annotation_north_arrow(location = "br", which_north = "true", 
                          pad_x = unit(0.0, "in"), pad_y = unit(0.2, "in"),
                          style = north_arrow_fancy_orienteering) + 
   theme(legend.title = element_blank(),
-        text = element_text(family="font"),
+        text = element_text(family="font_title"),
         legend.key.size = unit(0.7, "cm"),
-        legend.text = element_text(family="font", size=12),
+        legend.text = element_text(family="font_title", size=12),
         legend.key.spacing.y = unit(0, "cm"),
         plot.background = element_rect(fill="white", color=NA),
         plot.margin = margin(r=10))

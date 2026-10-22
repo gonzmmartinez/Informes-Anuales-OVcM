@@ -26,7 +26,7 @@ showtext_auto()
 
 # Crear datos
 Data <- data.frame(Año = 2020:2026,
-                   Cantidad = c(11, 11, 11, 12, 9, 6, 7)) %>%
+                   Cantidad = c(11, 11, 11, 12, 9, 6, 8)) %>%
   mutate(Año = as.character(Año),
          Año = ifelse(Año == "2026", "2026*", Año))
 
