@@ -84,7 +84,7 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.75, fill=Caratu
                 lineheight = ifelse(Data$Porcentaje <= 5, 1.25, 1.5),
                 label.color = NA, family="font_body", hjust=0.5, vjust=0.5,
                 show.legend=FALSE, fill=NA) +
-  coord_polar(theta="y", start=-pi/2) +
+  coord_polar(theta="y", start=0) +
   xlim(c(1.5, 4.5)) +
   theme_void() +
   scale_fill_manual(values = Colores, labels = function(z) str_wrap(z, width=25)) +
