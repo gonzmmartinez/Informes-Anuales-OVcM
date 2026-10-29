@@ -27,83 +27,62 @@ Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path)
 
 # Modificar datos
 Data <- Raw %>%
-  mutate(Originarias = case_when(Originarias == "Sí" ~ "Si",
-                                 Originarias == "Si" ~ "Si",
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera",
+                          "Cachi", "San Ramón de la Nueva Orán")) %>%
+  mutate(Originarias = case_when(Originarias == "Sí" ~ "Sí",
+                                 Originarias == "Si" ~ "Sí",
                                  Originarias == "No" ~ "No",
                                  Originarias == "NO" ~ "No",
                                  Originarias == "Sin dato" ~ "Sin dato")) %>%
   filter(Originarias != "Sin dato") %>%
-  mutate(Originarias = factor(Originarias, levels=c("Si", "No"))) %>%
+  mutate(Originarias = factor(Originarias, levels=c("Sí", "No"))) %>%
   group_by(Originarias) %>%
   summarise(Cantidad = n()) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
   ungroup %>%
-  mutate(Label = ifelse(Porcentaje > 3,
-                        paste0("<span style='font-size:12.5pt'>**",
-                               formatC(round(Porcentaje,1), big.mark = ".", decimal.mark=","),
-                               "%**</span><br><span style='font-size:10pt'>",
-                               formatC(Cantidad, big.mark = ".", decimal.mark = ",","</span>")),
-                        NA)) %>%
-  mutate(ymax = cumsum(Porcentaje)) %>%
-  mutate(ymin = c(0, head(ymax, n=-1))) %>%
-  rowwise() %>%
-  mutate(ymid = ymax - (ymax - ymin)/2)
+  mutate(Porcentaje_label = paste0(formatC(round(Porcentaje,1), decimal.mark=",", format="fg"), "%"),
+         Cantidad_label = formatC(Cantidad, big.mark=".", format="fg"))
 
 Total <- Raw %>%
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera",
+                          "Cachi", "San Ramón de la Nueva Orán")) %>%
   filter(Originarias %in% c("Sin dato", "")) %>%
   mutate(Originarias = "Sin dato") %>%
   group_by(Originarias) %>%
-  summarise(Cantidad = n()) %>%
-  mutate(Texto = paste0("<span style='font-size:15pt'>",
-                        "Sin dato: **",
-                        formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg"),
-                        "**</span>")) %>%
-  pull(Texto)
-
-Leyenda <- Data %>%
-  mutate(Leyenda = ifelse(Porcentaje >= 5,
-                          as.character(Originarias),
-                          paste0(as.character(Originarias), " (",
-                                 formatC(round(Porcentaje, 1), big.mark = ".", decimal.mark = ",", format = "fg"), "%)"))) %>%
-  select(Originarias, Leyenda) %>% 
-  deframe()
+  summarise(Cantidad = n())
 
 # Colores
 Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
             "#7c428a", "#4c2158", "#c72a29", "#ec6230", "#cbc2ce")
 
-Colores <- c("Si" = "#ec6230",
+Colores <- c("Sí" = "#ec6230",
              "No" = "#cbc2ce")
 
 # Gráfico
-grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.75, fill=Originarias)) +
-  geom_rect() +
-  geom_richtext(y=0, x=1.5,
-                label=Total, size=9,
-                color = "darkgrey",
-                label.color = NA, family="font_title",
-                show.legend=FALSE, fill=NA) +
-  geom_richtext(aes(x = 3.5,
-                    y=ymid, label=Label),
-                color = "white",
-                label.color = NA, family="font_body",
-                show.legend=FALSE, fill=NA) +
-  coord_polar(theta="y") +
-  xlim(c(1.5, 4.5)) +
+grafico <- ggplot(Data, aes(x = Porcentaje, y = factor(1),
+                            fill = factor(Originarias, levels = c("No", "Sí")))) +
+  annotate(geom="text", x=-2, y=1+0.02, label=subset(Data, Originarias=="Sí")$Porcentaje_label,
+           hjust=1, size=7.5, vjust=0, family="font_body", fontface="bold") +
+  annotate(geom="text", x=102, y=1+0.02, label=subset(Data, Originarias=="No")$Porcentaje_label,
+           hjust=0, size=7.5, vjust=0, family="font_body", fontface="bold") +
+  annotate(geom="text", x=-2, y=1-0.02, label=subset(Data, Originarias=="Sí")$Cantidad_label,
+           hjust=1, size=5, vjust=1, family="font_body") +
+  annotate(geom="text", x=102, y=1-0.02, label=subset(Data, Originarias=="No")$Cantidad_label,
+           hjust=0, size=5, vjust=1, family="font_body") +
+  geom_col(width = 0.5) +
+  scale_x_continuous(expand = c(0.1,0)) +
+  scale_y_discrete(expand = c(0,0)) +
+  scale_fill_manual(breaks = c("Sí", "No"),
+                      values = Colores,
+                      name=str_wrap("¿Es una persona perteneciente a comunidades originarias?", 30)) +
   theme_void() +
-  scale_fill_manual(name = str_wrap("¿Es una persona perteneciente a comunidades originarias?", 30),
-                    values = Colores,
-                    labels = Leyenda) +
-  theme(text=element_text(family="font_title"),
-        legend.position = "right",
-        plot.title = element_blank(),
-        plot.subtitle = element_blank(),
-        legend.title = element_text(family="font_title", face="bold", size=12, margin=margin(b=10)),
+  theme(plot.background = element_rect(fill="white", color=NA),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, unit="cm"),
+        legend.position = "top",
+        legend.justification = "center",
+        legend.title = element_text(family="font_title", size=12, face="bold", margin=margin(r=10)),
         legend.text = element_text(family="font_title", size=12),
-        legend.box.margin = margin(t=5,b=5,l=-50,r=40),
-        legend.key.spacing.y = unit(0.5, "cm"),
-        plot.margin = margin(t=-50, b=-50, l=-50, r=-25),
-        plot.background = element_rect(fill = "white", colour = NA))
+        legend.key.spacing.x = unit(0.25, "cm"))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -111,7 +90,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=7, height=4.5)
+       plot=grafico, dpi=100, width=10, height=1.5)
 ggsave(filename = paste0(filename, ".pdf"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=7, height=4.5)
+       plot=grafico, dpi=72, width=10, height=1.5)

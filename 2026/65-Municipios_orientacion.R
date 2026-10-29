@@ -27,6 +27,8 @@ Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path)
 
 # Modificar datos
 Data <- Raw %>%
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera",
+                          "Cachi", "San Ramón de la Nueva Orán")) %>%
   filter(Orientacion %ni% c("Sin dato", "")) %>%
   mutate(Orientacion = ifelse(Orientacion == "Heterosexual", "Heterosexual", "Otra")) %>%
   mutate(Orientacion = factor(Orientacion,
@@ -47,6 +49,8 @@ Data <- Raw %>%
   mutate(ymid = ymax - (ymax - ymin)/2)
 
 Total <- Raw %>%
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera",
+                          "Cachi", "San Ramón de la Nueva Orán")) %>%
   filter(Orientacion %in% c("Sin dato", "")) %>%
   mutate(Orientacion = "Sin dato") %>%
   group_by(Orientacion) %>%
@@ -56,6 +60,14 @@ Total <- Raw %>%
                         formatC(Cantidad, big.mark=".", decimal.mark=",", format="fg"),
                         "**</span>")) %>%
   pull(Texto)
+
+Leyenda <- Data %>%
+  mutate(Leyenda = ifelse(Porcentaje >= 10, as.character(Orientacion),
+                          paste0(as.character(Orientacion), " (",
+                                 Cantidad, "; ",
+                                 formatC(round(Porcentaje, 1),big.mark = ".", decimal.mark = ",", format = "fg"), "%)"))) %>%
+  select(Orientacion, Leyenda) %>% 
+  deframe()
 
 # Colores
 Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
@@ -80,7 +92,9 @@ grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.8, fill=Orienta
   coord_polar(theta="y") +
   xlim(c(1.5, 4.5)) +
   theme_void() +
-  scale_fill_manual(name = "Orientación sexual", values = Colores) +
+  scale_fill_manual(name = "Orientación sexual",
+                    values = Colores,
+                    labels = Leyenda) +
   theme(text=element_text(family="font_title"),
         legend.position = "right",
         plot.title = element_text(family="font_title", size=25, face="bold", hjust=0.5),

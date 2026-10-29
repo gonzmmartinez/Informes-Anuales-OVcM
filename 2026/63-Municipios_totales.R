@@ -26,6 +26,7 @@ Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path)
 
 # Modificar datos
 Data <- Raw %>%
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera", "Cachi", "San Ramón de la Nueva Orán")) %>%
   mutate(Género = ifelse(Género %in% c("Mujer trans", "Varón trans"), "Otro", Género)) %>%
   mutate(Género = factor(Género, levels=c("Mujer", "Varón", "Otro"))) %>%
   group_by(Género) %>%

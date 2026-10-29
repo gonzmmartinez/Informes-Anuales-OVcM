@@ -61,7 +61,8 @@ Colores <- c("Asfixia mecánica" = "#6963aa",
              "Arma blanca" = "#ec6230",
              "Arma de fuego" = "#c72a29",
              "Fuerza física" = "#1e7b34",
-             "Fuego/otros medios combustibles" = "#4c2158")
+             "Fuego/otros medios combustibles" = "#4c2158",
+             "Sin dato" = "#cbc2ce")
 
 # Gr?fico
 grafico <- ggplot(Data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=2.5, fill=Medio_utilizado)) +

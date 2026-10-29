@@ -54,7 +54,8 @@ grafico <- ggplot(Data, aes(x=Hijos, y=Cantidad, fill=Cantidad)) +
   scale_alpha_continuous(range=c(0.6,1)) +
   scale_fill_gradient(low="#FEAC8B", high="#ec6230",
                       labels = function(x) str_wrap(x, width = 20)) +
-  scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width=20),
+                   expand = c(0.25, 0)) +
   scale_y_continuous(breaks=1:6, limits=c(0, max(Data$Cantidad)*1.1),
                      labels = function(z) round(z,0)) +
   theme_light() +

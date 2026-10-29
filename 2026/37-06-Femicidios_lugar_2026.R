@@ -55,7 +55,8 @@ grafico <- ggplot(Data, aes(x=Lugar_del_hecho, y=Cantidad, fill=Lugar_del_hecho)
   labs(x="Lugar del hecho", y="Cantidad") +
   scale_fill_manual(values=Colores,
                       labels = function(x) str_wrap(x, width = 20)) +
-  scale_x_discrete(labels = function(x) str_wrap(x, width=20)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width=20),
+                   expand = c(0.25, 0)) +
   scale_y_continuous(breaks=seq(0, 8, by=2), limits=c(0, max(Data$Cantidad)*1.1),
                      labels = function(z) round(z,0)) +
   theme_light() +
