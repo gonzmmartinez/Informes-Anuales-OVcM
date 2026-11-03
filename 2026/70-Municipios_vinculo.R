@@ -23,7 +23,9 @@ showtext_auto()
 
 # Cargar datos
 Raw <- read.csv(file=paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Datos/Registro_Asistencias_Completo_2026.csv")) %>%
-  rename(Vinculo = "Tipo.de.vínculo.con.la.persona.agresora")
+  rename(Vinculo = "Tipo.de.vínculo.con.la.persona.agresora") %>%
+  filter(Municipio %in% c("Capital", "Rosario de la Frontera",
+                          "Cachi", "San Ramón de la Nueva Orán"))
 
 # Modificar datos
 Data <- Raw %>%
@@ -75,7 +77,7 @@ grafico <- ggplot(Data, aes(x=Porcentaje, y=reorder(Vinculo, -Ord))) +
   annotate(geom="text", y=0.75, x=max(Data$Porcentaje)*1.1, label=Sin_dato, size=4,
            family="font_body", fontface="italic", color="darkgrey", hjust=1) +
   labs(title="",
-       y="Modalidad de violencia", x="Porcentaje") +
+       y="Vínculo con la persona que ejerció la agresión", x="Porcentaje") +
   theme_light() +
   scale_fill_gradient(low="#9FCFD1", high="#119ca0") +
   scale_y_discrete(labels = function(z) str_wrap(z, width=25)) +
@@ -100,7 +102,7 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=8, height=5)
+       plot=grafico, dpi=100, width=10, height=5)
 ggsave(filename = paste0(filename, ".pdf"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=8, height=5)
+       plot=grafico, dpi=72, width=10, height=5)
