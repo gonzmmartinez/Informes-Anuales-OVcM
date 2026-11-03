@@ -49,7 +49,8 @@ Mapa_Salta <- Mapa_Salta %>%
   left_join(Data_femicidios, by="etiqueta") %>%
   replace(is.na(.), 0) %>%
   mutate(Cantidad = as.factor(Cantidad)) %>%
-  mutate(Labels = ifelse(Cantidad != 0, str_wrap(etiqueta, 15), NA))
+  mutate(Labels = ifelse(Cantidad != 0, str_wrap(etiqueta, 20), NA),
+         Cantidad_label = ifelse(etiqueta == "Capital", "2 + 1 vinc.", as.character(Cantidad)))
 
 # Colores
 Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
@@ -64,14 +65,14 @@ grafico <- ggplot(Mapa_Salta) +
   scale_fill_manual(values=Colores) +
   guides(color = guide_legend(override.aes=list(shape = 16))) +
   geom_sf_label(data = Mapa_Salta %>% filter(Cantidad != 0),
-                aes(label=Cantidad, fill=Cantidad), color="black",
+                aes(label=Cantidad_label, fill=Cantidad), color="white",
                 alpha=0.9, family="font_title", show.legend = FALSE,
                 size=5, fontface="bold", lineheight = 0.9, border.color = NA,
                 label.padding = unit(0.3, "lines"), vjust=0.5) +
   geom_sf_label(aes(label=Labels, fill=Cantidad), color="white",
                 alpha=0.9, family="font_title", show.legend = FALSE,
                 size=3.5, lineheight = 0.9, label.padding = unit(0.3, "lines"),
-                vjust=1, nudge_y = -0.1) +
+                vjust=1, nudge_y = -0.15) +
   annotation_scale(location = "br", width_hint = 0.2) +
   annotation_north_arrow(location = "br", which_north = "true", 
                          pad_x = unit(0.0, "in"), pad_y = unit(0.2, "in"),
