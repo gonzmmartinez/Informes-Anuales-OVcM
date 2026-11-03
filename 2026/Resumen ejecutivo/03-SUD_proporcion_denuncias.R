@@ -66,12 +66,12 @@ Colores2 <- c("VFG" = "#4c2158",
 # Gráfico
 grafico1 <- ggplot(Cuadros1, aes(x = x, y = y, fill = Tipo)) +
   geom_tile(width = 0.9, height = 0.9) +
-  annotate(geom = "text", x = 5.5, y = -0.5, label = "28,6%",
+  annotate(geom = "text", x = 5.5, y = -0.4, label = "28,6%",
            family = "font_title", fontface="bold", color="#6963aa", size = 20) +
   annotate(geom = "text", x = 5.5, y = -1.7, label = "42.059 de 147.268 denuncias",
            family = "font_body", size = 6) +
-  annotate(geom = "text", x = 5.5, y = 11, label = "2025 - año completo",
-           family = "font_title", size = 7, fontface="bold", color="black") +
+  annotate(geom = "text", x = 5.5, y = 11.1, label = "2025 - año completo",
+           family = "font_title", size = 10, fontface="bold", color="black") +
   scale_fill_manual(values = Colores1) +
   scale_x_continuous(expand = c(0, 0), breaks = NULL) +
   scale_y_continuous(limits = c(-2, 11.5), expand = c(0, 0), breaks = NULL) +
@@ -90,12 +90,12 @@ grafico1 <- ggplot(Cuadros1, aes(x = x, y = y, fill = Tipo)) +
 
 grafico2 <- ggplot(Cuadros2, aes(x = x, y = y, fill = Tipo)) +
   geom_tile(width = 0.9, height = 0.9) +
-  annotate(geom = "text", x = 5.5, y = -0.5, label = "27,8%",
+  annotate(geom = "text", x = 5.5, y = -0.4, label = "27,8%",
            family = "font_title", fontface="bold", color="#4c2158", size = 20) +
   annotate(geom = "text", x = 5.5, y = -1.7, label = "21.219 de 76.369 denuncias",
            family = "font_body", size = 6) +
-  annotate(geom = "text", x = 5.5, y = 11, label = "2026 - 1er semestre",
-           family = "font_title", size = 7, fontface="bold", color="black") +
+  annotate(geom = "text", x = 5.5, y = 11.1, label = "2026 - 1er semestre",
+           family = "font_title", size = 10, fontface="bold", color="black") +
   scale_fill_manual(values = Colores2) +
   scale_x_continuous(expand = c(0, 0), breaks = NULL) +
   scale_y_continuous(limits = c(-2, 11.5), expand = c(0, 0), breaks = NULL) +

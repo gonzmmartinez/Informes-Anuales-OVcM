@@ -30,9 +30,9 @@ showtext_auto()
 Data <- data.frame(Horario = c("Matutino\n(08:01 a 16:00 hs.)", "Vespertino\n(16:01 a 24:00 hs.)", "Nocturno\n(00:01 a 08:00 hs.)"),
                     Cantidad = c(27, 31, 26)) %>%
   mutate(Porcentaje = 100 * Cantidad / sum(Cantidad)) %>%
-  mutate(Label = paste0("<span style='font-size:12.5pt'>**",
+  mutate(Label = paste0("<span style='font-size:15pt'>**",
                         formatC(round(Porcentaje,1), big.mark=".", decimal.mark=",", format="fg"),
-                        "%**</span><br><span style='font-size:10pt'>",
+                        "%**</span><br><span style='font-size:12pt'>",
                         formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="fg"),
                         "</span>"))
 
@@ -49,8 +49,8 @@ grafico <- ggplot(Data, aes(x = Horario, y = Cantidad)) +
                 label.color = NA, family="font_body",
                 show.legend=FALSE, fill=NA) +
   geom_text(aes(label = Horario, y=40),
-            family="font_title", color="black", size=4, hjust=c(0, 1, 0.5)) +
-  coord_polar(start = 0) +
+            family="font_title", color="black", size=6, hjust=c(0, 1, 0.5)) +
+  coord_polar(start = 0, clip="off") +
   scale_y_continuous(limits = c(-10, 70),
                      expand = c(0, 0)) +
   scale_fill_gradient(low = "#7FC0C2", high = "#119ca0") +
@@ -75,8 +75,8 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 ggsave(
   filename = paste0(filename, ".png"),
   path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Graficos/PNG/"),
-  plot = grafico, dpi = 100, width = 5, height = 3, bg = "white")
+  plot = grafico, dpi = 100, width = 6.5, height = 3, bg = "white")
 
 ggsave(filename = paste0(filename, ".pdf"),
   path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/Graficos/PDF/"),
-  plot = grafico, dpi = 72, width = 5, height = 3, bg = "white")
+  plot = grafico, dpi = 72, width = 6.5, height = 3, bg = "white")

@@ -97,7 +97,7 @@ grafico1 <- ggplot(Mapa_Salta1) +
   geom_sf(color="white", aes(fill=Tasa), linewidth=0.5) +
   geom_sf(data=Mapa_labels1, color="black", fill=NA, linewidth=0.75) +
   ggsflabel::geom_sf_label_repel(data = Mapa_labels1, aes(label=Label), lineheight=0.9,
-                                 color="black", family="font_title", size=3, show.legend=FALSE,
+                                 color="black", family="font_title", size=4, show.legend=FALSE,
                                  force=10, force_pull=0.5, box.padding=1,
                                  max.iter=20000, max.overlaps=Inf, seed=123, fontface="bold") +
   labs(title = "2025 (todo el año)") +
@@ -106,13 +106,13 @@ grafico1 <- ggplot(Mapa_Salta1) +
                        low = "#E7DBE9", high="#7c428a", na.value = "grey90") +
   guides(color = guide_legend(override.aes=list(shape = 16))) +
   theme(legend.title.position = "top",
-        legend.title = element_text(family="font_title", size=10, face="bold", hjust=0.5),
+        legend.title = element_text(family="font_title", size=15, face="bold", hjust=0.5),
         legend.position = "bottom",
         legend.direction = "horizontal",
         text = element_text(family="font_body"),
         legend.key.size = unit(0.5, "cm"),
-        legend.key.width = unit(1.5, "cm"),
-        legend.text = element_text(family="font_body", size=10),
+        legend.key.width = unit(1.25, "cm"),
+        legend.text = element_text(family="font_body", size=12),
         legend.key.spacing.y = unit(0, "cm"),
         plot.title = element_text(family="font_title", size=20,
                                   face="bold", hjust=0.5,
@@ -125,7 +125,7 @@ grafico2 <- ggplot(Mapa_Salta2) +
   geom_sf(color="white", aes(fill=Tasa), linewidth=0.5) +
   geom_sf(data=Mapa_labels2, color="black", fill=NA, linewidth=0.75) +
   ggsflabel::geom_sf_label_repel(data = Mapa_labels2, aes(label=Label), lineheight=0.9,
-                                 color="black", family="font_title", size=3, show.legend=FALSE,
+                                 color="black", family="font_title", size=4, show.legend=FALSE,
                                  force=10, force_pull=0.5, box.padding=1,
                                  max.iter=20000, max.overlaps=Inf, seed=123, fontface="bold") +
   labs(title = "2026 (primer semestre)") +
@@ -134,13 +134,13 @@ grafico2 <- ggplot(Mapa_Salta2) +
                       low = "#E7DBE9", high="#7c428a", na.value = "grey90") +
   guides(color = guide_legend(override.aes=list(shape = 16))) +
   theme(legend.title.position = "top",
-        legend.title = element_text(family="font_title", size=10, face="bold", hjust=0.5),
+        legend.title = element_text(family="font_title", size=15, face="bold", hjust=0.5),
         legend.position = "bottom",
         legend.direction = "horizontal",
         text = element_text(family="font_body"),
         legend.key.size = unit(0.5, "cm"),
-        legend.key.width = unit(1.5, "cm"),
-        legend.text = element_text(family="font_body", size=10),
+        legend.key.width = unit(1.25, "cm"),
+        legend.text = element_text(family="font_body", size=12),
         legend.key.spacing.y = unit(0, "cm"),
         plot.title = element_text(family="font_title", size=20,
                                   face="bold", hjust=0.5,

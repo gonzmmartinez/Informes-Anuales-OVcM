@@ -46,10 +46,10 @@ Colores <- c("Violencia familiar - en curso" = "#119ca0",
 # Gráfico
 grafico <- ggplot(Data, aes(x=Cantidad, y=Tiempo, group=1)) +
   geom_col(aes(fill=Tiempo), width=0.85) +
-  geom_text(aes(label=Label), family="font_body", size=5, nudge_x=750,
+  geom_text(aes(label=Label), family="font_body", size=7, nudge_x=750,
             fontface="bold", color="black", hjust=0, vjust=0.5) +
   scale_fill_manual(values=Colores) + 
-  scale_x_continuous(limits = c(0, 46000), expand=c(0.025,0),
+  scale_x_continuous(limits = c(0, max(Data$Cantidad)*1.15), expand=c(0.025,0),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark = ",", format="fg")) +
   theme_light() +
   theme(
@@ -60,7 +60,7 @@ grafico <- ggplot(Data, aes(x=Cantidad, y=Tiempo, group=1)) +
     plot.title=element_blank(),
     plot.subtitle=element_blank(),
     plot.caption=element_blank(),
-    axis.text.y=element_text(family="font_subtitle", size=15, margin=margin(r=10)),
+    axis.text.y=element_text(family="font_subtitle", size=16, margin=margin(r=10)),
     axis.title.y=element_blank(),
     axis.line.y = element_line(color="darkgrey", linewidth=0.5),
     axis.text.x=element_blank(),
@@ -69,9 +69,7 @@ grafico <- ggplot(Data, aes(x=Cantidad, y=Tiempo, group=1)) +
     axis.ticks.x = element_blank(),
     plot.margin=unit(c(0.25,0.25,0.25,0.25), "cm"),
     panel.border = element_blank(),
-    panel.grid=element_blank(),
-    panel.grid.major=element_line(linewidth=0.5, color="grey95"),
-    panel.grid.major.x=element_blank())
+    panel.grid=element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

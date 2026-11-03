@@ -24,7 +24,8 @@ showtext_auto()
 # Leer datos
 Raw <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/1Cfbecjc5DLo3uGsMEHscsfUC9YOtnKtFvt1bOZI_B4c/edit?usp=sharing",
                   sheet = "Vinculo") %>%
-  filter(Año == 2026)
+  filter(Año == 2026) %>%
+  mutate(Vínculo = ifelse(Vínculo == "Familiar", "Familiar afín", Vínculo))
 
 Data1 <- Raw %>%
   group_by(Vínculo) %>%
@@ -51,8 +52,8 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Vínculo, Ord))) +
   theme_light() +
   labs(y=str_wrap("Vínculo con la persona que resultó denunciada", 25), x="Porcentaje") +
   geom_text(aes(label = paste0(formatC(round(Porcentaje,1), big.mark = ".", decimal.mark = ","), "%")), color = "black",
-            size=6, family="font_body", vjust=0.5, hjust = 0, nudge_x = 0.5) +
-  scale_x_continuous(limits = c(0, round(max(Data1$Porcentaje) * 1.1, 0)),
+            size=8, family="font_body", vjust=0.5, hjust = 0, nudge_x = 0.5) +
+  scale_x_continuous(limits = c(0, round(max(Data1$Porcentaje) * 1.125, 0)),
                      expand = c(0.01, 0),
                      labels = function(z) paste0(z, "%")) +
   scale_y_discrete(labels = function(z) str_wrap(z, 30)) +
@@ -60,13 +61,12 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Vínculo, Ord))) +
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         panel.grid = element_blank(),
-        panel.grid.major.x = element_line(color="grey95", linewidth = 0.5),
         panel.border = element_blank(),
         axis.text.x = element_blank(),
         axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
-        axis.text.y = element_text(family="font_title", size=20, margin = margin(t=0,r=10,b=0,l=0)),
-        axis.title.y = element_text(family="font_title", size=20, margin = margin(t=0, r=15, b=0, l=0)),
+        axis.text.y = element_text(family="font_title", size=22, margin = margin(t=0,r=10,b=0,l=0)),
+        axis.title.y = element_blank(),
         axis.line.y = element_line(linewidth=0.5, color="darkgrey"))
 
 # Guardar gráfico

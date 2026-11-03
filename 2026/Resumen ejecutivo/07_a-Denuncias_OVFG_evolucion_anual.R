@@ -70,10 +70,10 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
            linetype=2, color="gray", fill="gray", alpha=0.5) +
   geom_text(aes(y=Cantidad, label=formatC(Cantidad, big.mark = ".", decimal.mark = ",", format="d")),
             family="font_body", fontface="bold",
-            color="white", size=6, vjust=2) +
+            color="white", size=7, vjust=2) +
   annotate(geom="text", x=11, y=Estimacion,
            label = formatC(Estimacion, big.mark = ".", decimal.mark=",", format="d"),
-           vjust=2, family="font_body", fontface="bold", color="black", size=6) +
+           vjust=2, family="font_body", fontface="bold", color="black", size=7) +
   annotate(geom="text", x=11, y=Estimacion+750,
            label = str_wrap("Proyección del número total de denuncias para el año 2026 completo", width=20),
            vjust=0, family="font_title", fontface="bold", color="gray", size=4,
@@ -90,8 +90,6 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
         panel.grid = element_blank(),
-        panel.grid.major = element_line(colour = "grey95"),
-        panel.grid.major.x = element_blank(),
         panel.border = element_blank(),
         axis.line.y = element_blank(),
         axis.ticks.y = element_blank(),
@@ -99,7 +97,7 @@ grafico <- ggplot(Data, aes(x=Año, y=Cantidad)) +
         axis.text.y = element_blank(),
         axis.line.x = element_line(color="darkgrey", linewidth=0.5),
         axis.title.x = element_blank(),
-        axis.text.x = element_text(size=20, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)))
+        axis.text.x = element_text(size=22, family="font_sans", margin = margin(t=10,r=0,b=5,l=0)))
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

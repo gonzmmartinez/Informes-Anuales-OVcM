@@ -52,11 +52,11 @@ Colores <- c("2025 (año completo)" = "#119ca0",
 grafico <- ggplot(Data, aes(x = Porcentaje, y = Distrito, group = Año)) +
   geom_col(aes(fill = Año), position = position_dodge(width = 0.85), width = 0.85) +
   geom_text(aes(x = Porcentaje + max(Data$Porcentaje)*0.01, label = Label, group = Año),
-            position = position_dodge(width = 0.85), family = "font_body", size = 4,
+            position = position_dodge(width = 0.85), family = "font_body", size = 6,
             color = "black", hjust = 0, vjust = 0.5) +
   scale_fill_manual(values=Colores) + 
   scale_y_discrete(limits = rev) +
-  scale_x_continuous(limits = c(0, 72.5), expand=c(0.025,0),
+  scale_x_continuous(limits = c(0, max(Data$Porcentaje)*1.1), expand=c(0.025,0),
                      labels = function(z) formatC(z, big.mark=".", decimal.mark = ",", format="fg")) +
   theme_light() +
   theme(
@@ -64,13 +64,13 @@ grafico <- ggplot(Data, aes(x = Porcentaje, y = Distrito, group = Año)) +
     legend.position="top",
     legend.justification = "center",
     legend.title=element_blank(),
-    legend.text=element_text(size=12, family="font_title"),
+    legend.text=element_text(size=15, family="font_title"),
     legend.key.spacing.x = unit(0.5, "cm"),
     plot.title=element_blank(),
     plot.subtitle=element_blank(),
     plot.caption=element_blank(),
     panel.border = element_blank(),
-    axis.text.y=element_text(family="font_subtitle", size=15, margin=margin(r=10)),
+    axis.text.y=element_text(family="font_subtitle", size=17, margin=margin(r=10)),
     axis.title.y=element_blank(),
     axis.line.y = element_line(color="darkgrey", linewidth=0.5),
     axis.text.x=element_blank(),
@@ -78,9 +78,7 @@ grafico <- ggplot(Data, aes(x = Porcentaje, y = Distrito, group = Año)) +
     axis.line.x = element_blank(),
     axis.ticks.x = element_blank(),
     plot.margin=unit(c(0.25,0.25,0.25,0.25), "cm"),
-    panel.grid=element_blank(),
-    panel.grid.major=element_line(linewidth=0.5, color="grey95"),
-    panel.grid.major.x=element_blank())
+    panel.grid=element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,

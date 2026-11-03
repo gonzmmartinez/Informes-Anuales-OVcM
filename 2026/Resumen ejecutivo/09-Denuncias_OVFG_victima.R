@@ -64,7 +64,7 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Rango_etario, Ord), fill=G�
   geom_text(aes(label = paste0(formatC(round(abs(Porcentaje),1), big.mark = ".", decimal.mark = ","), "%"),
                 hjust = ifelse(Género == "Mujeres", 1, 0),
                 nudge_x = ifelse(Género == "Mujeres", -0.25, 0.25)),
-            family="font_body", size=3) +
+            family="font_body", size=5) +
   scale_x_continuous(limits=c(min(Data1$Porcentaje) - 1.5, max(Data1$Porcentaje) + 1.5)) +
   scale_fill_manual(name = "Género",
                     values = Colores) +
@@ -72,17 +72,16 @@ grafico <- ggplot(Data1, aes(x=Porcentaje, y=reorder(Rango_etario, Ord), fill=G�
         legend.position = "top",
         legend.justification = "center",
         legend.title = element_blank(),
-        legend.text = element_text(size=12, family="font_title"),
+        legend.text = element_text(size=15, family="font_title"),
+        legend.key.spacing.x = unit(0.5, "cm"),
         plot.title = element_blank(),
         plot.subtitle = element_blank(),
         plot.caption = element_blank(),
-        panel.grid.major = element_line(colour = "#F5F5F5"),
+        panel.grid = element_blank(),
         panel.grid.major.y = element_line(color="grey95", linewidth = 0.5),
-        panel.grid.minor.y = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(family="font_title", size=12, margin = margin(t=0,r=10,b=0,l=5)),
-        axis.title.x = element_blank(),
-        axis.title.y = element_text(family="font_title", size=15))
+        axis.text.y = element_text(family="font_title", size=15, margin = margin(t=0,r=10,b=0,l=5)),
+        axis.title = element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
@@ -90,8 +89,8 @@ filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
 
 ggsave(filename = paste0(filename, ".png"),
        path = paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PNG/"),
-       plot=grafico, dpi=100, width=8, height=5)
+       plot=grafico, dpi=100, width=9, height=5)
 ggsave(filename = paste0(filename, ".pdf"),
        path=paste0(dirname(rstudioapi::getActiveDocumentContext()$path),"/Graficos/PDF/"),
-       plot=grafico, dpi=72, width=8, height=5)
+       plot=grafico, dpi=72, width=9, height=5)
 

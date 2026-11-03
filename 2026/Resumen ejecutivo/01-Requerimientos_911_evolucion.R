@@ -63,18 +63,17 @@ Paleta <- c("#1e7b34", "#119ca0", "#b8d6ac", "#6963aa",
 
 # Posiciones
 pos_anios <- c(seq(1.5, 11.5, by = 2), 13)
-pos_lineas <- c(0.25, seq(2.5, 12.5, by = 2), 13.75)
+pos_lineas <- c(0.5, seq(2.5, 12.5, by = 2), 13.5)
 
 # Gráfico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   geom_col(aes(fill=Cantidad), width=0.85) +
-  geom_text(aes(label=Label), family="font_body", size=5,
+  geom_text(aes(label=Label), family="font_body", size=6,
             fontface="bold", color="black", nudge_y=4000, hjust=0.5, vjust=0) +
   annotate(geom="text", y=-17500, x=pos_anios, label=2020:2026,
-           size=6, color="black", family="font_title", fontface="bold") +
+           size=8, color="black", family="font_title", fontface="bold") +
   annotate(geom="segment", x=pos_lineas, xend=pos_lineas, y=-20000,
            yend=-5000, color="grey", linewidth=0.5) +
-  labs(title="", x="Semestre/Año", y="Cantidad") +
   scale_x_discrete(labels = c(rep(c("1°", "2°"), 6), "1°")) +
   scale_y_continuous(
     labels = function(z) formatC(
@@ -84,18 +83,18 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
                        midpoint=mean(Data$Cantidad, na.rm=TRUE)) +
   scale_size_continuous(range=c(25, 40)) +
   theme_light() +
-  coord_cartesian(ylim=c(-5000, 120000), xlim=c(0.25, 13.75),
+  coord_cartesian(ylim=c(-5000, 120000), xlim=c(0.5, 13.5),
                   clip="off", expand=FALSE) +
   theme(
     text=element_text(family="font_body"),
     legend.position="none",
     legend.title=element_blank(),
-    legend.text=element_text(size=12, family="font_body"),
+    legend.text=element_blank(),
     plot.title=element_blank(),
     plot.subtitle=element_blank(),
     plot.caption=element_blank(),
-    axis.text.x=element_text(family="font_subtitle", size=15, margin=margin(t=5,r=0,b=5,l=0)),
-    axis.title.x=element_text(family="font_subtitle", size=15, margin=margin(t=40)),
+    axis.text.x=element_text(family="font_subtitle", size=17, margin=margin(t=10,r=0,b=30,l=0)),
+    axis.title.x=element_blank(),
     axis.text.y=element_blank(),
     axis.title.y=element_blank(),
     axis.line.y = element_blank(),
@@ -103,9 +102,7 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
     axis.ticks.y = element_blank(),
     panel.border = element_blank(),
     plot.margin=unit(c(0.25,0.25,0.25,0.25), "cm"),
-    panel.grid=element_blank(),
-    panel.grid.major=element_line(linewidth=0.5, color="grey95"),
-    panel.grid.major.x=element_blank())
+    panel.grid=element_blank())
 
 # Guardar gráfico
 filename <- str_sub(basename(rstudioapi::getSourceEditorContext()$path), 1,
