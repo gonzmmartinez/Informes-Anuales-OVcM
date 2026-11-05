@@ -68,7 +68,6 @@ pos_lineas <- c(0.25, seq(2.5, 12.5, by = 2), 13.75)
 # Gráfico
 grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   geom_col(aes(fill=Cantidad)) +
-  
   geom_text(aes(label=Label), family="font_body", size=5,
             fontface="bold", color="white", nudge_y=-7500, hjust=0.5) +
   
@@ -116,7 +115,6 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   ) +
   
   labs(
-    title="",
     x="Semestre/Año",
     y="Cantidad",
     caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente."
@@ -163,8 +161,8 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
     legend.position="none",
     legend.title=element_blank(),
     legend.text=element_text(size=12, family="font_body"),
-    plot.title=element_text(size=20, family="font_title", face="bold"),
-    plot.subtitle=element_text(size=15, family="font_subtitle"),
+    plot.title=element_blank(),
+    plot.subtitle=element_blank(),
     plot.caption=element_text(
       size=10, family="font_body", face="italic",
       margin=margin(t=10)
