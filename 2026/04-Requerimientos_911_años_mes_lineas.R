@@ -50,7 +50,7 @@ Labels <- Data %>%
   filter(Mes_num == max(Mes_num)) %>%
   ungroup %>%
   mutate(xpos = Mes_num+0.4,
-         Label = str_replace(as.character(Año), "^(\\d)(\\d+)$", "\\1.\\2")) %>%
+         Label = Año) %>%
   mutate(ypos = case_when(Año == 2020 ~ Cantidad + 250,
                           Año == 2025 ~ Cantidad - 250,
                           .default = Cantidad))

@@ -98,7 +98,7 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
     geom="text",
     y=-25000,
     x=pos_anios,
-    label=2020:2026,
+    label=Totales$Año,
     size=8, color="black", family="font_title",
     fontface="bold"
   ) +
@@ -117,7 +117,7 @@ grafico <- ggplot(Data, aes(x=Semestre_año, y=Cantidad, group=1)) +
   labs(
     x="Semestre/Año",
     y="Cantidad",
-    caption="* las proporciones se calculan en base a los datos correspondientes al primer semestre únicamente."
+    caption="* los totales se calculan en base a los datos correspondientes al primer semestre únicamente."
   ) +
   
   scale_x_discrete(

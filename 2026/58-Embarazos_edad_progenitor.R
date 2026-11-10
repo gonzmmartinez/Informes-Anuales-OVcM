@@ -93,7 +93,7 @@ grafico <- ggplot(Data, aes(x = Edad, y = Cantidad)) +
     label.color = NA, position = position_dodge(width = 0.85)) +
   geom_richtext(aes(x=4.5, y=60, label=Sin_dato), size=5, vjust=0.5, hjust=0, family="font_title",
                 fill = NA, label.color = NA, color="grey", lineheight = 1.15) +
-  labs(y="Cantidad", x="Edad de la persona gestante") +
+  labs(y="Cantidad", x="Edad del progenitor") +
   scale_y_continuous(expand = c(0.05, 0), limits=c(0, max(Data$Cantidad)*1.2)) +
   scale_fill_manual(values = Colores) +
   theme_light() +
