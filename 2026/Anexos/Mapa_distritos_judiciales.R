@@ -12,6 +12,7 @@ library(showtext)
 library(stringr)
 library(ggimage)
 library(ggrepel)
+library(googlesheets4)
 
 # Fuentes
 library(sysfonts)
